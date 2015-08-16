@@ -1,7 +1,7 @@
 Project Facet Planning
 ======================
 
-This repo is where planning docs, mockups and early stage work will be shared.
+This repo is where planning docs, mockups and early stage work will be shared in this repo and in the wiki pages you can find `here <https://github.com/ProjectFacet/multifacet/wiki>`_.
 
 What are we trying to do?
 -------------------------
