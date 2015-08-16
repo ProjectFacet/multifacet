@@ -32,11 +32,11 @@ The development process for Facet will be as open as possible. We'll be sharing 
 
 ##Repo wiki
 
-**glossary** - definitions used by the project for different aspects of the editorial process.
+**[glossary](https://github.com/ProjectFacet/multifacet/wiki/Glossary)** - definitions used by the project for different aspects of the editorial process.
 
 
 ##Repo issue tracker
 
 Using Issues to track project discussion, features, questions, code, bugs and milestones.
 
-**Current Milestons:** *Sprint 8/16 - 8/22*
+**Current Milestones:** *Sprint 8/16 - 8/22*
