@@ -39,4 +39,3 @@ The development process for Facet will be as open as possible. We'll be sharing 
 
 Using Issues to track project discussion, features, questions, code, bugs and milestones.
 
-**Current Milestones:** *Sprint 8/16 - 8/22*
