@@ -48,7 +48,6 @@ Series
 
 - A Series is a collection of Stories on a related topic.
 - Any Story can be added to a Series.
-A series has:
 - Planning: all of the documents (uploaded), notes (text input) and comments around the planning and implementation of a series.
 - Assets: photos, video, documents or audio that could be used in any Story.
 
@@ -57,11 +56,10 @@ Stories
 
 - A Story is piece of content on a specific topic.
 - A Story is a bundle of related Facets
-- A Story has:
 - Planning: all of the documents (uploaded), notes (text input) and comments around the planning and implementation of a Story.
 - Assets: photos, video, documents or audio that will be used in any of the facets of the Story.
 - Meta: Common information that is true no matter what the Facet is.
-Comments: All of the comments around the editing of the Facets. (displayed next to the text editor) 
+- Comments: All of the comments around the editing of the Facets. (displayed next to the text editor) 
 
 *Note:* Sharing, collaborating, embargo and sensitivity are tracked at a story level
 
