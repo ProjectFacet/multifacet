@@ -27,7 +27,20 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'base.apps.BaseConfig',
     'editorial.apps.EditorialConfig',
+    'entity.apps.EntityConfig',
+    'freelance.apps.FreelanceConfig',
+    'staff.apps.StaffConfig',
+    'subscription.apps.SubscriptionConfig',
+    'transaction.apps.TransactionConfig',
+    'task.apps.TaskConfig',
+    'note.apps.NoteConfig',
+    'timeline.apps.TimelineConfig',
+    'communication.apps.CommunicationConfig',
+    'social.apps.SocialConfig',
+    'data.apps.DataConfig',
+    'engagement.apps.EngagementConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -108,6 +121,10 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL = "collaborate@projectfacet.org"
 ADMINS = [
     ('Heather', 'heather@projectfacet.org'),
 ]
+
+
+AUTH_USER_MODEL = 'base.Participant'
+
 
 
 # Internationalization
