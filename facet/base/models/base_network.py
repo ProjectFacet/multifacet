@@ -21,29 +21,21 @@ class BaseNetwork(models.Model):
         blank=True,
     )
 
+    # FIXME Pilkit install
     # logo = models.ImageField(
     #     upload_to='networks',
     #     blank=True,
     # )
-    #
+
     # display_logo = ImageSpecField(
     #     source='logo',
     #     processors=[SmartResize(500, 500)],
     #     format='JPEG',
     # )
 
-    # discussion = models.ForeignKey(
-    #     'Discussion',
-    #     related_name='network_discussion',
-    #     help_text='Id of discussion for a network.',
-    #     blank=True,
-    #     null=True,
-    # )
+    # discussions = GenericRelation(Discussion)
 
-    # notes = models.ManyToManyField(
-    #     'Note',
-    #     blank=True,
-    # )
+    # notes = GenericRelation(Note)
 
     # simple assets
     # simple_image_assets = models.ManyToManyField(

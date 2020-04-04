@@ -1,7 +1,8 @@
 # from django.db import models
 #
 # # from entity.models import NewsOrganization
-# from base.models import BaseNetwork
+# from base.models import BaseNetwork, BaseOrganization
+# from editorial.models import Project, Story, Item, ItemTemplate
 #
 # class NewsOrganizationNetwork(BaseNetwork):
 #     """A group of organizations.
@@ -30,6 +31,8 @@
 #     #     related_name='network_newsorganization',
 #     # )
 #
+#     # items = GenericRelation(Item)
+
 #     class Meta:
 #         verbose_name = 'Network'
 #         verbose_name_plural = "Networks"

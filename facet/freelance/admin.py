@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # from .models import FreelanceJournalist
-# from .models import TalentEditor
+# from .models import FreelanceManager
 # from .models import FreelancerAffiliationRecord
 # from .models import OrganizationAffiliationRecord
 # from .models import Call
@@ -11,7 +11,7 @@ from django.contrib import admin
 #
 #
 # admin.site.register(FreelanceJournalist)
-# admin.site.register(TalentEditor)
+# admin.site.register(FreelanceManager)
 # admin.site.register(FreelancerAffiliationRecord)
 # admin.site.register(OrganizationAffiliationRecord)
 # admin.site.register(Call)

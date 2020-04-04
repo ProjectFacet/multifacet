@@ -19,5 +19,7 @@ urlpatterns = [
     path('note/', include('note.urls')),
     path('data/', include('data.urls')),
     path('engagement/', include('engagement.urls')),
+    path('pickup/', include('pickup.urls')),
+    path('dei/', include('dei.urls')),
     path('admin/', admin.site.urls),
 ]

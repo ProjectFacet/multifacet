@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'social.apps.SocialConfig',
     'data.apps.DataConfig',
     'engagement.apps.EngagementConfig',
+    'pickup.apps.PickupConfig',
+    'dei.apps.DeiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

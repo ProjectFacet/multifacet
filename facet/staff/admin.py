@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+# from .journalist_staff import StaffJournalist
+
+# admin.site.register(StaffJournalist)

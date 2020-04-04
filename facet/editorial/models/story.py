@@ -4,13 +4,24 @@
 # from django.db import models
 # # from django.db.models import Q
 # # from django.shortcuts import get_object_or_404
-# # from django.utils.encoding import python_2_unicode_compatible
 # from datetime import datetime
 # import time
 #
-# # from . import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
-# # from . import User, Organization, Network, Project, Discussion
-# from . import Project
+# # from base.models import Participant
+# # from entity.models import NewsOrganization, NewsOrganizationNetwork
+# # from discussion.models import Discussion, Comment
+# # from task.models import Task
+# # from event.models import Event
+# # from note.models import Note
+# # from .asset_image import ImageAsset, SimpleImage
+# # from .asset_document import DocumentAsset, SimpleDocument
+# # from .asset_audio import AudioAsset, SimpleAudio,
+# # from .asset_video import VideoAsset, SimpleVideo,
+# # from .project import Project
+# # from .item import Item
+# # from .item_template import ItemTemplate
+# # from .content_license import ContentLicense
+# # from .tag import Tag
 #
 # #-----------------------------------------------------------------------#
 # #  STORY
@@ -19,33 +30,33 @@
 # class Story(models.Model):
 #     """The unit of a story.
 #
-#     A story is the one or more facets that make up a particular story.
+#     A story is the one or more items that make up a particular story.
 #     Sharing and collaboration is controlled at the story level.
 #     The story also controls the sensitivity and embargo status of the content.
 #     """
 #
-#     project = models.ForeignKey(
-#         Project,
-#         on_delete = models.SET_NULL,
-#         null=True,
-#     )
-#
+#     # project = models.ForeignKey(
+#     #     Project,
+#     #     on_delete = models.SET_NULL,
+#     #     null=True,
+#     # )
+#     #
 #     # owner = models.ForeignKey(
-#     #     User,
+#     #     Participant,
 #     #     related_name='story_owner',
-#     #     help_text='User who created the story'
+#     #     help_text='Participant who created the story'
 #     # )
-#     #
-#     # organization = models.ForeignKey(
-#     #     Organization,
-#     #     help_text="Organization that owns this story."
-#     # )
-#     #
-#     # original_story = models.BooleanField(
-#     #     default=True,
-#     #     help_text='Was this story originally created by a user from this organization?'
-#     #     #If story is not original, set to false and use StoryCopyDetail for additional info.
-#     # )
+#
+#     # Entity Owner
+#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+#     object_id = models.PositiveIntegerField()
+#     content_object = GenericForeignKey('content_type', 'object_id')
+#
+#     original = models.BooleanField(
+#         default=True,
+#         help_text='If original to participant/entity, true. If picked up, false.',
+#         # If story is not original, set to false and use StoryPickupDetail for additional info.
+#     )
 #
 #     name = models.CharField(
 #         max_length=250,
@@ -57,104 +68,99 @@
 #         blank=True,
 #     )
 #
-#     # embargo = models.BooleanField(
-#     #     default=False,
-#     #     help_text='Is a story embargoed?'
-#     #     )
-#     #
-#     # embargo_datetime = models.DateTimeField(
-#     #     help_text='When is the story no longer under embargo.',
-#     #     blank=True,
-#     #     null=True,
-#     # )
-#     #
-#     # creation_date = models.DateTimeField(
-#     #     auto_now_add=True,
-#     #     help_text='When was the story created.'
-#     # )
-#     #
-#     # # connection to users participating in a story
+#     embargo = models.BooleanField(
+#         default=False,
+#         help_text='Is a story embargoed?'
+#         )
+#
+#     embargo_datetime = models.DateTimeField(
+#         help_text='When is the story no longer under embargo.',
+#         blank=True,
+#         null=True,
+#     )
+#
+#     creation_date = models.DateTimeField(
+#         auto_now_add=True,
+#         help_text='When was the story created.'
+#     )
+#
+#     # # connection to participants participating in a story
 #     # team = models.ManyToManyField(
-#     #     User,
+#     #     Participant,
 #     #     related_name='story_team_member',
-#     #     help_text='User contributing to the story.',
+#     #     help_text='Participant contributing to the story.',
 #     #     blank=True,
 #     # )
-#     #
-#     # sensitive = models.BooleanField(
-#     #     default=False,
-#     #     help_text='Is a story sensitive and viewing it limited only to the team working on it?'
-#     # )
-#     #
-#     # share = models.BooleanField(
-#     #     default=False,
-#     #     help_text='The story is being shared with a network.'
-#     # )
-#     #
-#     # share_with_date = models.DateTimeField(
-#     #     help_text="Estimated date the story will be available",
-#     #     blank=True,
-#     #     null=True,
-#     # )
-#     #
-#     # ready_to_share = models.BooleanField(
-#     #     default=False,
-#     #     help_text='The story is finished and ready to be copied.'
-#     # )
-#     #
+#
+#     sensitive = models.BooleanField(
+#         default=False,
+#         help_text='Is a story sensitive and viewing it limited only to the team working on it?'
+#     )
+#
+#     share = models.BooleanField(
+#         default=False,
+#         help_text='The story is being shared with a network.'
+#     )
+#
+#     share_date = models.DateTimeField(
+#         help_text="Estimated date the story will be available",
+#         blank=True,
+#         null=True,
+#     )
+#
+#     ready_to_share = models.BooleanField(
+#         default=False,
+#         help_text='The story is finished and ready to be copied.'
+#     )
+#
+#     # FIXME Create ManyToMany Generic relation to include multiple entities as options
 #     # share_with = models.ManyToManyField(
-#     #     Network,
+#     #     NewsOrganizationNetwork,
 #     #     related_name='story_shared_with_network',
 #     #     help_text='Network ids that a story is shared with.',
 #     #     blank=True,
 #     #     # null=True,
 #     # )
-#     #
-#     # collaborate = models.BooleanField(
-#     #     default=False,
-#     #     help_text='The story is being collaborated on with a network.'
-#     # )
-#     #
+#
+#     collaborate = models.BooleanField(
+#         default=False,
+#         help_text='The story is being collaborated on with a network.'
+#     )
+#
+#     # FIXME Create ManyToMany Generic relation to include multiple entities as options
 #     # collaborate_with = models.ManyToManyField(
-#     #     Organization,
+#     #     NewsOrganization,
 #     #     related_name='story_collaborated_with_organization',
 #     #     help_text='Organization ids that a story is open to collaboration with.',
 #     #     blank=True,
 #     # )
-#     #
-#     # archived = models.BooleanField(
-#     #     default=False,
-#     #     help_text='Is the content no longer active and needed?'
-#     # )
-#     #
-#     # discussion = models.ForeignKey(
-#     #     'Discussion',
-#     #     help_text='Id of planning discussion for a story.',
-#     #     blank=True,
-#     #     null=True,
-#     # )
-#     #
-#     # notes = models.ManyToManyField(
-#     #     'Note',
-#     #     blank=True,
-#     # )
-#     #
+#
+#     archived = models.BooleanField(
+#         default=False,
+#         help_text='Is the content no longer active and needed?'
+#     )
+#
+#     # discussions = GenericRelation(Discussion)
+#     # notes = GenericRelation(Note)
+#     # tasks = GenericRelation(Task)
+#     # events = GenericRelation(Event)
+#
 #     # # assets
 #     # simple_image_assets = models.ManyToManyField(
 #     #     SimpleImage,
 #     #     blank=True,
 #     # )
-#     #
+#
 #     # simple_document_assets = models.ManyToManyField(
 #     #     SimpleDocument,
 #     #     blank=True,
 #     # )
-#     #
+#
 #     # simple_audio_assets = models.ManyToManyField(
 #     #     SimpleAudio,
 #     #     blank=True,
 #     # )
-#     #
+#
 #     # simple_video_assets = models.ManyToManyField(
 #     #     SimpleVideo,
 #     #     blank=True,
@@ -183,6 +189,7 @@
 #     def type(self):
 #         return "Story"
 #
+#     # FIXME account for organization and participant filtering
 #     # def copy_story(self):
 #     #     """ Create a copy of a story for a partner organization in a network.
 #     #
@@ -216,13 +223,13 @@
 #     #     story_copy.save()
 #     #
 #     #     return story_copy
-#     #
+#
 #     # def get_story_download(self):
 #     #     """Return rst formatted string for downloading story meta."""
 #     #
 #     #     # loop over m2m and get the values as string
 #     #     team = self.team.all()
-#     #     team = [user.credit_name for user in team]
+#     #     team = [participant.credit_name for participant in team]
 #     #     team = ",".join(team)
 #     #
 #     #     share_with = self.share_with.all()
@@ -265,72 +272,72 @@
 #     #     sharedate=self.share_with_date, sharewith=share_with, shareready=self.ready_to_share,
 #     #     collaborate=self.collaborate, collaboratewith=collaborate_with, archived=self.archived)
 #     #     return story_download
-#     #
+#
 #     # # formerly get_story_team
 #     # def get_story_team_vocab(self):
-#     #     """Return queryset with org users and users from collaboration orgs for a story.
-#     #     Used in selecting credit and editors for a facet.
+#     #     """Return queryset with org participants and participants from collaboration orgs for a story.
+#     #     Used in selecting credit and editors for a item.
 #     #     """
 #     #
-#     #     from . import User
+#     #     from . import Participant
 #     #     # TODO future: add contractors added to a story
 #     #     collaborators = self.collaborate_with.all()
-#     #     story_team = User.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators)))
+#     #     story_team = Participant.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators)))
 #     #     return story_team
-#     #
+#
 #     # def get_story_images(self):
 #     #     """Return all the images associated with a story."""
 #     #
 #     #     story_images = []
-#     #     for facet in self.facet_set.all():
-#     #         images = facet.get_facet_images()
+#     #     for item in self.item_set.all():
+#     #         images = item.get_item_images()
 #     #         story_images.extend(images)
 #     #     return story_images
-#     #
+#
 #     # def get_story_documents(self):
 #     #     """Return all documents associated with a story."""
 #     #
 #     #     story_documents = []
-#     #     for facet in self.facet_set.all():
-#     #         documents = facet.get_facet_documents()
+#     #     for item in self.item_set.all():
+#     #         documents = item.get_item_documents()
 #     #         story_documents.extend(documents)
 #     #     return story_documents
-#     #
+#
 #     # def get_story_audio(self):
 #     #     """Return all audio associated with a story."""
 #     #
 #     #     story_audio = []
-#     #     for facet in self.facet_set.all():
-#     #         audio = facet.get_facet_audio()
+#     #     for item in self.item_set.all():
+#     #         audio = item.get_item_audio()
 #     #         story_audio.extend(audio)
 #     #     return story_audio
-#     #
+#
 #     # def get_story_video(self):
 #     #     """ Return all video associated with a story."""
 #     #
 #     #     story_video = []
-#     #     for facet in self.facet_set.all():
-#     #         video = facet.get_facet_video()
+#     #     for item in self.item_set.all():
+#     #         video = item.get_item_video()
 #     #         story_video.extend(video)
 #     #     return story_video
+#
+#     # def get_story_items(self):
+#     #     """Return all existing items associated with a story."""
 #     #
-#     # def get_story_facets(self):
-#     #     """Return all existing facets associated with a story."""
+#     #     return self.item_set.all()
 #     #
-#     #     return self.facet_set.all()
-#     #
-#     #     # {% for facet in story.get_story_facets %}
-#     #     #    <a href="{{ facet.get_absolute_url }}">{{ facet.name }}</a>
+#     #     # {% for item in story.get_story_items %}
+#     #     #    <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
 #     #     # {% endfor %}
-#     #
-#     # def get_story_facets_schedule(self):
-#     #     """Return deadlines of a story and its facets.
+#
+#     # def get_story_items_schedule(self):
+#     #     """Return deadlines of a story and its items.
 #     #     Used for inclusion with project schedules.
 #     #
 #     #     Includes:
 #     #     story_share_date
-#     #     facet due_edit
-#     #     facet run_date
+#     #     item due_edit
+#     #     item run_date
 #     #     """
 #     #
 #     #     data = []
@@ -357,46 +364,46 @@
 #     #
 #     #         data.append(shared_story_dict)
 #     #
-#     #     # gather schedule dates for all story facets
-#     #     if story.facet_set.all():
-#     #         for facet in story.facet_set.all():
-#     #             if facet.due_edit:
-#     #                 facet_edit_dict = {}
+#     #     # gather schedule dates for all story items
+#     #     if story.item_set.all():
+#     #         for item in story.item_set.all():
+#     #             if item.due_edit:
+#     #                 item_edit_dict = {}
 #     #
-#     #                 item_date = facet.due_edit
+#     #                 item_date = item.due_edit
 #     #
-#     #                 facet_edit_dict['id'] = facet.id
-#     #                 facet_edit_dict['title'] = facet.name
-#     #                 facet_edit_dict['due_edit'] = item_date.isoformat()
-#     #                 facet_edit_dict['url'] = facet.get_absolute_url()
-#     #                 facet_edit_dict['start'] = item_date.isoformat()
-#     #                 facet_edit_dict['end'] = item_date.isoformat()
-#     #                 facet_edit_dict['overlap'] = True
-#     #                 facet_edit_dict['all_day'] = False
-#     #                 facet_edit_dict['backgroundColor'] = '#FFA000'
-#     #                 facet_edit_dict['textColor'] = 'fff'
-#     #                 facet_edit_dict['class'] = "calevent"
+#     #                 item_edit_dict['id'] = item.id
+#     #                 item_edit_dict['title'] = item.name
+#     #                 item_edit_dict['due_edit'] = item_date.isoformat()
+#     #                 item_edit_dict['url'] = item.get_absolute_url()
+#     #                 item_edit_dict['start'] = item_date.isoformat()
+#     #                 item_edit_dict['end'] = item_date.isoformat()
+#     #                 item_edit_dict['overlap'] = True
+#     #                 item_edit_dict['all_day'] = False
+#     #                 item_edit_dict['backgroundColor'] = '#FFA000'
+#     #                 item_edit_dict['textColor'] = 'fff'
+#     #                 item_edit_dict['class'] = "calevent"
 #     #
-#     #                 data.append(facet_edit_dict)
+#     #                 data.append(item_edit_dict)
 #     #
-#     #             if facet.run_date:
-#     #                 facet_run_dict = {}
+#     #             if item.run_date:
+#     #                 item_run_dict = {}
 #     #
-#     #                 item_date = facet.run_date
+#     #                 item_date = item.run_date
 #     #
-#     #                 facet_run_dict['id'] = facet.id
-#     #                 facet_run_dict['title'] = facet.name
-#     #                 facet_run_dict['run_date'] = item_date.isoformat()
-#     #                 facet_run_dict['url'] = facet.get_absolute_url()
-#     #                 facet_run_dict['start'] = item_date.isoformat()
-#     #                 facet_run_dict['end'] = item_date.isoformat()
-#     #                 facet_run_dict['overlap'] = True
-#     #                 facet_run_dict['all_day'] = False
-#     #                 facet_run_dict['backgroundColor'] = '#7CB342'
-#     #                 facet_run_dict['textColor'] = 'fff'
-#     #                 facet_run_dict['class'] = "calevent"
+#     #                 item_run_dict['id'] = item.id
+#     #                 item_run_dict['title'] = item.name
+#     #                 item_run_dict['run_date'] = item_date.isoformat()
+#     #                 item_run_dict['url'] = item.get_absolute_url()
+#     #                 item_run_dict['start'] = item_date.isoformat()
+#     #                 item_run_dict['end'] = item_date.isoformat()
+#     #                 item_run_dict['overlap'] = True
+#     #                 item_run_dict['all_day'] = False
+#     #                 item_run_dict['backgroundColor'] = '#7CB342'
+#     #                 item_run_dict['textColor'] = 'fff'
+#     #                 item_run_dict['class'] = "calevent"
 #     #
-#     #                 data.append(facet_run_dict)
+#     #                 data.append(item_run_dict)
 #     #
 #     #     return data
 #     #
@@ -496,8 +503,8 @@
 #     #
 #     #     Includes:
 #     #     story_share_date
-#     #     facet due_edit
-#     #     facet run_date
+#     #     item due_edit
+#     #     item run_date
 #     #     event event_date
 #     #     task due_date
 #     #     """
@@ -526,46 +533,46 @@
 #     #
 #     #         data.append(shared_story_dict)
 #     #
-#     #     # gather schedule dates for all story facets
-#     #     if story.facet_set.all():
-#     #         for facet in story.facet_set.all():
-#     #             if facet.due_edit:
-#     #                 facet_edit_dict = {}
+#     #     # gather schedule dates for all story items
+#     #     if story.item_set.all():
+#     #         for item in story.item_set.all():
+#     #             if item.due_edit:
+#     #                 item_edit_dict = {}
 #     #
-#     #                 item_date = facet.due_edit
+#     #                 item_date = item.due_edit
 #     #
-#     #                 facet_edit_dict['id'] = facet.id
-#     #                 facet_edit_dict['title'] = facet.name
-#     #                 facet_edit_dict['due_edit'] = item_date.isoformat()
-#     #                 facet_edit_dict['url'] = facet.get_absolute_url()
-#     #                 facet_edit_dict['start'] = item_date.isoformat()
-#     #                 facet_edit_dict['end'] = item_date.isoformat()
-#     #                 facet_edit_dict['overlap'] = True
-#     #                 facet_edit_dict['all_day'] = False
-#     #                 facet_edit_dict['backgroundColor'] = '#FFA000'
-#     #                 facet_edit_dict['textColor'] = 'fff'
-#     #                 facet_edit_dict['class'] = "calevent"
+#     #                 item_edit_dict['id'] = item.id
+#     #                 item_edit_dict['title'] = item.name
+#     #                 item_edit_dict['due_edit'] = item_date.isoformat()
+#     #                 item_edit_dict['url'] = item.get_absolute_url()
+#     #                 item_edit_dict['start'] = item_date.isoformat()
+#     #                 item_edit_dict['end'] = item_date.isoformat()
+#     #                 item_edit_dict['overlap'] = True
+#     #                 item_edit_dict['all_day'] = False
+#     #                 item_edit_dict['backgroundColor'] = '#FFA000'
+#     #                 item_edit_dict['textColor'] = 'fff'
+#     #                 item_edit_dict['class'] = "calevent"
 #     #
-#     #                 data.append(facet_edit_dict)
+#     #                 data.append(item_edit_dict)
 #     #
-#     #             if facet.run_date:
-#     #                 facet_run_dict = {}
+#     #             if item.run_date:
+#     #                 item_run_dict = {}
 #     #
-#     #                 item_date = facet.run_date
+#     #                 item_date = item.run_date
 #     #
-#     #                 facet_run_dict['id'] = facet.id
-#     #                 facet_run_dict['title'] = facet.name
-#     #                 facet_run_dict['run_date'] = item_date.isoformat()
-#     #                 facet_run_dict['url'] = facet.get_absolute_url()
-#     #                 facet_run_dict['start'] = item_date.isoformat()
-#     #                 facet_run_dict['end'] = item_date.isoformat()
-#     #                 facet_run_dict['overlap'] = True
-#     #                 facet_run_dict['all_day'] = False
-#     #                 facet_run_dict['backgroundColor'] = '#7CB342'
-#     #                 facet_run_dict['textColor'] = 'fff'
-#     #                 facet_run_dict['class'] = "calevent"
+#     #                 item_run_dict['id'] = item.id
+#     #                 item_run_dict['title'] = item.name
+#     #                 item_run_dict['run_date'] = item_date.isoformat()
+#     #                 item_run_dict['url'] = item.get_absolute_url()
+#     #                 item_run_dict['start'] = item_date.isoformat()
+#     #                 item_run_dict['end'] = item_date.isoformat()
+#     #                 item_run_dict['overlap'] = True
+#     #                 item_run_dict['all_day'] = False
+#     #                 item_run_dict['backgroundColor'] = '#7CB342'
+#     #                 item_run_dict['textColor'] = 'fff'
+#     #                 item_run_dict['class'] = "calevent"
 #     #
-#     #                 data.append(facet_run_dict)
+#     #                 data.append(item_run_dict)
 #     #
 #     #     # gather schedule dates for all story events
 #     #     if story.event_set.all():

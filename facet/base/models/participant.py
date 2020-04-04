@@ -80,6 +80,7 @@ class Participant(AbstractUser):
     #     blank=True,
     # )
 
+    # FIXME Pilkit install
     # photo = models.ImageField(
     #     upload_to='participants',
     #     blank=True,

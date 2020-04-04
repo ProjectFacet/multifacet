@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+# from .sub_newsorganization import NewsOrganizationSubscription
+# from .sub_freelance import FreelanceSubscription
+
+admin.site.register(NewsOrganizationSubscription)
+admin.site.register(FreelanceSubscription)
