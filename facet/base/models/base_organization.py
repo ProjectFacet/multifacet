@@ -1,34 +1,29 @@
 from django.db import models
+from django.dispatch import receiver
 
-from base.models import Participant
-
+from .participant import Participant
 from .entity_owner import EntityOwner
 from .anchor import Anchor
 from .partner import Partner
 from .network_member import NetworkMember
-
-from editorial.models import Project, Story, Item, ItemTemplate, ContentLicense
-from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
-from task.models import Task
-from event.models import Event
 from note.models import Note
-from discussion.models import Discussion
+
 
 class BaseOrganization(models.Model):
     """ Abstract of an Organization.
     """
 
     participant_owner = models.ForeignKey(
-        'Participant',
+        Participant,
         help_text='Participant who created/owns this organization.',
         null=True,
         on_delete = models.SET_NULL,
     )
 
-    entity_owner_profile = models.OneToOneField(EntityOwner, on_delete=models.CASCADE)
-    anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
-    partner_profile = models.OneToOneField(Partner, on_delete=models.CASCADE)
-    network_member_profile = models.OneToOneField(NetworkMember, on_delete=models.CASCADE)
+    entity_owner_profile = models.OneToOneField(EntityOwner, null=True, on_delete=models.SET_NULL)
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
+    partner_profile = models.OneToOneField(Partner, null=True, on_delete=models.SET_NULL)
+    network_member_profile = models.OneToOneField(NetworkMember, null=True, on_delete=models.SET_NULL)
 
     name = models.CharField(
         max_length=250,
@@ -55,12 +50,12 @@ class BaseOrganization(models.Model):
     )
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
     # simple assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
+    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
+    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
+    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
 
     # --------------------------------
     # Logos and Cover Images

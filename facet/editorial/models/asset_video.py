@@ -35,7 +35,7 @@ class BaseVideo(BaseAsset):
 class VideoAssetManager(models.Manager):
     """Custom manager for VideoAsset."""
 
-    def create_videoasset(self, participantowner, entity_owner, title, description, attribution, video, asset_type):
+    def create_videoasset(self, participant_owner, entity_owner, title, description, attribution, video, asset_type):
         """Method for quick creation of a video asset."""
         videoasset=self.create(participant_owner=participant_owner, entity_owner=entity_owner, title=title, description=description, attribution=attribution, video=video, asset_type=asset_type)
         return videoasset
@@ -64,7 +64,6 @@ class VideoAsset(BaseVideo, BaseAssetMetadata):
     # TODO to be populated automatically
     file_type = models.CharField(
         max_length=10,
-        choices = FILE_TYPE_CHOICES,
         help_text='The file extension'
     )
 

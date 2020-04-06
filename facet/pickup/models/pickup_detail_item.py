@@ -1,7 +1,7 @@
 from django.db import models
 
-from base.models import Participant, Partner, EntityOwner
-from editorial.models import Story, Item, DocumentAsset, ImageAsset, AudioAsset, VideoAsset
+from base.models import Partner, EntityOwner
+from editorial.models import Item
 
 
 class ItemPickupDetailManager(models.Manager):
@@ -19,25 +19,53 @@ class ItemPickupDetail(models.Model):
     original_entity_owner = models.OneToOneField(
         EntityOwner,
         help_text = 'Entity that originally made the item available.',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    original_entity_owner_name = models.CharField(
+        max_length=300,
+        help_text='Name of original entity.'
     )
 
     original_item = models.ForeignKey(
         Item,
         help_text='ID of original instance of the item.',
         related_name='original_item_detail',
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
-    partner = models.ManyToManyField(
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    original_item_name = models.CharField(
+        max_length=300,
+        help_text='Name of original item.'
+    )
+
+    partner = models.OneToOneField(
         Partner,
         related_name='item_pickup_partner',
         help_text='Partner picking up the item.',
-        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    partner_name = models.CharField(
+        max_length=300,
+        help_text='Name of partner.'
     )
 
     partner_item = models.ForeignKey(
         Item,
         help_text='The new version of the item saved by the partner organization.',
         related_name='item_pickup',
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     pickup_date = models.DateTimeField(

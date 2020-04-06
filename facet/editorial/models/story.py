@@ -6,22 +6,10 @@ from django.db import models
 from datetime import datetime
 import time
 
-from base.models import Participant, EntityOwner, Partner, NetworkMember
-from entity.models import NewsOrganization, NewsOrganizationNetwork
-from discussion.models import Discussion, Comment
-from task.models import Task
-from event.models import Event
+from base.models import Participant, Anchor, EntityOwner, Partner
 from note.models import Note
-from .asset_image import ImageAsset, SimpleImage
-from .asset_document import DocumentAsset, SimpleDocument
-from .asset_audio import AudioAsset, SimpleAudio,
-from .asset_video import VideoAsset, SimpleVideo,
 from .project import Project
-from .item import Item
-from .item_template import ItemTemplate
-from .content_license import ContentLicense
-from .tag import Tag
-
+#
 
 class Story(models.Model):
     """The unit of a story.
@@ -31,7 +19,7 @@ class Story(models.Model):
     The story also controls the sensitivity and embargo status of the content.
     """
 
-    anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
 
     #ownership
     participant_owner = models.OneToOneField(
@@ -57,7 +45,7 @@ class Story(models.Model):
     # connection to participants participating in a story
     team = models.ManyToManyField(
         Participant,
-        related_name='team_member',
+        related_name='story_team_members',
         help_text='Contributing participant.',
         blank=True,
     )
@@ -129,7 +117,7 @@ class Story(models.Model):
 
     collaborate_with = models.ManyToManyField(
         Partner,
-        related_name='collaboration_partners',
+        related_name='story_collaboration_partners',
         help_text='Partner profiles selected to have collaborative access.',
         blank=True,
     )
@@ -141,12 +129,12 @@ class Story(models.Model):
 
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
     # assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
+    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
+    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
+    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
 
     class Meta:
         verbose_name = 'Story'

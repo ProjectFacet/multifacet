@@ -13,15 +13,15 @@ class BaseImage(BaseAsset):
     # type name for search system
     type = "Image"
 
-    image = models.ImageField(
-        upload_to='photos',
-        blank=True,
-    )
-
-    display_images = ImageSpecField(
-        source='images',
-        format='JPEG',
-    )
+    # image = models.ImageField(
+    #     upload_to='photos',
+    #     blank=True,
+    # )
+    #
+    # display_images = ImageSpecField(
+    #     source='images',
+    #     format='JPEG',
+    # )
 
     class Meta:
         abstract = True
@@ -58,7 +58,6 @@ class ImageAsset(BaseImage, BaseAssetMetadata):
     # TODO to be populated automatically
     file_type = models.CharField(
         max_length=10,
-        choices = FILE_TYPE_CHOICES,
         help_text='The file extension'
     )
 

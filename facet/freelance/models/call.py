@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
-from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from entity.models import NewsOrganization
+from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo, Tag
 
 
 class Call(models.Model):
@@ -13,13 +13,13 @@ class Call(models.Model):
     """
 
     owner = models.ForeignKey(
-        'FreelanceManager',
+        FreelanceManager,
         help_text='Freelance Manager that owns this call.',
         on_delete = models.CASCADE,
     )
 
     organization = models.ForeignKey(
-        'NewsOrganization',
+        NewsOrganization,
         help_text='Organization that is making this call.',
         on_delete = models.CASCADE,
     )

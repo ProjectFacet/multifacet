@@ -2,8 +2,8 @@ from django.contrib import admin
 
 # from .discussion import Discussion
 # from .comment import Comment
-# from .directmessage import DirectMessageExchange, DirectMessage
-
+# from .directmessage_exchange import DirectMessageExchange
+# from .message import DirectMessage
 
 # admin.site.register(Discussion)
 # admin.site.register(Comment)

@@ -25,7 +25,7 @@ class BaseDocumentAsset(BaseAsset):
 class DocumentAssetManager(models.Manager):
     """Custom manager for DocumentAsset."""
 
-    def create_documentasset(self, participantowner, entity_owner, title, description, attribution, document, asset_type):
+    def create_documentasset(self, participant_owner, entity_owner, title, description, attribution, document, asset_type):
         """Method for quick creation of a document asset."""
         documentasset=self.create(participant_owner=participant_owner, entity_owner=entity_owner, title=title, description=description, attribution=attribution, document=document, asset_type=asset_type)
         return documentasset
@@ -60,7 +60,6 @@ class DocumentAsset(BaseDocumentAsset, BaseAssetMetadata):
     # TODO to be populated automatically
     file_type = models.CharField(
         max_length=10,
-        choices = FILE_TYPE_CHOICES,
         help_text='The file extension'
     )
 

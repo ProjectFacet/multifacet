@@ -1,10 +1,9 @@
 from django.db import models
 from django.db.models import Q
 
+from base.models import Participant, Anchor, EntityOwner
 from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
-from editorial.models import Project, Story
-from base.models import Participant, Anchor
-from entity.models import NewsOrganization
+from note.models import Note
 
 #-----------------------------------------------------------------------#
 #  TASK
@@ -21,7 +20,7 @@ class Task(models.Model):
     - anchor field because they are connected to Project, Story, Event
     """
 
-    anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
 
     participant_owner = models.OneToOneField(
         Participant,
@@ -40,6 +39,7 @@ class Task(models.Model):
     # object this is bound to
     anchor = models.OneToOneField(
         Anchor,
+        related_name='task_anchor',
         null=True,
         on_delete=models.SET_NULL,
         help_text='The anchor object',
@@ -108,7 +108,7 @@ class Task(models.Model):
     )
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
 
     # simple assets
     simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)

@@ -25,16 +25,9 @@ a Discussion, seeing and contributing comments.
 """
 
 from django.db import models
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 
-from base.models import Participant, Anchor
-from entity.models import NewsOrganization, NewsOrganizationNetwork
-from editorial.models import Project, Story, Item
-from task.models import Task
-from note.models import Note
-from event.models import Event
-from freelance.models import Pitch, Assignment
+from base.models import Anchor
+
 
 class DiscussionManager(models.Manager):
     """ Custom manager for discussions."""
@@ -45,15 +38,14 @@ class DiscussionManager(models.Manager):
         return discussion
 
 
-@python_2_unicode_compatible
 class Discussion(models.Model):
     """ Container class for Comments."""
 
     # default value is 'main'
     # for story, item, task, event, pitch, assignment only have one channel
     channel = models.CharField(
-        max_length=250
-        help_text='Name of specific discussion.'
+        max_length=250,
+        help_text='Name of specific discussion.',
     )
 
     # Relation to anchor object:
@@ -62,7 +54,6 @@ class Discussion(models.Model):
     anchor = models.OneToOneField(
         Anchor,
         on_delete=models.CASCADE,
-        related_name='anchor_object',
         help_text='The anchor object',
     )
 
@@ -102,7 +93,7 @@ class Discussion(models.Model):
     )
 
     class Meta:
-        unique_together = ['channel', 'content_object']
+        unique_together = ['channel', 'anchor']
         ordering = ['-creation_date']
 
     objects = DiscussionManager()

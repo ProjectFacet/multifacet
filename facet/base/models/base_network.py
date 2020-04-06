@@ -4,7 +4,8 @@ from .participant import Participant
 from .entity_owner import EntityOwner
 from .anchor import Anchor
 from .partner import Partner
-from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
+from .network_member import NetworkMember
+from note.models import Note
 
 class BaseNetwork(models.Model):
     """A group of organizations, partipants +
@@ -22,16 +23,17 @@ class BaseNetwork(models.Model):
     )
 
     # Entity that owns this network (optional)
-    entity_owner = ForeignKey(
+    entity_owner = models.ForeignKey(
         EntityOwner,
+        related_name='network_owner',
         help_text='Entity that owns this network.',
         null=True,
         on_delete = models.SET_NULL,
     )
 
-    entity_owner_profile = models.OneToOneField(EntityOwner, on_delete=models.CASCADE)
-    anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
-    partner_profile = models.OneToOneField(Partner, on_delete=models.CASCADE)
+    entity_owner_profile = models.OneToOneField(EntityOwner, null=True, on_delete=models.SET_NULL)
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
+    partner_profile = models.OneToOneField(Partner, null=True, on_delete=models.SET_NULL)
 
     name = models.CharField(
         max_length=350,
@@ -61,12 +63,12 @@ class BaseNetwork(models.Model):
     # )
 
 
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
     # simple assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
+    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
+    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
+    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
 
     class Meta:
         abstract = True

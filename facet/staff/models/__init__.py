@@ -1,1 +1,1 @@
-# from .journalist_staff import StaffJournalist
+from .journalist_staff import StaffJournalist

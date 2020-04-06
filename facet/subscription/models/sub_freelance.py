@@ -1,7 +1,5 @@
 from django.db import models
 
-from entity.models import NewsOrganization
-from base.models import Participant
 from freelance.models import FreelanceJournalist
 
 

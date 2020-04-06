@@ -1,9 +1,6 @@
 from django.db import models
 
-from entity.models import NewsOrganization
-from .entity_owner import EntityOwner
 from base.models import BaseNetwork, NetworkMember
-from editorial.models import Project, Story, Item
 
 class NewsOrganizationNetwork(BaseNetwork):
     """A group of organizations.
@@ -22,7 +19,7 @@ class NewsOrganizationNetwork(BaseNetwork):
 
     members = models.ManyToManyField(
         NetworkMember,
-        related_name='network_newsorganization',
+        related_name='network_members',
     )
 
     class Meta:

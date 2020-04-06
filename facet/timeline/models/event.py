@@ -1,11 +1,9 @@
 from django.db import models
 from django.db.models import Q
 
+from base.models import Participant, Anchor, EntityOwner
+from note.models import Note
 from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
-from editorial.models import Project, Story
-from base.models import Participant
-from entity.models import NewsOrganization
-from . import User, Organization, Project, Story
 
 
 class Event(models.Model):
@@ -19,7 +17,7 @@ class Event(models.Model):
     - anchor field because they are connected to Project, Story, Event
     """
 
-    anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
 
     participant_owner = models.OneToOneField(
         Participant,
@@ -38,6 +36,7 @@ class Event(models.Model):
     # object this is bound to
     anchor = models.OneToOneField(
         Anchor,
+        related_name='event_anchor',
         null=True,
         on_delete=models.SET_NULL,
         help_text='The anchor object',
@@ -76,10 +75,10 @@ class Event(models.Model):
     )
 
     team = models.ManyToManyField(
-        # There can be multiple users assigned to an event.
-        User,
-        related_name='eventteam',
-        help_text='The users assigned to an event.',
+        # There can be multiple participants assigned to an event.
+        Participant,
+        related_name='event_team',
+        help_text='The participants assigned to an event.',
         blank=True,
     )
 
@@ -100,7 +99,7 @@ class Event(models.Model):
     )
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
 
     # simple assets
     simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
@@ -119,32 +118,6 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('event_detail', kwargs={'pk': self.id})
 
-
-    def get_event_team_vocab(self):
-        """Return queryset with org users and users from collaborating orgs for the parent
-        of the event. Used in selecting assigned users for event team.
-        """
-
-        from . import User
-        # TODO future: add contractors
-
-        if self.evt_organization:
-            parent = self.evt_organization
-        elif self.project:
-            parent = self.project
-        elif self.story:
-            parent = self.story
-
-        if parent.type == "project" or "story":
-            collaborators = parent.collaborate_with.all()
-            owner = parent.organization
-            event_vocab = User.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators) | Q(organization=owner)))
-        else:
-            event_vocab = self.organization.get_org_users()
-
-        return event_vocab
-
-
     @property
     def search_title(self):
         return self.name
@@ -157,16 +130,26 @@ class Event(models.Model):
     def description(self):
         return self.text
 
-    # def clean(self):
-    #     """Enforce that there is one relationship."""
+    # def get_event_team_vocab(self):
+    #     """Return queryset with org participants and participants from collaborating orgs for the parent
+    #     of the event. Used in selecting assigned participants for event team.
+    #     """
     #
-    #     super(Event, self).clean()
+    #     from . import Participant
+    #     # TODO future: add contractors
     #
-    #     count = (
-    #         (1 if self.evt_organization else 0) +
-    #         (1 if self.project else 0) +
-    #         (1 if self.story else 0)
-    #     )
+    #     if self.evt_organization:
+    #         parent = self.evt_organization
+    #     elif self.project:
+    #         parent = self.project
+    #     elif self.story:
+    #         parent = self.story
     #
-    #     if count != 1:
-    #         raise ValidationError("Events can only relate to one thing.")
+    #     if parent.type == "project" or "story":
+    #         collaborators = parent.collaborate_with.all()
+    #         owner = parent.organization
+    #         event_vocab = Participant.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators) | Q(organization=owner)))
+    #     else:
+    #         event_vocab = self.organization.get_org_participants()
+    #
+    #     return event_vocab

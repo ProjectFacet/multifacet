@@ -30,7 +30,7 @@ class BaseAudio(BaseAsset):
 class AudioAssetManager(models.Manager):
     """Custom manager for AudioAsset."""
 
-    def create_audioasset(self, participantowner, entity_owner, title, description, attribution, audio, asset_type):
+    def create_audioasset(self, participant_owner, entity_owner, title, description, attribution, audio, asset_type):
         """Method for quick creation of a audio asset."""
         audioasset=self.create(participant_owner=participant_owner, entity_owner=entity_owner, title=title, description=description, attribution=attribution, audio=audio, asset_type=asset_type)
         return audioasset
@@ -59,7 +59,6 @@ class AudioAsset(BaseAudio, BaseAssetMetadata):
     # TODO to be populated automatically
     file_type = models.CharField(
         max_length=10,
-        choices = FILE_TYPE_CHOICES,
         help_text='The file extension'
     )
 

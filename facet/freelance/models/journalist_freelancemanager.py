@@ -1,12 +1,12 @@
 from django.db import models
 
-from participant.models import Participant
+from base.models import Participant
 
 class FreelanceManager(models.Model):
     """A team user who manages contract talent."""
 
     participant = models.OneToOneField(
-        'Participant',
+        Participant,
         on_delete=models.CASCADE,
     )
 

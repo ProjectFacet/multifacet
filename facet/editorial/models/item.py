@@ -5,9 +5,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # from simple_history.models import HistoricalRecords
 
-from base.models import Participant, EntityOwner, Partner, NetworkMember
-from entity.NewsOrganization import NewsOrganization
-from discussion.models import Discussion, Comment
+from base.models import Participant, EntityOwner, Anchor
+from entity.models import NewsOrganization
 from .story import Story
 from .item_template import ItemTemplate
 from .content_license import ContentLicense
@@ -31,7 +30,7 @@ class Item(models.Model):
     """
 
     # populated automatically
-    anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
 
     participant_owner = models.OneToOneField(
         Participant,
@@ -90,7 +89,6 @@ class Item(models.Model):
         related_name='item_editor',
         help_text='The full participant name(s) to be listed as the editor(s) for the item.',
         blank=True,
-        on_delete = models.SET_NULL,
     )
 
     credit = models.ManyToManyField(
@@ -102,7 +100,7 @@ class Item(models.Model):
 
     team = models.ManyToManyField(
         Participant,
-        related_name='team_member',
+        related_name='item_team_member',
         help_text='Contributing participant.',
         blank=True,
     )
@@ -149,7 +147,13 @@ class Item(models.Model):
         null=True,
     )
 
-    tags = models.ManyToManyField('Tag', blank=True)
+    content_license = models.ForeignKey(
+        ContentLicense,
+        null=True,
+        on_delete = models.SET_NULL,
+    )
+
+    tags = models.ManyToManyField(Tag, blank=True)
 
     # assets
     image_assets = models.ManyToManyField('ImageAsset', blank=True)
@@ -163,8 +167,6 @@ class Item(models.Model):
     # ------------------------#
     # optional fields
     # ------------------------#
-
-    contentlicense = GenericRelation(ContentLicense)
 
     update_note  = models.TextField(
         help_text='Text commenting regarding any updates or corrections made to the item.',

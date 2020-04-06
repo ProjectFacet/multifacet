@@ -1,6 +1,5 @@
 from django.db import models
 
-from participant.models import StaffJournalist
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from entity.models import NewsOrganization
@@ -18,14 +17,14 @@ class FreelancerAffiliationRecord(models.Model):
     """
 
     organization = models.ForeignKey(
-        'NewsOrganization',
+        NewsOrganization,
         on_delete = models.CASCADE,
     )
 
     # FIXME Update to allow for newsrooms to keep historical records even if a
     # freelancer has deactivated/deleted their account
     freelancer = models.ForeignKey(
-        'FreelanceJournalist',
+        FreelanceJournalist,
         on_delete = models.CASCADE,
     )
 
@@ -67,7 +66,7 @@ class FreelancerAffiliationRecord(models.Model):
     )
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
 
     def __str__(self):
         return "{organization} - {freelancer}".format(
@@ -107,17 +106,17 @@ class OrganizationAffiliationRecord(models.Model):
     """
 
     organization = models.ForeignKey(
-        'NewsOrganization',
+        NewsOrganization,
         on_delete = models.CASCADE,
     )
 
     freelancer = models.ForeignKey(
-        'FreelanceJournalist',
+        FreelanceJournalist,
         on_delete = models.CASCADE,
     )
 
     contacts = models.ManyToManyField(
-        'TalentEditor',
+        FreelanceManager,
         related_name='affilation_contact',
         help_text='News Organization Freelance Managers freelancer works with.',
         blank=True,
@@ -134,7 +133,7 @@ class OrganizationAffiliationRecord(models.Model):
     )
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
 
     def __str__(self):
         return "{organization} - {freelancer}".format(

@@ -2,27 +2,29 @@ from django.db import models
 
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
+from entity.models import NewsOrganization
+from editorial.models import Project, Story, Item
 from .call import Call
 from .pitch import Pitch
-from entity.models import NewsOrganization
-
+from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
+from note.models import Note
 
 class Assignment(models.Model):
     """The details of an assignment to a freelancer from an organization."""
 
     freelancer = models.ForeignKey(
-        'FreelanceJournalist',
+        FreelanceJournalist,
         on_delete = models.CASCADE,
     )
 
     editor = models.ForeignKey(
-        'TalentEditor',
+        FreelanceManager,
         help_text='Editor responsible for this assignment.',
         on_delete = models.CASCADE,
     )
 
     organization = models.ForeignKey(
-        'NewsOrganization',
+        NewsOrganization,
         help_text='Organization that owns this assignment.',
         on_delete = models.CASCADE,
     )
@@ -46,8 +48,16 @@ class Assignment(models.Model):
     # OR an assignment can be connected to a specific item, giving the freelancer
     # access to only that item of the story.
     # The story or item could be an existing one or newly created through the assignment.
+    project = models.ForeignKey(
+        Project,
+        on_delete = models.SET_NULL,
+        help_text='Which project is this assignment related to?',
+        blank=True,
+        null=True,
+    )
+
     story = models.ForeignKey(
-        'Story',
+        Story,
         on_delete = models.SET_NULL,
         help_text='Which story is this assignment related to?',
         blank=True,
@@ -55,7 +65,7 @@ class Assignment(models.Model):
     )
 
     item = models.ForeignKey(
-        'Item',
+        Item,
         on_delete = models.SET_NULL,
         help_text='Which item is this assignment related to?',
         blank=True,
@@ -63,7 +73,7 @@ class Assignment(models.Model):
     )
 
     call = models.ForeignKey(
-        'Call',
+        Call,
         on_delete = models.SET_NULL,
         help_text='If this assignment is related to a call, which one?',
         blank=True,
@@ -71,7 +81,7 @@ class Assignment(models.Model):
     )
 
     pitch = models.ForeignKey(
-        'Pitch',
+        Pitch,
         on_delete = models.SET_NULL,
         help_text='If this assignment is related to a pitch, which one?',
         blank=True,
@@ -99,7 +109,7 @@ class Assignment(models.Model):
     )
 
     # notes
-    notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField(Note, blank=True)
 
     # simple assets
     simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)

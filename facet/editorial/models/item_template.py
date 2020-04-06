@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 # from simple_history.models import HistoricalRecords
 
-from base.models import Participant, EntityOwner, Partner, NetworkMember
+from base.models import Participant, EntityOwner
 
 class ItemTemplate(models.Model):
     """Template for items.
@@ -64,7 +64,7 @@ class ItemTemplate(models.Model):
 
     class Meta:
         ordering = ['id']
-        unique_together = ['name', 'content_object']
+        unique_together = ['name', 'entity_owner']
 
     def __str__(self):
         return self.name

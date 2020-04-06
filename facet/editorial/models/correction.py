@@ -1,5 +1,6 @@
 from django.db import models
 
+from base.models import Participant, Anchor
 
 class Correction(models.Model):
     """Correction issued for story or item.
@@ -11,7 +12,7 @@ class Correction(models.Model):
     corrected_content = models.OneToOneField(
         Anchor,
         on_delete=models.CASCADE,
-        related_name='anchor_object',
+        related_name='correction_anchor_object',
         help_text='The anchor object',
     )
 
@@ -43,7 +44,7 @@ class Correction(models.Model):
 
     priority = models.CharField(
         max_length=25,
-        choices=CORRECTION_PRIORITY,
+        choices=CORRECTION_PRIORITY_CHOICES,
         help_text='Correction urgency.',
         default='LOW',
     )

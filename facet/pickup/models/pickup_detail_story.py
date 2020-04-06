@@ -1,7 +1,8 @@
 from django.db import models
 
-from base.models import Participant, Partner, EntityOwner
-from editorial.models import Story, Item, DocumentAsset, ImageAsset, AudioAsset, VideoAsset
+from base.models import Partner, EntityOwner
+from editorial.models import Story
+
 
 class StoryPickupDetailManager(models.Manager):
     """Custom manager to create pickup records for stories. """
@@ -15,32 +16,60 @@ class StoryPickupDetailManager(models.Manager):
 class StoryPickupDetail(models.Model):
     """ The details of each pickup of a story.
 
-    Each time an organization elects to pickup a shared facet, query to see if the
+    Each time an organization elects to pickup a shared item, query to see if the
     story has already been copied over. If not, pickup the story to the new organization.
     """
+
 
     original_entity_owner = models.OneToOneField(
         EntityOwner,
         help_text = 'Entity that originally made the story available.',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    original_entity_owner_name = models.CharField(
+        max_length=300,
+        help_text='Name of original entity.'
     )
 
     original_story = models.ForeignKey(
         Story,
         help_text='ID of original instance of the story.',
         related_name='original_story_detail',
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
-    partner = models.ManyToManyField(
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    original_story_name = models.CharField(
+        max_length=300,
+        help_text='Name of original story.'
+    )
+
+    partner = models.OneToOneField(
         Partner,
-        related_name='story_pickup_partner',
         help_text='Partner picking up the story.',
-        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    partner_name = models.CharField(
+        max_length=300,
+        help_text='Name of partner.'
     )
 
     partner_story = models.ForeignKey(
         Story,
         help_text='ID of the new instance of the story saved by the pickup partner.',
         related_name='story_pickup',
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     pickup_date = models.DateTimeField(

@@ -1,5 +1,6 @@
 from django.db import models
 
+from base.models import Participant, Anchor
 
 class Update(models.Model):
     """Update issued for story or item.
@@ -15,7 +16,7 @@ class Update(models.Model):
     updated_content = models.OneToOneField(
         Anchor,
         on_delete=models.CASCADE,
-        related_name='anchor_object',
+        related_name='update_anchor_object',
         help_text='The anchor object',
     )
 

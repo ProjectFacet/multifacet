@@ -1,29 +1,21 @@
 from django.db import models
 
-from base.models import Participant, Anchor
+from base.models import Participant
+# from base.models import EntityOwner
 
-
-class NoteManager(modfels.Manager):
+class NoteManager(models.Manager):
     """Custom manager for notes."""
 
-    def create_note(self, owner, title, text, note_type, important):
+    def create_note(self, participant_owner, entity_owner, title, text, note_type, important):
         """Method for quick creation of a note."""
-        note = self.create(owner=owner, title=title, text=text, note_type=note_type, important=important)
+        note = self.create(participant_owner=participant_owner, entity_owner=entity_owner, title=title, text=text, note_type=note_type, important=important)
         return note
 
 
 class Note(models.Model):
     """ Basic note."""
 
-    # object this is bound to
-    anchor = models.OneToOneField(
-        Anchor,
-        on_delete=models.CASCADE,
-        related_name='anchor_object',
-        help_text='The anchor object',
-    )
-
-    creator = models.ForeignKey(
+    participant_owner = models.ForeignKey(
         Participant,
         help_text = 'Participant who created the note.',
         null = True,
@@ -33,7 +25,7 @@ class Note(models.Model):
     # set entity owner for notes associated with orgs, networks, projects, stories
     # so that note persists should the participant leave the platform
     entity_owner = models.OneToOneField(
-        EntityOwner,
+        'base.EntityOwner',
         help_text = 'Entity that owns this.',
         null = True,
         on_delete = models.SET_NULL,
@@ -57,33 +49,6 @@ class Note(models.Model):
         default=False,
         help_text='Mark as important for pinning to top of notes',
     )
-
-    # FIXME Not sure there is utility for this
-    # Choices for Note Type
-    # ORGANIZATION = 'ORG'
-    # NETWORK = 'NET'
-    # USER = 'USER'
-    # PROJECT = 'PRO'
-    # STORY = 'STO'
-    # TASK = 'TSK'
-    # EVENT = 'EV'
-    #
-    # NOTE_TYPE_CHOICES = (
-    #     (ORGANIZATION, 'Organization'),
-    #     (NETWORK, 'Network'),
-    #     (USER, 'Participant'),
-    #     (PROJECT, 'Project'),
-    #     (STORY, 'Story'),
-    #     (TASK, 'Task'),
-    #     (EVENT, 'Event'),
-    # )
-    #
-    # # to simplify querying/filtering for notes
-    # note_type = models.CharField(
-    #     max_length=25,
-    #     choices=NOTE_TYPE_CHOICES,
-    #     help_text='The kind of object this note is for.'
-    # )
 
     objects = NoteManager()
 

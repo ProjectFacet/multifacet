@@ -1,7 +1,7 @@
 from django.db import models
 
-from base.models import Participant, Partner, EntityOwner
-from editorial.models import Story, Item, DocumentAsset, ImageAsset, AudioAsset, VideoAsset
+from base.models import Partner, EntityOwner
+from editorial.models import VideoAsset
 
 
 class VideoPickupDetailManager(models.Manager):
@@ -14,30 +14,57 @@ class VideoPickupDetailManager(models.Manager):
 
 
 class VideoPickupDetail(models.Model):
-    """ The details of each pickup of an VideoAsset."""
+    """The details of each pickup of an VideoAsset."""
 
     original_entity_owner = models.OneToOneField(
         EntityOwner,
-        help_text = 'Entity that originally made the item available.',
+        help_text = 'Entity that originally made the video available.',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    original_entity_owner_name = models.CharField(
+        max_length=300,
+        help_text='Name of original entity.'
     )
 
     original_videoasset = models.ForeignKey(
         VideoAsset,
         help_text='Original instance of the videoasset',
         related_name='original_videoasset_detail',
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
-    partner = models.ManyToManyField(
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    original_videoasset_name = models.CharField(
+        max_length=300,
+        help_text='Title of original video.'
+    )
+
+    partner = models.OneToOneField(
         Partner,
-        related_name='item_pickup_partner',
-        help_text='Partner picking up the item.',
-        blank=True,
+        help_text='Partner picking up the story.',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    # To capture name of entity in the event the entity records are deleted.
+    # FIXME Better ways to manage this data integrity component?
+    partner_name = models.CharField(
+        max_length=300,
+        help_text='Name of partner.'
     )
 
     partner_videoasset = models.ForeignKey(
         VideoAsset,
-        help_text='The copied instance of the videoasset saved by the partner organization.',
+        help_text='The copied version of the videoasset saved by the partner organization.',
         related_name='videoasset_pickup',
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     pickup_date = models.DateTimeField(
@@ -45,7 +72,7 @@ class VideoPickupDetail(models.Model):
         help_text='Datetime when pickup was made.',
     )
 
-    objects = VideoAssetPickupDetailManager()
+    objects = VideoPickupDetailManager()
 
     def __str__(self):
         return "Pickup info for {pickup_partner} \'s pickup of videoasset: {videoasset}".format(

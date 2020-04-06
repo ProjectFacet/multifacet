@@ -12,9 +12,7 @@ from django.dispatch import receiver
 # from imagekit.models import ImageSpecField
 # from pilkit.processors import SmartResize
 
-# from .partner import Partner
-# from .anchor import Anchor
-# from note.models import Note
+from .partner import Partner
 
 
 class Participant(AbstractUser):
@@ -24,11 +22,9 @@ class Participant(AbstractUser):
     """
 
     # for inclusion in collaborations
-    # partner_profile = models.OneToOneField(Partner, on_delete=models.CASCADE)
-    # for association of notes
-    # anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
+    partner_profile = models.OneToOneField(Partner, null=True, on_delete=models.SET_NULL)
     # notes
-    # notes = models.ManyToManyField('Note', blank=True)
+    notes = models.ManyToManyField('note.Note', blank=True)
 
     display_name = models.CharField(
         max_length=100,

@@ -1,14 +1,7 @@
 from django.db import models
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 
-from base.models import Participant, Anchor
-from entity.models import NewsOrganization, NewsOrganizationNetwork
-from editorial.models import Project, Story, Item
-from task.models import Task
-from note.models import Note
-from event.models import Event
-from freelance.models import Pitch, Assignment
+from base.models import Participant
+from .discussion import Discussion
 
 
 class CommentManager(models.Manager):

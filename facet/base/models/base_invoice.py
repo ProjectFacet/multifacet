@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class BaseInvoice(models.Model):
     """Invoice for freelance assignment(s)"""
 
@@ -13,7 +14,6 @@ class BaseInvoice(models.Model):
     )
 
     total_due = models.IntegerField(
-        max_length=100,
         help_text='Total value of the invoice.',
     )
 
@@ -51,10 +51,10 @@ class BaseInvoice(models.Model):
     )
 
     # simple assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
+    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
+    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
+    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
 
     class Meta:
         abstract = True

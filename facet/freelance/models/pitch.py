@@ -3,19 +3,19 @@ from django.db import models
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from .call import Call
-from entity.models import NewsOrganization
+from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
 
 
 class Pitch(models.Model):
     """ Pitches for content from a freelancer to a news organization."""
 
     freelancer = models.ForeignKey(
-        'FreelanceJournalist',
+        FreelanceJournalist,
         on_delete = models.CASCADE,
     )
 
     recipient = models.ForeignKey(
-        'FreelanceManager',
+        FreelanceManager,
         help_text='Freelance Manager being pitched.',
         on_delete = models.SET_NULL,
         blank=True,
@@ -23,7 +23,7 @@ class Pitch(models.Model):
     )
 
     call = models.ForeignKey(
-        'Call',
+        Call,
         help_text='Call if pitch is in response to a call.',
         on_delete = models.SET_NULL,
         blank=True,

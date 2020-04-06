@@ -24,12 +24,12 @@ class StaffJournalist(models.Model):
     """
 
     participant = models.OneToOneField(
-        'Participant',
+        Participant,
         on_delete=models.CASCADE,
     )
 
     newsorganization = models.ForeignKey(
-        'NewsOrganization',
+        NewsOrganization,
         blank=True,
         null=True,
         on_delete=models.SET_NULL,

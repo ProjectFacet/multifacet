@@ -28,7 +28,7 @@ class NetworkMember(models.Model):
     member_type = models.CharField(
         max_length=250,
         choices=MEMBER_TYPE_CHOICES,
-        help_text='What kind of entity it is.'
+        help_text='What kind of member it is.'
     )
 
     member_name = models.CharField(

@@ -6,22 +6,23 @@ from entity.models import NewsOrganization
 
 from base.models import BaseInvoice
 
+
 class FreelanceInvoice(BaseInvoice):
     """Invoice for freelance assignment(s)"""
 
     freelancer = models.ForeignKey(
-        'FreelanceJournalist',
+        FreelanceJournalist,
         on_delete = models.CASCADE,
     )
 
     manager = models.ForeignKey(
-        'FreelanceManager',
+        FreelanceManager,
         help_text='Manager responsible for this assignment.',
         on_delete = models.CASCADE,
     )
 
     organization = models.ForeignKey(
-        'NewsOrganization',
+        NewsOrganization,
         help_text='Organization that owns this assignment.',
         on_delete = models.CASCADE,
     )

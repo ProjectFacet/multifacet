@@ -1,6 +1,6 @@
 from django.db import models
 
-from participant.models import Participant
+from base.models import Participant
 
 class FreelanceJournalist(models.Model):
     """A Participant who is a freelancer.
@@ -10,7 +10,7 @@ class FreelanceJournalist(models.Model):
     """
 
     participant = models.OneToOneField(
-        'Participant',
+        Participant,
         on_delete=models.CASCADE,
     )
 

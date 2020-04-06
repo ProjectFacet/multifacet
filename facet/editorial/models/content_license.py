@@ -1,5 +1,8 @@
 from django.db import models
 
+from base.models import EntityOwner
+
+
 class ContentLicense(models.Model):
     """Content License for items.
 
