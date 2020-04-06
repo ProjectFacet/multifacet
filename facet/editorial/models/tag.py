@@ -13,10 +13,6 @@ class Tag(models.Model):
     VideoAsset
     """
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey('content_type', 'object_id')
-
     text = models.CharField(
         max_length=150,
         help_text = 'Simple tag to find and collect content.',
@@ -29,3 +25,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.text
+
+    @property
+    def type(self):
+        return "Tag"

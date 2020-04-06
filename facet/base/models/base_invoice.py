@@ -50,26 +50,11 @@ class BaseInvoice(models.Model):
         blank=True,
     )
 
-    # assets
-    # simple_image_assets = models.ManyToManyField(
-    #     SimpleImage,
-    #     blank=True,
-    # )
-    #
-    # simple_document_assets = models.ManyToManyField(
-    #     SimpleDocument,
-    #     blank=True,
-    # )
-    #
-    # simple_audio_assets = models.ManyToManyField(
-    #     SimpleAudio,
-    #     blank=True,
-    # )
-    #
-    # simple_video_assets = models.ManyToManyField(
-    #     SimpleVideo,
-    #     blank=True,
-    # )
+    # simple assets
+    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
+    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
+    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
+    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
 
     class Meta:
         abstract = True

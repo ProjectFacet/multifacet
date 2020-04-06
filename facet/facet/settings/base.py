@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'engagement.apps.EngagementConfig',
     'pickup.apps.PickupConfig',
     'dei.apps.DeiConfig',
+    'pavilion.apps.PavilionConfig',
+    'glassbreak.apps.GlassbreakConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

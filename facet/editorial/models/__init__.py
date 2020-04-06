@@ -8,3 +8,5 @@
 # from .asset_video import VideoAsset, SimpleVideo,
 # from .tag import Tag
 # from .content_license import ContentLicense
+# from .correction import Correction
+# from .update import Update

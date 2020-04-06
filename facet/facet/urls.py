@@ -21,5 +21,7 @@ urlpatterns = [
     path('engagement/', include('engagement.urls')),
     path('pickup/', include('pickup.urls')),
     path('dei/', include('dei.urls')),
+    path('pavilion/', include('pavilion.urls')),
+    path('glassbreak/', include('glassbreak.urls')),
     path('admin/', admin.site.urls),
 ]

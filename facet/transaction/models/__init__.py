@@ -1,1 +1,1 @@
-# from .pickup_detail_story import ClientProfile
+# from .profile_client import ClientProfile

@@ -10,6 +10,8 @@ from django.contrib import admin
 # from .asset_video import VideoAsset, SimpleVideo,
 # from .tag import Tag
 # from .content_license import ContentLicense
+# from .correction import Correction
+# from .update import Update
 
 
 # admin.site.register(Project)
@@ -26,3 +28,5 @@ from django.contrib import admin
 # admin.site.register(SimpleVideo)
 # admin.site.register(Tag)
 # admin.site.register(ContentLicense)
+# admin.site.register(Correction)
+# admin.site.register(Update)

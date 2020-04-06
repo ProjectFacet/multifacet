@@ -12,12 +12,23 @@ from django.dispatch import receiver
 # from imagekit.models import ImageSpecField
 # from pilkit.processors import SmartResize
 
+# from .partner import Partner
+# from .anchor import Anchor
+# from note.models import Note
+
 
 class Participant(AbstractUser):
     """Participant.
 
     The basic profile of a participant on the platform.
     """
+
+    # for inclusion in collaborations
+    # partner_profile = models.OneToOneField(Partner, on_delete=models.CASCADE)
+    # for association of notes
+    # anchor_profile = models.OneToOneField(Anchor, on_delete=models.CASCADE)
+    # notes
+    # notes = models.ManyToManyField('Note', blank=True)
 
     display_name = models.CharField(
         max_length=100,
@@ -74,11 +85,6 @@ class Participant(AbstractUser):
         help_text='Array of participant skills and beats to filter/search by.',
         blank=True,
     )
-
-    # notes = models.ManyToManyField(
-    #     'Note',
-    #     blank=True,
-    # )
 
     # FIXME Pilkit install
     # photo = models.ImageField(
