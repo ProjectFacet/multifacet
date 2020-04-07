@@ -1,5 +1,15 @@
 from django.db import models
 
+class NetworkMemberManager(models.Manager):
+    """Custom manager for EntityOwner."""
+
+    def create_network_member_record(self, member_type, member_name, member_id):
+        """Method that takes in type, name and id for quick access."""
+
+        network_member = self.create(member_type=member_type, member_name=member_name, member_id=member_id)
+        return network_member
+
+
 class NetworkMember(models.Model):
     """Connection between different types of entities participating in a network.
 
@@ -15,7 +25,7 @@ class NetworkMember(models.Model):
     so the members field is a many2Many with NetworkMember allowing for any
     model with a member_profile FK to be included.
 
-    This allows for consistency across multiple kinds of Network Members.
+    This allows for consistency across multiple kinds of NetworkMembers.
     """
 
     # Choices for Member Type
@@ -37,6 +47,8 @@ class NetworkMember(models.Model):
     )
 
     member_id = models.PositiveIntegerField()
+
+    objects = NetworkMemberManager()
 
     class Meta:
         verbose_name = 'Member Profile'

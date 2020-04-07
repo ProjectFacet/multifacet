@@ -1,5 +1,15 @@
 from django.db import models
 
+class PartnerManager(models.Manager):
+    """Custom manager for Partner."""
+
+    def create_partner_record(self, partner_type, partner_name, partner_id):
+        """Method that takes in type, name and id for quick access."""
+
+        partner = self.create(partner_type=partner_type, partner_name=partner_name, partner_id=partner_id)
+        return partner
+
+
 class Partner(models.Model):
     """Facilitates inclusion of multiple kinds of entities as partners in
     collaborate_with M2M field on projects, stories, etc.
@@ -47,6 +57,8 @@ class Partner(models.Model):
     )
 
     partner_id = models.PositiveIntegerField()
+
+    objects = PartnerManager()
 
     class Meta:
         verbose_name = 'Partner Profile'

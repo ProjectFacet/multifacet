@@ -32,60 +32,32 @@ from base.models import Anchor
 class DiscussionManager(models.Manager):
     """ Custom manager for discussions."""
 
-    def create_discussion(self, discussion_type):
+    def create_discussion(self, discussion_type, anchor, channel):
         """ Method for quick creation of a discussion."""
-        discussion = self.create(discussion_type=discussion_type, content_object=anchor, channel=channel)
+        discussion = self.create(anchor=anchor, channel=channel)
         return discussion
 
 
 class Discussion(models.Model):
-    """ Container class for Comments."""
+    """ Container class for Comments.
 
-    # default value is 'main'
-    # for story, item, task, event, pitch, assignment only have one channel
+    Standard value for channel is 'main' for models that only
+    get one channel: Story, Item, Task, Event, Pitch, Assignment.
+
+    The anchor connects the discussion to another object:
+    Organization, Network, Project, Story, Item,
+    Task, Event, Pitch, Assignment.
+    """
+
     channel = models.CharField(
         max_length=250,
         help_text='Name of specific discussion.',
     )
 
-    # Relation to anchor object:
-    # Organization, Network, Project, Story, Item
-    # Task, Event, Pitch, Assignment
     anchor = models.OneToOneField(
         Anchor,
         on_delete=models.CASCADE,
         help_text='The anchor object',
-    )
-
-    # Choices for Discussion type
-    ORGANIZATION = 'ORGANIZATION'
-    NETWORK = 'NETWORK'
-    DIRECT = 'DIRECT'
-    PROJECT = 'PROJECT'
-    STORY = 'STORY'
-    ITEM = 'ITEM'
-    TASK = 'TASK'
-    EVENT = 'EVENT'
-    PITCH = 'PITCH'
-    ASSIGNMENT = 'ASSIGNMENT'
-
-    DISCUSSION_TYPE_CHOICES = (
-        (ORGANIZATION, 'Organization Discussion'),
-        (NETWORK, 'Network Discussion'),
-        (DIRECT, 'Direct Discussion'),
-        (PROJECT, 'Project Discussion'),
-        (STORY, 'Story Discussion'),
-        (ITEM, 'Item Discussion'),
-        (TASK, 'Task Discussion'),
-        (EVENT, 'Event Discussion'),
-        (PITCH, 'Pitch Discussion'),
-        (ASSIGNMENT, 'Assignment Discussion'),
-    )
-
-    discussion_type = models.CharField(
-        max_length=25,
-        choices=DISCUSSION_TYPE_CHOICES,
-        help_text='What kind of discussion it is.'
     )
 
     creation_date = models.DateTimeField(

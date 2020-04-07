@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from base.models import BaseOrganization
 from base.models import Participant
@@ -37,7 +39,7 @@ class NewsOrganization(BaseOrganization):
     )
 
     # Profile fields
-    NONPROFIT = 'Nonprofit - 501C3'
+    NONPROFIT = 'Nonprofit - 501c3'
     FOR_PROFIT = 'For profit'
     B_CORP = 'B Corp'
     COOPERATIVE = 'Cooperative'
@@ -664,15 +666,41 @@ class NewsOrganization(BaseOrganization):
     #     return ItemTemplate.objects.filter(Q(organization_id__isnull=True) | Q(organization=self) & Q(is_active=True))
 
 
-
-
-# @receiver(post_save, sender=Organization)
-# def add_discussion(sender, instance, **kwargs):
-#     from . import Discussion
-#     from . import NewsOrganizationPublicProfile
-#
-#     if not instance.discussion:
-#         instance.discussion = Discussion.objects.create_discussion("ORG")
-#     if not instance.public_profile:
-#         instance.public_profile = NewsOrganizationPublicProfile.objects.create_public_profile()
-#         instance.save()
+@receiver(post_save, sender=NewsOrganization)
+def create_org_meta(sender, instance, created, **kwargs):
+    # Make a new NewsOrganization
+    if created:
+        # Create an EntityOwner record
+        instance.entity_owner_profile = EntityOwner.objects.create_entity_owner_record(
+            owner_type = 'NEWSORGANIZATION',
+            owner_name = instance.name,
+            owner_id = instance.id,
+        )
+        # Create a NetworkMember record
+        instance.network_member_profile = NetworkMember.objects.create_network_member_record(
+            member_type = 'NEWSORGANIZATION',
+            member_name = instance.name,
+            member_id = instance.id,
+        )
+        # Create an Anchor record
+        instance.anchor_profile = Anchor.objects.create_anchor_record(
+            anchor_type = 'NEWSORGANIZATION',
+            anchor_name = instance.name,
+            anchor_id = instance.id,
+        )
+        # Create Partner record
+        instance.partner_profile = Partner.objects.create_partner_record(
+            partner_type = 'NEWSORGANIZATION',
+            partner_name = instance.name,
+            partner_id = instance.id,
+        )
+        # Save Instance before adding Discussion
+        instance.save()
+        # Create Discussion, channel = 'main'
+        # Retrieve instance anchor_profile
+        main_discussion = Discussion.objects.create_discussion(
+            anchor=instance.anchor_profile,
+            channel='Main',
+        )
+        # Final Save
+        instance.save()

@@ -1,5 +1,15 @@
 from django.db import models
 
+class AnchorManager(models.Manager):
+    """Custom manager for Anchor."""
+
+    def create_anchor_record(self, anchor_type, anchor_name, anchor_id):
+        """Method that takes in type, name and id for quick access."""
+
+        anchor = self.create(anchor_type=anchor_type, anchor_name=anchor_name, anchor_id=anchor_id)
+        return anchor
+
+
 class Anchor(models.Model):
     """Connection between different anchors that objects can be connected to.
 
@@ -54,6 +64,8 @@ class Anchor(models.Model):
     )
 
     anchor_id = models.PositiveIntegerField()
+
+    objects = AnchorManager()
 
     class Meta:
         verbose_name = 'Anchor Profile'

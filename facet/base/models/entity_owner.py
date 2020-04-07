@@ -1,5 +1,15 @@
 from django.db import models
 
+class EntityOwnerManager(models.Manager):
+    """Custom manager for EntityOwner."""
+
+    def create_entity_owner_record(self, owner_type, owner_name, owner_id):
+        """Method that takes in type, name and id for quick access."""
+
+        entity_owner = self.create(owner_type=owner_type, owner_name=owner_name, owner_id=owner_id)
+        return entity_owner
+
+
 class EntityOwner(models.Model):
     """Connection between different types of entities and objects they own.
 
@@ -39,6 +49,8 @@ class EntityOwner(models.Model):
     )
 
     owner_id = models.PositiveIntegerField()
+
+    objects = EntityOwnerManager()
 
     class Meta:
         verbose_name = 'Entity Owner Profile'
