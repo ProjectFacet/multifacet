@@ -23,5 +23,6 @@ urlpatterns = [
     # path('dei/', include('dei.urls')),
     # path('pavilion/', include('pavilion.urls')),
     # path('glassbreak/', include('glassbreak.urls')),
+    # path('formation/', include('formation.urls')),
     path('admin/', admin.site.urls),
 ]

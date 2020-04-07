@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'dei.apps.DeiConfig',
     'pavilion.apps.PavilionConfig',
     'glassbreak.apps.GlassbreakConfig',
+    'formation.apps.FormationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
