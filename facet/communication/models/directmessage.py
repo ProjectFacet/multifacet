@@ -14,7 +14,7 @@ class DirectMessageManager(models.Manager):
         return message
 
 
-class DirectMessage(models.Manager):
+class DirectMessage(models.Model):
     """Messages in a direct message exhange."""
 
     # FIXME Should message delete if a participant is deleted?
@@ -59,6 +59,6 @@ class DirectMessage(models.Manager):
             date=date,
         )
 
-    @property
-    def type(self):
-        return "Direct Message"
+    # @property
+    # def type(self):
+    #     return "Direct Message"

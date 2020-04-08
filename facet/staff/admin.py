@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-# from .journalist_staff import StaffJournalist
+from .models import StaffJournalist
 
-# admin.site.register(StaffJournalist)
+admin.site.register(StaffJournalist)
