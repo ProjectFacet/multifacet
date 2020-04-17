@@ -3,26 +3,27 @@
 
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
-    # path('base/', include('base.urls')),
-    # path('editorial/', include('editorial.urls')),
-    # path('entity/', include('entity.urls')),
-    # path('freelance/', include('freelance.urls')),
-    # path('staff/', include('staff.urls')),
-    # path('subscription/', include('subscription.urls')),
-    # path('transaction/', include('transaction.urls')),
-    # path('task/', include('task.urls')),
-    # path('timeline/', include('timeline.urls')),
-    # path('social/', include('social.urls')),
-    # path('note/', include('note.urls')),
-    # path('data/', include('data.urls')),
-    # path('engagement/', include('engagement.urls')),
-    # path('pickup/', include('pickup.urls')),
-    # path('dei/', include('dei.urls')),
-    # path('pavilion/', include('pavilion.urls')),
-    # path('glassbreak/', include('glassbreak.urls')),
-    # path('formation/', include('formation.urls')),
+    path('', include('base.urls')),
+    # path('', include('editorial.urls')),
+    # path('', include('entity.urls')),
+    # path('', include('freelance.urls')),
+    # path('', include('staff.urls')),
+    # path('', include('subscription.urls')),
+    # path('', include('transaction.urls')),
+    # path('', include('task.urls')),
+    # path('', include('timeline.urls')),
+    # path('', include('social.urls')),
+    # path('', include('note.urls')),
+    # path('', include('data.urls')),
+    # path('', include('engagement.urls')),
+    # path('', include('pickup.urls')),
+    # path('', include('dei.urls')),
+    # path('', include('pavilion.urls')),
+    # path('', include('glassbreak.urls')),
+    # path('', include('formation.urls')),
     path('admin/', admin.site.urls),
+    url(r'^accounts/', include('allauth.urls')),
 ]

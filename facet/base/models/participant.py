@@ -99,3 +99,9 @@ class Participant(AbstractUser):
         verbose_name = 'Participant'
         verbose_name_plural = 'Participants'
         ordering = ['credit_name']
+
+
+    @property
+    def initials(self):
+        "Return's participant's initials based on their credit_name."
+        return ''.join( [ letter[0] for letter in self.credit_name.split() ] )

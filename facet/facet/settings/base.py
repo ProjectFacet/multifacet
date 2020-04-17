@@ -8,7 +8,7 @@ import os
 
 # Directories used in these settings files
 SETTINGS_DIR = os.path.dirname(__file__)
-PROJECT_DIR = os.path.abspath(SETTINGS_DIR + "/../..")
+PROJECT_DIR = os.path.abspath(SETTINGS_DIR + "/..")
 GIT_DIR = os.path.abspath(PROJECT_DIR + "/..")
 
 
@@ -52,6 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -62,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'facet.urls'
@@ -69,7 +75,8 @@ ROOT_URLCONF = 'facet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(PROJECT_DIR, "templates")],
+        'DIRS': [(os.path.join(PROJECT_DIR, 'templates')),],
+        # 'DIRS': [os.path.join(PROJECT_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,20 +124,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Email
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
+# Email
 SERVER_EMAIL = DEFAULT_FROM_EMAIL = "collaborate@projectfacet.org"
 
 # Email these people when errors happen on production sites
-
 ADMINS = [
     ('Heather', 'heather@projectfacet.org'),
 ]
 
-
 AUTH_USER_MODEL = 'base.Participant'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+LOGIN_REDIRECT_URL = 'base:dashboard'
+LOGOUT_REDIRECT_URL = 'base:dashboard'
 
-
+SITE_ID = 1
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

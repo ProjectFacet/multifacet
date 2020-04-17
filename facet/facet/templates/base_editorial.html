@@ -1,0 +1,881 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Facet</title>
+  <!-- Icon -->
+  <link rel="icon" href="img/facet.png" type="image/x-icon">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    .navbar {
+    z-index: 1040;
+    padding: .3rem 1rem;
+    }
+    .side-nav {
+    margin-top: 49px !important;
+    }
+    .double-nav .breadcrumb-dn p {
+      color: #fff;
+    }
+    .side-nav.wide.slim .sn-ad-avatar-wrapper a span {
+      display: none;
+    }
+
+    body {
+      /* background-color: #252932; */
+      background-color: #1C2331;
+      color: #fff;
+    }
+
+    main {
+      margin-top: 100px;
+    }
+
+    .mdb-skin .navbar .navbar-nav .nav-item .dropdown-menu .readmore-sublink a:hover {
+      text-decoration: none;
+      background-color: transparent !important;
+      color: #fff !important;
+    }
+
+    .initial-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      font-size: 14px;
+      color: white;
+      line-height: 35px;
+      text-align: center;
+      background: purple;
+    }
+
+  </style>
+  {% block head %}
+  <!-- Child Head Items -->
+  {% endblock %}
+</head>
+
+<body class="mdb-skin">
+
+  <!--Double navigation-->
+  <header class="mb-3">
+
+    {% if user.is_authenticated %}
+      <!-- Navbar -->
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-2">
+
+      <!-- Navbar brand -->
+      <li class="nav-item dropdown navbar-brand">
+        <a class="nav-link" data-toggle="dropdown"><img src="{% static 'img/bluestone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class=" font-weight-lighter ml-2">FACET</span></a>
+        <div class="dropdown-menu dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="base_editorial.html"><img src="{% static 'img/bluestone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class="text-white font-weight-lighter ml-2">Editorial</span></a>
+          <a class="dropdown-item" href="base_talent.html"><img src="{% static 'img/limestone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class="text-white font-weight-lighter ml-2">Talent</span></a>
+          <a class="dropdown-item" href="base_product.html"><img src="{% static 'img/purplestone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class="text-white font-weight-lighter ml-2">Product</span></a>
+          <a class="dropdown-item" href="base_community.html"><img src="{% static 'img/redstone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class="text-white font-weight-lighter ml-2">Community</span></a>
+          <a class="dropdown-item" href="base_pavilion.html"><img src="{% static 'img/whitestone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class="text-white font-weight-lighter ml-2">The Pavilion</span></a>
+          <!-- <a class="dropdown-item" href="#"><img src="img/orangestone.png" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"></a> -->
+        </div>
+      </li>
+      <!-- <a class="navbar-brand" href="#"><img src="img/facet.png" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"></a> -->
+
+      <!-- Collapse button -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2"
+        aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+          <!-- Dashboard -->
+          <li class="nav-item">
+            <a class="nav-link" id="navbarDropdownDashboard" aria-haspopup="true" aria-expanded="false">Dashboard
+            </a>
+          </li>
+          <!-- Organization -->
+          <li class="nav-item dropdown mega-dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownOrganization" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Organization
+            </a>
+            <div class="dropdown-menu mega-menu v-2 z-depth-1 mdb-color darken-1 py-5 px-3" aria-labelledby="navbarDropdownOrganization">
+              <div class="row">
+                <div class="col-md-6 col-xl-3 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Team <a href="participant_stafF_detail.html" title="See Team Detail" class="small grey-text float-right readmore-sublink  white-text-hover"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                    <div class="row">
+                      <div class="col-md-3">
+                        <img src="img/faces/face9.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face10.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face11.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face12.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face13.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face14.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face15.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face16.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face17.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face18.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face19.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face20.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face21.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face22.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face23.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                      <div class="col-md-3">
+                        <img src="img/faces/face24.jpg" class="rounded zoom img-fluid mt-2">
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Recent Notes <a href="organization_notes.html" title="See Organization Notes" class="small grey-text float-right readmore-sublink white-text-hover"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul  class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-star pl-1 pr-3 blue-grey-text"></i> Note Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-star pl-1 pr-3 yellow-text"></i> Note Name That's Longer
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-star pl-1 pr-3 blue-grey-text"></i> Note Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-star pl-1 pr-3 yellow-text"></i> Long Note Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-star pl-1 pr-3 yellow-text"></i> Note Name
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-md-0 mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Conversations <a href="#" title="See All Conversations" class="small grey-text float-right readmore-sublink white-text-hover"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comment pl-1 pr-3"></i>Announcements
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>General
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>Planning
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>Training
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>Events
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-0">
+                  <ul class="list-unstyled ml-5">
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Public Profile
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Manage Organization
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Organization Subscription
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Documentation
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- Content -->
+          <li class="nav-item dropdown mega-dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownContent" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Content
+            </a>
+            <div class="dropdown-menu mega-menu v-2 z-depth-1 mdb-color darken-1 py-5 px-3" aria-labelledby="navbarDropdownContent">
+              <div class="row">
+                <div class="col-md-6 col-xl-3 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Your Top Projects <a href="project_list.html" title="See Team Detail" class="small grey-text float-right readmore-sublink white-text-hover"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul  class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th pl-1 pr-3 white-text"></i> Corona Virus
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th pl-1 pr-3 white-text"></i> Youth Vote
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th pl-1 pr-3 white-text"></i> Climate Change
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th pl-1 pr-3 white-text"></i> Remote Work
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th pl-1 pr-3 white-text"></i> Student Loans
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Your Top Stories <a href="story_list.html" title="See All Stories" class="small grey-text float-right readmore-sublink"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th-large pl-1 pr-3"></i>Quis nostrud exercitation
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th-large pl-1 pr-3"></i>Duis aute irure dolor in
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th-large pl-1 pr-3"></i>Laboris nisi ut aliquip ex ea commodo consequat
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-th-large pl-1 pr-3"></i>Reprehenderit in voluptate
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-md-0 mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Collaborations <a href="collaborations_list.html" title="See All Organization Collaborations" class="small grey-text float-right readmore-sublink"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-network-wired pl-1 pr-3"></i>Active Projects
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-network-wired pl-1 pr-3"></i>Networks
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-network-wired pl-1 pr-3"></i>Available Content
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-network-wired pl-1 pr-3"></i>Open Collaborations
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-0">
+                  <ul class="list-unstyled ml-5">
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Story Budget
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Day Book
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Content Licenses
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Item Templates
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- Assets -->
+          <li class="nav-item dropdown mega-dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownAssets" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Assets</a>
+            <div class="dropdown-menu mega-menu v-2 z-depth-1 mdb-color darken-1 py-5 px-3"
+              aria-labelledby="navbarDropdownAssets">
+              <div class="row">
+                <div class="col-md-9 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Recent Media</h6>
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/1.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/2.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/3.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/4.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/5.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/6.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/7.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/8.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/9.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/10.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/11.jpg" alt="test" class="img-fluid"></div>
+                    <div class="col-sm-2 col-md-2 mb-2"><img src="img/demo/12.jpg" alt="test" class="img-fluid"></div>
+                  </div>
+                </div>
+                <div class="col-md-3 sub-menu mb-0">
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-image pl-1 pr-3"></i>Graphics
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-alt pl-1 pr-3"></i>Documents
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-audio pl-1 pr-3"></i>Audio
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-video pl-1 pr-3"></i>Video Embeds
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-photo-video pl-1 pr-3"></i>Internal Assets
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- Networks -->
+          <li class="nav-item dropdown mega-dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownNetworks" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Networks</a>
+            <div class="dropdown-menu mega-menu v-2 z-depth-1 mdb-color darken-1 py-5 px-3" aria-labelledby="navbarDropdownNetworks">
+              <div class="row">
+                <div class="col-md-6 col-xl-3 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Networks <a href="participant_staff_detail.html" title="See Team Detail" class="small grey-text float-right readmore-sublink"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-project-diagram pl-1 pr-3"></i>Network Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-project-diagram pl-1 pr-3"></i>Network Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-project-diagram pl-1 pr-3"></i>Network Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-project-diagram pl-1 pr-3"></i>Network Name
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="fas fa-project-diagram pl-1 pr-3"></i>Network Name
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Network Content <a href="participant_staff_detail.html" title="See All Network Stories" class="small grey-text float-right readmore-sublink"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-alt pl-1 pr-3"></i>Quis nostrud exercitation
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-alt pl-1 pr-3"></i>Duis aute irure dolor in
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-alt pl-1 pr-3"></i>Laboris nisi ut aliquip ex ea commodo consequat
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-alt pl-1 pr-3"></i>Reprehenderit in voluptate
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-file-alt pl-1 pr-3"></i>Esse cillum dolore eu fugiat nulla pariatur
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-md-0 mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold text-white">Conversations</h6>
+                  <ul class="list-unstyled">
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>[Name of Network] Conversation
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>[Name of Network] Conversation
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>[Name of Network] Conversation
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>[Name of Network] Conversation
+                      </a>
+                    </li>
+                    <li>
+                      <a class="menu-item pl-0" href="#!">
+                        <i class="far fa-comments pl-1 pr-3"></i>[Name of Network] Conversation
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 col-xl-3 sub-menu mb-0">
+                  <ul class="list-unstyled ml-5">
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Public Profile
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Manage Networks
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Create New Network
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Discover New Partners
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- People -->
+          <li class="nav-item dropdown mega-dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownPeople" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">People
+            </a>
+            <div class="dropdown-menu mega-menu v-2 z-depth-1 mdb-color darken-1 py-5 px-3" aria-labelledby="navbarDropdownPeople">
+              <div class="row">
+                <div class="col-md-9 sub-menu mb-xl-0 mb-4">
+                  <h6 class="sub-title font-weight-bold white-text">Organization Team <a href="#" title="See All Conversations" class="small grey-text float-right readmore-sublink white-text-hover"><i class="fas fa-long-arrow-alt-right mr-2"></i>See all</a></h6>
+                  <div class="row">
+                    <div class="col-md-1">
+                      <img src="img/faces/face1.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face2.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face3.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face4.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face5.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face6.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face7.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face8.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face9.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face10.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face11.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face12.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face13.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face14.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face15.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face16.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face17.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face18.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face19.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face20.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face21.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face22.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face23.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face24.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face1.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face2.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face3.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face4.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face5.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face6.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face7.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face8.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face9.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face10.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face11.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                    <div class="col-md-1">
+                      <img src="img/faces/face12.jpg" class="rounded zoom img-fluid mt-2">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 sub-menu mb-0">
+                  <ul class="list-unstyled ml-5">
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Partner Team Directory
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Manage Organization Participants
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="#!">
+                        Manage Community Participants
+                      </a>
+                    </li>
+                    <li class="">
+                      <a class="menu-item pl-1 mt-2 font-weight-bold" href="base_talent.html">
+                        Freelancers
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- Create New Content -->
+          <div class="dropdown">
+            <button type="button" data-toggle="dropdown" class="btn btn-info btn-sm ml-3" id="navbarDropdownNew"><i class="fas fa-plus mr-2"></i>Create</button></a>
+            <div class="dropdown-menu dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownNew">
+              <a class="dropdown-item" href="project_form.html"><span class="text-white font-weight-lighter ml-2"><i class="fas fa-plus mr-2"></i>New Project</span></a>
+              <a class="dropdown-item" href="sotry_form.html"><span class="text-white font-weight-lighter ml-2"><i class="fas fa-plus mr-2"></i>New Story</span></a>
+            </div>
+          </div>
+        </ul>
+        <!-- Links -->
+
+        <!-- Search form -->
+        <form class="form-inline">
+          <div class="md-form my-0">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          </div>
+        </form>
+
+        <!-- Right Side -->
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <!-- Inbox -->
+          <li class="nav-item">
+            <a class="nav-link waves-effect waves-light">1
+              <i class="fas fa-comment"></i>
+            </a>
+          </li>
+          <!-- Profile -->
+          {% if user.is_authenticated %}
+            {% if user.initials %}
+              <li class="nav-item avatar dropdown ml-3">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="initial-avatar">{{ user.initials }}</div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg-right dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item text-white" href="#">Profile</a>
+                  <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
+                  <a class="dropdown-item text-white" href="#">Password</a>
+                </div>
+              </li>
+            {% else %}
+              <li class="nav-item avatar dropdown ml-3">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0" alt="avatar image">
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg-right dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item text-white" href="#">Profile</a>
+                  <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
+                  <a class="dropdown-item text-white" href="#">Password</a>
+                </div>
+              </li>
+            {% endif %}
+          {% else %}
+            <a hef="/accounts/login/" title="Login"><button type="button" class="btn btn-outline-info waves-effect">Login</button></a>
+          {% endif %}
+        </ul>
+
+      </div>
+      <!-- Collapsible content -->
+
+      </nav>
+      <!-- Navbar -->
+    {% else %}
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark mdb-color darken-2">
+
+    <!-- Navbar brand -->
+    <li class="nav-item dropdown navbar-brand">
+      <a class="nav-link"><img src="{% static 'img/bluestone.png' %}" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"><span class=" font-weight-lighter ml-2">FACET</span></a>
+    </li>
+    <!-- <a class="navbar-brand" href="#"><img src="img/facet.png" class="img-fluid mw-100" style="width: 25px;" alt="Responsive image"></a> -->
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent2"
+      aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+
+      <!-- Right Side -->
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+        <a href="{% url 'account_login' %}" class="nav-link border border-light rounded">
+          <i class="fas fa-user mr-2"></i>Log In
+        </a>
+      </ul>
+
+    </div>
+    <!-- Collapsible content -->
+
+    </nav>
+    <!-- Navbar -->
+
+    {% endif %}
+
+
+
+
+  </header>
+  <!--/.Double navigation-->
+
+  <!--Main Layout-->
+  <main class="pl-5">
+    <!-- Messages -->
+    <div class="container-fluid">
+      {% block messages %}
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+              {% if message.tags == "success" %}
+                <div class="alert bg-success-100 fadeIn" role="alert">
+                  <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  <span class="f-r-8">{{ message }}</span>
+                  <a href="#" class="del-msg"></a>
+                </div>
+                {% elif message.tags == "error" %}
+                <div class="alert bg-danger-100 fadeIn" role="alert">
+                  <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  <span class="f-r-8">{{ message }}</span>
+                  <a href="#" class="del-msg"></a>
+                </div>
+                {% comment %}
+                <div class="alert bg-info-100 fadeIn" role="alert">
+                  <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                  </button>
+                  <span class="f-r-8">{{ message }}</span>
+                  <a href="#" class="del-msg"></a>
+                </div>
+                {% endcomment %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-message">
+        </div>
+        {% endif %}
+      {% endblock messages %}
+    </div>
+    <!-- Main Content -->
+    <div class="container-fluid">
+      {% block content %}
+      <!-- Child Template Content -->
+      {% endblock content %}
+    </div>
+  </main>
+  <!--Main Layout-->
+
+  <!-- jQuery -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+
+  <script src="{% static 'js/popper.min.js' %}"></script>
+
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+  <script src="{% static 'js/mdb.min.js' %}"></script>
+
+  <script src="{% static 'js/sidenav.js' %}"></script>
+
+  <script src="{% static 'js/.js' %}"></script>
+
+  <!-- Your custom scripts (optional) -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+    // SideNav Button Initialization
+      $(".button-collapse").sideNav({
+        slim: true,
+        showOverlay: false,
+        showCloseButton: false,
+      });
+    });
+  </script>
+
+  {# Don't change/remove this next line; used to show render times on staging. #}
+    <!-- RENDER_TIME -->
+
+</body>
+</html>
