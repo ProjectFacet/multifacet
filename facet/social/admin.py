@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import PlatformProfile, Website
+
+
+admin.site.register(PlatformProfile)
+admin.site.register(Website)

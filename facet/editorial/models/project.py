@@ -84,7 +84,6 @@ class Project(models.Model):
         help_text = 'Project website if applicable.'
     )
 
-
     # notes
     notes = models.ManyToManyField(Note, blank=True)
 

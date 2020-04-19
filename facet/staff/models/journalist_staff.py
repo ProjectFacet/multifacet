@@ -52,10 +52,6 @@ class StaffJournalist(models.Model):
         help_text='Type of staff journalist.'
     )
 
-    # social_profile = models.OneToOneField(
-    #     SocialProfile,
-    # )
-
     class Meta:
         verbose_name = 'Staff Journalist'
         verbose_name_plural = "Staff Journalists"

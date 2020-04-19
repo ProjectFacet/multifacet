@@ -33,6 +33,10 @@ class Partner(models.Model):
     Additional simple information is included on the record for easy access.
     """
 
+    # TODO Need for passthrough table to denote whether a partner is active for
+    # an organization. Need: When participant deletes there account, need to
+    # maintain data integrity regarding their involvement with content.
+
     # Choices for Partner Type
     PARTICIPANT = 'PARTICIPANT'
     NEWSORGANIZATION = 'NEWS ORGANIZATION'

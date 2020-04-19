@@ -1,9 +1,6 @@
 from django.shortcuts import render
 
 from braces.views import LoginRequiredMixin
-from django.conf import settings
-from django.core.mail import send_mail
-from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import UpdateView, DetailView, CreateView, View, TemplateView
 
@@ -24,7 +21,7 @@ from django.views.generic import UpdateView, DetailView, CreateView, View, Templ
 class LandingTemplateView(TemplateView):
     """Return static homepage for pre-login users."""
 
-    template_name = 'base/landing.html'
+    template_name = 'landing.html'
 
 
 #----------------------------------------------------------------------#
@@ -35,4 +32,4 @@ class LandingTemplateView(TemplateView):
 class DashboardTemplateView(LoginRequiredMixin, TemplateView):
     """ Returns participant's unique dashboard."""
 
-    template_name = 'base/dashboard.html'
+    template_name = 'dashboard.html'
