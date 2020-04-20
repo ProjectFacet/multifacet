@@ -12,21 +12,14 @@ from django.views.generic import UpdateView, DetailView, CreateView, View, Templ
 
 
 
-
-#----------------------------------------------------------------------#
-#   Initial View
-#----------------------------------------------------------------------#
-
 # This is the only general view that does not require login
 class LandingTemplateView(TemplateView):
-    """Return static homepage for pre-login users."""
+    """Landing page explaining Project Facet and guiding users to scenario
+    that is appropriate for their goals."""
 
     template_name = 'landing.html'
 
 
-#----------------------------------------------------------------------#
-#   Dashboard View
-#----------------------------------------------------------------------#
 
 # ACCESS: All users have access to dashboard
 class DashboardTemplateView(LoginRequiredMixin, TemplateView):
