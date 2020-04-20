@@ -1,0 +1,138 @@
+{% extends 'base_editorial.html' %}
+{% load i18n %}
+
+{% load static %}
+
+<!-------------------------------------------->
+<!--            Main Section                -->
+<!-------------------------------------------->
+
+{% block content %}
+
+<!-- Sidebar navigation -->
+<div id="slide-out" class="side-nav fixed wide mdb-color darken-3">
+  <ul class="custom-scrollbar">
+    <li>
+      <div class="logo-wrapper sn-ad-avatar-wrapper">
+        <a href="#" class="px-3"><span style="padding-left: -10px;">Unusually Long, Detailed and Descriptive Project Title</span></a>
+      </div>
+    </li>
+    <!-- Side navigation links -->
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-chevron-right"></i> Submit blog<i class="fas fa-angle-down rotate-icon"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> SL </span>
+                <span class="sv-normal">Submit listing</span></a>
+              </li>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> RF </span>
+                <span class="sv-normal">Registration form</span></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-hand-point-right"></i> Instruction<i class="fas fa-angle-down rotate-icon"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> FB </span>
+                <span class="sv-normal">For bloggers</span></a>
+              </li>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> FA </span>
+                <span class="sv-normal">For authors</span></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-eye"></i> About<i class="fas fa-angle-down rotate-icon"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> I </span>
+                <span class="sv-normal">Introduction</span></a>
+              </li>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> MM </span>
+                <span class="sv-normal">Monthly meetings</span></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Contact me<i class="fas fa-angle-down rotate-icon"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> F </span>
+                <span class="sv-normal">FAQ</span></a>
+              </li>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> W </span>
+                <span class="sv-normal">Write a message</span></a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li><a id="toggle" class="waves-effect"><i class="sv-slim-icon fas fa-angle-double-left"></i>Minimize menu</a>
+        </li>
+      </ul>
+    </li>
+    <!--/. Side navigation links -->
+  </ul>
+  <div class="sidenav-bg"></div>
+</div>
+<!--/. Sidebar navigation -->
+
+<!-- Sidebar Trigger -->
+<div class="container-fluid" style="margin-left: 80px;">
+<div class="float-left" id="sidenav-button">
+  <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+  <div class="col-6">
+    <h5>Details</h5>
+
+  </div>
+  <div class="col-6">
+    <h5>Discussion</h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <h5>Story Budget</h5>
+
+  </div>
+  <div class="col-6">
+    <h5>Calendar</h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <h5>Stories</h5>
+
+  </div>
+  <div class="col-6">
+    <h5>Story Media</h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <h5>Notes</h5>
+  </div>
+  <div class="col-6">
+    <h5>Project Assets</h5>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}
