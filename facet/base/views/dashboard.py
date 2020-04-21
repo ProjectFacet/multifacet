@@ -10,9 +10,7 @@ from django.views.generic import UpdateView, DetailView, CreateView, View, Templ
 # import forms
 
 
-
-
-# This is the only general view that does not require login
+# Index page of entire app projectfacet.com/
 class LandingTemplateView(TemplateView):
     """Landing page explaining Project Facet and guiding users to scenario
     that is appropriate for their goals."""
@@ -20,9 +18,21 @@ class LandingTemplateView(TemplateView):
     template_name = 'landing.html'
 
 
-
-# ACCESS: All users have access to dashboard
+# ACCESS: All logged in users have access to dashboard
 class DashboardTemplateView(LoginRequiredMixin, TemplateView):
-    """ Returns participant's unique dashboard."""
+    """ Returns participant's unique dashboard.
+
+    A freelancer gets their freelance dashboard.
+    A staff journalist will see their staff dashboard.
+    """
 
     template_name = 'dashboard.html'
+    participant = self.request.user
+
+    #If participant has a Staff Journalist profile
+    if participant.staffjournalist:
+        org = participant.staffjournalist.newsorganization
+
+
+
+    # If Participant has a Freelance profile
