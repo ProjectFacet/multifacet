@@ -27,12 +27,14 @@ class DashboardTemplateView(LoginRequiredMixin, TemplateView):
     """
 
     template_name = 'dashboard.html'
-    participant = self.request.user
 
-    #If participant has a Staff Journalist profile
-    if participant.staffjournalist:
-        org = participant.staffjournalist.newsorganization
+    def get_context_data(self):
+        participant = self.request.user
+
+        #If participant has a Staff Journalist profile
+        # if participant.staffjournalist:
+        #     org = participant.staffjournalist.newsorganization
 
 
 
-    # If Participant has a Freelance profile
+        # If Participant has a Freelance profile
