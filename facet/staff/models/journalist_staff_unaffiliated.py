@@ -12,15 +12,10 @@ from django.dispatch import receiver
 
 from entity.models import NewsOrganization
 from base.models import Participant
+from staff.models import StaffJournalist
 
-class StaffJournalist(models.Model):
-    """ A Staff Journalist.
-
-    A staff journalist can either be an admin or a general staff journalist and are
-    associated with a NewsOrganization. Most staff journalists can do most things.
-    An admin staff journalists can be a site owner, add new staff journalists,
-    create and manage networks and shift staff journalists from active
-    to inactive. A general staff journalist creates and collaborates on content.
+class UnaffiliatedStaffJournalist(models.Model):
+    """ A Staff Journalist whose organization is not on platform.
     """
 
     participant = models.OneToOneField(
@@ -28,33 +23,32 @@ class StaffJournalist(models.Model):
         on_delete=models.CASCADE,
     )
 
-    newsorganization = models.ForeignKey(
-        NewsOrganization,
+    # If converted to staff journalist, maintain connection
+    staffjournalist = models.ForeignKey(
+        StaffJournalist,
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
+        help_text = 'Account of Affiliated Staff Journalist',
     )
 
-    ADMIN = 'Admin'
-    EDITOR = 'Editor'
-    STAFF = 'Staff'
-    OTHER = 'Other'
-    STAFFJOURNALIST_TYPE_CHOICES = (
-        (ADMIN, 'Admin'),
-        (EDITOR, 'Editor'),
-        (STAFF, 'Staff'),
-        (OTHER, 'Other'),
+    # Collect name of news organization for later possible affiliation
+    newsorganization = models.CharField(
+        max_length=350,
+        blank=True,
+        help_text='Name of the off platform news organization.',
     )
 
-    staffjournalist_type = models.CharField(
-        max_length=25,
-        choices=STAFFJOURNALIST_TYPE_CHOICES,
-        help_text='Type of staff journalist.'
+    newsorganization_website = models.URLField(
+        max_length=500,
+        help_text='Link to news organization website.',
+        blank=True,
+        null=True,
     )
 
     class Meta:
-        verbose_name = 'Staff Journalist'
-        verbose_name_plural = "Staff Journalists"
+        verbose_name = 'Unaffiliated Staff Journalist'
+        verbose_name_plural = 'Unaffiliated Staff Journalists'
 
 
     def __str__(self):
@@ -65,9 +59,9 @@ class StaffJournalist(models.Model):
 
     @property
     def description(self):
-        org = self.newsorganization.name
+        org = self.newsorganization
 
-        return "{staff_journalist}, {title}, {org}".format(
+        return "{staff_journalist}, {title}, {org} (Organization Not on Platform)".format(
                                         staff_journalist=self.participant.credit_name,
                                         title=self.participant.title,
                                         org=org,
@@ -79,7 +73,7 @@ class StaffJournalist(models.Model):
 
     @property
     def type(self):
-        return "Staff Journalist"
+        return 'Unaffiliated Staff Journalist'
 
 
     # def get_staffjournalist_content(self):

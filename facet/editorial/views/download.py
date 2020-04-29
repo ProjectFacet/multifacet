@@ -58,7 +58,7 @@ class StoryDownloadTemplateView(CustomUserTest, TemplateView):
         }
 
 
-# ACCESS: Any org user, or user from an organization that is in collaborate_with
+# ACCESS: Any org user, or user from an organization that is in partner_with
 # should be able to download a story
 # Contractors should not be able to download
 class StoryDownloadProcessView(CustomUserTest, View):

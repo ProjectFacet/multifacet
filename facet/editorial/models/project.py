@@ -1,4 +1,4 @@
-# from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 # from django.db.models import Q
 # from imagekit.models import ImageSpecField
@@ -41,7 +41,7 @@ class Project(models.Model):
         blank=True,
     )
 
-    collaborate_with = models.ManyToManyField(
+    partner_with = models.ManyToManyField(
         Partner,
         related_name='roject_collaboration_partners',
         help_text='Partner profiles selected to have collaborative access.',
@@ -54,7 +54,7 @@ class Project(models.Model):
         help_text='The name identifying the project.'
     )
 
-    description = models.TextField(
+    sketch = models.TextField(
         blank=True,
         help_text='Short description of a project.',
     )
@@ -113,8 +113,8 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('project_detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse('project_detail', kwargs={'pk': self.id})
 
     @property
     def description(self):
@@ -136,57 +136,57 @@ class Project(models.Model):
     # def get_project_team_vocab(self):
     #     """Return queryset with org participants and participants from collaboration orgs for a project."""
     #
-    #     collaborators = self.collaborate_with.all()
+    #     collaborators = self.partner_with.all()
     #     project_team = Participant.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators)))
     #     return project_team
 
-    # def get_project_images(self):
-    #     """Return all image assets associated with items that are part of a project."""
-    #
-    #     # get all original stories associated with a project
-    #     project_stories = self.story_set.filter(original_story=True).all()
-    #     # get all image assets associated with those stories.
-    #     project_images = []
-    #     for story in project_stories:
-    #         images=Story.get_story_images(story)
-    #         project_images.extend(images)
-    #     return set(project_images)
+    def get_project_images(self):
+        """Return all image assets associated with items that are part of a project."""
 
-    # def get_project_documents(self):
-    #     """Return all document assets associated with items that are part of a project."""
-    #
-    #     # get all original stories associated with a project
-    #     project_stories = self.story_set.filter(original_story=True).all()
-    #     # get all document assets associated with those stories.
-    #     project_documents = []
-    #     for story in project_stories:
-    #         documents=story.get_story_documents()
-    #         project_documents.extend(documents)
-    #     return set(project_documents)
+        # get all original stories associated with a project
+        project_stories = self.story_set.filter(original_story=True).all()
+        # get all image assets associated with those stories.
+        project_images = []
+        for story in project_stories:
+            images=Story.get_story_images(story)
+            project_images.extend(images)
+        return set(project_images)
 
-    # def get_project_audio(self):
-    #     """Return all audio assets associated with items that are part of a project."""
-    #
-    #     # get all original stories associated with a project
-    #     project_stories = self.story_set.filter(original_story=True).all()
-    #     # get all audio assets associated with those stories.
-    #     project_audio = []
-    #     for story in project_stories:
-    #         audio=story.get_story_audio()
-    #         project_audio.extend(audio)
-    #     return set(project_audio)
+    def get_project_documents(self):
+        """Return all document assets associated with items that are part of a project."""
 
-    # def get_project_video(self):
-    #     """Return all video assets associated with items that are part of a project."""
-    #
-    #     # get all original stories associated with a project
-    #     project_stories = self.story_set.filter(original_story=True).all()
-    #     # get all video assets associated with those stories.
-    #     project_video = []
-    #     for story in project_stories:
-    #         videos=story.get_story_video()
-    #         project_video.extend(videos)
-    #     return set(project_video)
+        # get all original stories associated with a project
+        project_stories = self.story_set.filter(original_story=True).all()
+        # get all document assets associated with those stories.
+        project_documents = []
+        for story in project_stories:
+            documents=story.get_story_documents()
+            project_documents.extend(documents)
+        return set(project_documents)
+
+    def get_project_audio(self):
+        """Return all audio assets associated with items that are part of a project."""
+
+        # get all original stories associated with a project
+        project_stories = self.story_set.filter(original_story=True).all()
+        # get all audio assets associated with those stories.
+        project_audio = []
+        for story in project_stories:
+            audio=story.get_story_audio()
+            project_audio.extend(audio)
+        return set(project_audio)
+
+    def get_project_video(self):
+        """Return all video assets associated with items that are part of a project."""
+
+        # get all original stories associated with a project
+        project_stories = self.story_set.filter(original_story=True).all()
+        # get all video assets associated with those stories.
+        project_video = []
+        for story in project_stories:
+            videos=story.get_story_video()
+            project_video.extend(videos)
+        return set(project_video)
 
     # TODO Delete
     # def get_project_tasks(self):

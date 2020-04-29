@@ -32,12 +32,14 @@ class Story(models.Model):
     entity_owner = models.OneToOneField(
         EntityOwner,
         help_text = 'Entity that owns this.',
+        blank=True,
         null = True,
         on_delete = models.SET_NULL,
     )
 
     project = models.ForeignKey(
         Project,
+        blank=True,
         on_delete = models.SET_NULL,
         null=True,
     )
@@ -55,7 +57,7 @@ class Story(models.Model):
         help_text='The name by which the story is identified.'
     )
 
-    description = models.TextField(
+    sketch = models.TextField(
         help_text="Short description of the story.",
         blank=True,
     )
@@ -115,7 +117,7 @@ class Story(models.Model):
         help_text='The story is being collaborated on with partners.'
     )
 
-    collaborate_with = models.ManyToManyField(
+    partner_with = models.ManyToManyField(
         Partner,
         related_name='story_collaboration_partners',
         help_text='Partner profiles selected to have collaborative access.',
@@ -179,8 +181,8 @@ class Story(models.Model):
     #     # clear relationships if they exist
     #     if story_copy.share_with:
     #         story_copy.share_with.clear()
-    #     if story_copy.collaborate_with:
-    #         story_copy.collaborate_with.clear()
+    #     if story_copy.partner_with:
+    #         story_copy.partner_with.clear()
     #
     #     # clear attributes for the copying organization
     #     story_copy.original_story = False
@@ -206,9 +208,9 @@ class Story(models.Model):
     #     share_with = [org.name for org in share_with]
     #     share_with = ",".join(share_with)
     #
-    #     collaborate_with = self.share_with.all()
-    #     collaborate_with = [org.name for org in collaborate_with]
-    #     collaborate_with = ",".join(collaborate_with)
+    #     partner_with = self.share_with.all()
+    #     partner_with = [org.name for org in partner_with]
+    #     partner_with = ",".join(partner_with)
     #
     #     # verify the text area fields have correct encoding
     #     name = self.name.encode('utf-8')
@@ -240,7 +242,7 @@ class Story(models.Model):
     #     original=self.original_story, team=team, created=self.creation_date, sensitive=self.sensitive,
     #     embargo=self.embargo, embargo_dt=self.embargo_datetime, share=self.share,
     #     sharedate=self.share_with_date, sharewith=share_with, shareready=self.ready_to_share,
-    #     collaborate=self.collaborate, collaboratewith=collaborate_with, archived=self.archived)
+    #     collaborate=self.collaborate, collaboratewith=partner_with, archived=self.archived)
     #     return story_download
 
     # # formerly get_story_team
@@ -251,7 +253,7 @@ class Story(models.Model):
     #
     #     from . import Participant
     #     # TODO future: add contractors added to a story
-    #     collaborators = self.collaborate_with.all()
+    #     collaborators = self.partner_with.all()
     #     story_team = Participant.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators)))
     #     return story_team
 
@@ -658,4 +660,4 @@ class Story(models.Model):
     #     # FIXME: add contractor access?
     #
     #     return (org == self.organization or
-    #          (self.collaborate and org in self.collaborate_with.all()))
+    #          (self.collaborate and org in self.partner_with.all()))

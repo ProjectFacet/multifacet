@@ -8,13 +8,15 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Facet</title>
   <!-- Icon -->
-  <link rel="icon" href="img/facet.png" type="image/x-icon">
+  <link rel="icon" href="{% static 'img/bluestone.png' %}" type="image/x-icon">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <!-- Datatables -->
+  <link rel="stylesheet" href="{% static 'css/datatables2.min.css' %}">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
   <!-- Your custom styles (optional) -->
@@ -98,7 +100,7 @@
       background: 0;
     }
 
-    body {
+    body, .table {
       /* background-color: #252932; */
       background-color: #1C2331;
       color: #fff;
@@ -770,8 +772,8 @@
           <div class="dropdown">
             <button type="button" data-toggle="dropdown" class="btn btn-info btn-sm ml-3" id="navbarDropdownNew"><i class="fas fa-plus mr-2"></i>Create</button></a>
             <div class="dropdown-menu dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownNew">
-              <a class="dropdown-item" href="project_form.html"><span class="text-white font-weight-lighter ml-2"><i class="fas fa-plus mr-2"></i>New Project</span></a>
-              <a class="dropdown-item" href="sotry_form.html"><span class="text-white font-weight-lighter ml-2"><i class="fas fa-plus mr-2"></i>New Story</span></a>
+              <a class="dropdown-item" href="{% url 'editorial:project_new' %}"><span class="text-white font-weight-lighter ml-2"><i class="fas fa-plus mr-2"></i>New Project</span></a>
+              <a class="dropdown-item" href="{% url 'editorial:story_new' %}"><span class="text-white font-weight-lighter ml-2"><i class="fas fa-plus mr-2"></i>New Story</span></a>
             </div>
           </div>
         </ul>
@@ -808,7 +810,7 @@
             {% else %}
               <li class="nav-item avatar dropdown ml-3">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-2.jpg" class="rounded-circle z-depth-0" alt="avatar image">
+                  <img src="{% static 'img/nophoto.jpg' %}" class="rounded-circle z-depth-0" alt="avatar image">
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg-right dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item text-white" href="#">Profile</a>
@@ -929,11 +931,12 @@
 
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
+  <script src="{% static 'js/datatables2.min.js' %}"></script>
+
   <script src="{% static 'js/mdb.min.js' %}"></script>
 
   <script src="{% static 'js/sidenav.js' %}"></script>
 
-  <!-- Your custom scripts (optional) -->
   <script type="text/javascript">
     $(document).ready(function() {
     // SideNav Button Initialization

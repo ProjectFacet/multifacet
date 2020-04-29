@@ -24,7 +24,20 @@ from django.shortcuts import render
 from braces.views import LoginRequiredMixin, FormMessagesMixin
 from django.views.generic import TemplateView, UpdateView, DetailView, ListView, CreateView, DeleteView, FormView, View
 
-from editorial.forms import ()
+from editorial.forms import (
+    ProjectForm,
+    ProjectTeamForm,
+    SimpleImageForm,
+    SimpleDocumentForm,
+    SimpleImageLibraryAssociateForm,
+    SimpleDocumentLibraryAssociateForm,
+)
+
+from task.forms import (TaskForm)
+from timeline.forms import (EventForm)
+from communication.forms import (CommentForm)
+from note.forms import (NoteForm)
+from editorial.forms import (SimpleImageForm, SimpleDocumentForm)
 
 from editorial.models import (
     Project,
@@ -37,41 +50,137 @@ from communication.models import (
 )
 
 
-class ProjectListView(LoginRequiredMixin, ListView):
-    """Displays a filterable table of projects.
-
-    Initial display organizes listings by creation date."""
-
-    pass
-    # model = Project
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['x'] = 'x'
-    #     return context
-
-
-
 class ProjectCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
-    """A logged in user with the appropriate permissions can create a project .
+    """A logged in user with the appropriate permissions can create a project.
+
+    Currently limited to StaffJournalist:
+    If staff journalists is affiliated, entity_owner = staffjournalist.newsorganization
+    If staff journalist is unaffiliated, entity_owner = Null
 
     Projects are a large-scale organizational component made up of multiple stories.
     Projects can have stories, assets, notes, discussions,
     simple assets, calendar objects and meta information.
     """
-    pass
 
     model = Project
+    template_name = 'project/project_form.html'
+    form_class = ProjectForm
+
+    form_invalid_message = "Something went wrong."
+    form_valid_message = "Project created."
+
+    def form_valid(self, form):
+        """Save -- but first adding participant_owner and entity_owner if applicable."""
+
+        self.object = form.save(commit=False)
+        participant = self.request.user
+        self.object.participant_owner = participant
+        if participant.staffjournalist:
+            entity = participant.staffjournalist.newsorganization
+            self.object.entity_owner = entity
+        self.object.save()
+        return redirect(self.object)
+
+
+class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
+    """
+    Displays project meta, stories, tasks, events, notes, assets.
+    """
+
+    model = Project
+    template_name = 'project/project_detail.html'
+
+    def get_form_kwargs(self):
+        """Pass entity, participant to form."""
+
+        kw = super(ProjectDetailView, self).get_form_kwargs()
+        kw.update({'entity_owner': self.request.user.organization})
+        if self.object.participant_owner == self.request.user:
+            kw.update({'participant_owner': self.request.user})
+        return kw
+
+    def stories(self):
+        """Get all stories associated with project."""
+
+        return self.story_set.filter(original_story=True).all()
+
+    def assets(self):
+        """Retrieve all assets associated with a project through story items."""
+
+        images = self.object.get_project_images()
+        documents = self.object.get_project_documents()
+        audio = self.object.get_project_audio()
+        video = self.object.get_project_video()
+
+        return {'images': images, 'documents': documents, 'audio': audio, 'video': video}
+
+    def project_discussion(self):
+        """Get discussion, comments and comment form for the project."""
+
+        discussion = self.object.discussion
+        comments = discussion.comment_set.all().order_by('date')
+        form = CommentForm()
+
+        return {'discussion': discussion, 'comments': comments, 'form': form}
+
+    def project_notes(self):
+        """Get notes and note form for the project."""
+
+        notes = self.object.notes.all().order_by('-creation_date')
+        form = NoteForm()
+
+        return {'notes': notes, 'form': form}
+
+    def project_tasks(self):
+        """Get tasks and task form for the project."""
+
+        tasks = self.object.task_set.all()
+        identified = self.object.task_set.filter(status="Identified")
+        inprogress = self.object.task_set.filter(status="In Progress")
+        complete = self.object.task_set.filter(status="Complete")
+        identified_ct = identified.count()
+        inprogress_ct = inprogress.count()
+        complete_ct = complete.count()
+        form = TaskForm(organization=self.request.user.organization)
+
+        return {
+            'tasks': tasks,
+            'identified': identified,
+            'inprogress': inprogress,
+            'complete': complete,
+            'identified_ct': identified_ct,
+            'inprogress_ct': inprogress_ct,
+            'complete_ct': complete_ct,
+            'form': form,
+        }
+
+    def events(self):
+        """Get events and event form for the project."""
+
+        events = self.object.event_set.all().order_by('-event_date')
+        form = EventForm(organization=self.request.user.organization)
+
+        return {'events': events, 'form': form}
+
+    def simple_images(self):
+        """Return simple images."""
+
+        images = self.object.simple_image_assets.all()
+        form = SimpleImageForm()
+        addform = SimpleImageLibraryAssociateForm(organization=self.request.user.organization)
+        return {'images': images, 'form': form, 'addform': addform,}
+
+    def simple_documents(self):
+        """Return simple documents."""
+
+        documents = self.object.simple_document_assets.all()
+        form = SimpleDocumentForm()
+        addform = SimpleDocumentLibraryAssociateForm(organization=self.request.user.organization)
+        return {'documents': documents, 'form': form, 'addform': addform,}
+
 
 
 class ProjectUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
-    """
-
-    """
-    pass
-
-
-class ProjectTeamUpdateView(FormMessagesMixin, UpdateView):
     """
 
     """
@@ -85,27 +194,67 @@ class ProjectDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
     pass
 
 
-class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
-    """
+class ProjectListView(LoginRequiredMixin, ListView):
+    """Displays a filterable table of projects.
 
-    """
-    pass
-    # model = Project
-    #
+    Initial display organizes listings by creation date."""
+
+    model = Project
+    template_name = 'project/project_list.html'
+
+    def get_queryset(self):
+        """Retrieve appropriate project list."""
+
+        #TODO replace this temporary queryset
+        projects = Project.objects.all()
+
+        return projects
+
+
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     context['x'] = 'x'
     #     return context
 
 
-class ProjectAssetTemplateView(LoginRequiredMixin, TemplateView):
+class ProjectTeamUpdateView(FormMessagesMixin, UpdateView):
     """
 
     """
     pass
 
 
-class ProjectStoryListTemplateView(LoginRequiredMixin, TemplateView):
+
+
+class ProjectStoryView(LoginRequiredMixin, TemplateView):
+    """
+
+    """
+    pass
+
+
+class ProjectAssetView(LoginRequiredMixin, TemplateView):
+    """
+
+    """
+    pass
+
+
+class ProjectTaskView(LoginRequiredMixin, TemplateView):
+    """
+
+    """
+    pass
+
+
+class ProjectNoteView(LoginRequiredMixin, TemplateView):
+    """
+
+    """
+    pass
+
+
+class ProjectScheduleView(LoginRequiredMixin, FormMessagesMixin, TemplateView):
     """
 
     """

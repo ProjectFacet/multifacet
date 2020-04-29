@@ -12,21 +12,21 @@ class PartnerManager(models.Manager):
 
 class Partner(models.Model):
     """Facilitates inclusion of multiple kinds of entities as partners in
-    collaborate_with M2M field on projects, stories, etc.
+    partner_with M2M field on projects, stories, etc.
 
     Models that can be Partners:
     _Organization, Participant
 
-    Models that select collaborate_with partners:
+    Models that select partner_with partners:
     Project, Story +
 
     Models that are partners point at an Partner record as the
     partner_profile
 
-    Collaborative models point to Partner records through collaborate_with.
+    Collaborative models point to Partner records through partner_with.
 
     Ex. A NewsOrganization has partner record and a Project is collaborative.
-    Project has a field called collaborate_with that is a M2M with Partner.
+    Project has a field called partner_with that is a M2M with Partner.
 
     This allows for consistency across multiple kinds of Partners.
 
@@ -52,7 +52,7 @@ class Partner(models.Model):
     partner_type = models.CharField(
         max_length=250,
         choices=PARTNER_TYPE_CHOICES,
-        help_text='What kind of partner it is.'
+        help_text='What kind of partner it is.',
     )
 
     partner_name = models.CharField(
@@ -69,7 +69,7 @@ class Partner(models.Model):
         verbose_name_plural = "Partner Profiles"
 
     def __str__(self):
-        self.partner_name
+        return self.partner_name
 
     @property
     def description(self):

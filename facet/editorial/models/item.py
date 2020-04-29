@@ -485,7 +485,7 @@ class Item(models.Model):
 #         story = self.content_object
 #
 #         return (org == story.organization or
-#                 (story.collaborate and org in story.collaborate_with.all()))
+#                 (story.collaborate and org in story.partner_with.all()))
 
 # @receiver(post_save, sender=Item)
 # def add_discussion(sender, instance, **kwargs):

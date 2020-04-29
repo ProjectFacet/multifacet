@@ -71,8 +71,8 @@ class Discussion(models.Model):
     objects = DiscussionManager()
 
     def __str__(self):
-        return "{anchor} {discussion_type} Discussion: {channel}".format(
-            anchor = content_object,
-            discussion_type=self.discussion_type,
-            channel = channel,
+        return "{anchor} {anchor_type} Discussion: {channel}".format(
+            anchor = self.anchor,
+            anchor_type=self.anchor.anchor_type,
+            channel = self.channel,
         )

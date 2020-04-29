@@ -142,7 +142,7 @@ class Task(models.Model):
             parent = self.event
 
         if parent.type == "project" or "story":
-            collaborators = parent.collaborate_with.all()
+            collaborators = parent.partner_with.all()
             owner = parent.organization
             task_vocab = Participant.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators) | Q(organization=owner)))
         else:

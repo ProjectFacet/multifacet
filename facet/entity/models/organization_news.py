@@ -507,7 +507,7 @@ class NewsOrganization(BaseOrganization):
     #
     #     from .story import Story
     #     org_collaborative_content = []
-    #     external_stories = Story.objects.filter(Q(collaborate_with=self))
+    #     external_stories = Story.objects.filter(Q(partner_with=self))
     #     internal_stories = self.story_set.filter(Q(organization=self) & Q(collaborate=True))
     #     org_collaborative_content.extend(external_stories)
     #     org_collaborative_content.extend(internal_stories)
@@ -521,8 +521,8 @@ class NewsOrganization(BaseOrganization):
     #     from . import Project
     #     from . import Story
     #     external_collaborative_content = []
-    #     external_projects = Project.objects.filter(Q(collaborate_with=self))
-    #     external_stories = Story.objects.filter(Q(collaborate_with=self))
+    #     external_projects = Project.objects.filter(Q(partner_with=self))
+    #     external_stories = Story.objects.filter(Q(partner_with=self))
     #     external_collaborative_content.extend(external_projects)
     #     external_collaborative_content.extend(external_stories)
     #     return external_collaborative_content
@@ -634,8 +634,8 @@ class NewsOrganization(BaseOrganization):
     #
     #     searchable_objects = []
     #
-    #     projects = Project.objects.filter(Q(Q(organization=self) | Q(collaborate_with=self)))
-    #     stories = Story.objects.filter(Q(Q(organization=self) | Q(collaborate_with=self)))
+    #     projects = Project.objects.filter(Q(Q(organization=self) | Q(partner_with=self)))
+    #     stories = Story.objects.filter(Q(Q(organization=self) | Q(partner_with=self)))
     #     items = Item.objects.filter(Q(organization=self))
     #     imageassets = self.imageasset_set.all()
     #     documentassets = self.documentasset_set.all()
@@ -666,41 +666,41 @@ class NewsOrganization(BaseOrganization):
     #     return ItemTemplate.objects.filter(Q(organization_id__isnull=True) | Q(organization=self) & Q(is_active=True))
 
 
-@receiver(post_save, sender=NewsOrganization)
-def create_org_meta(sender, instance, created, **kwargs):
-    # Make a new NewsOrganization
-    if created:
-        # Create an EntityOwner record
-        instance.entity_owner_profile = EntityOwner.objects.create_entity_owner_record(
-            owner_type = 'NEWSORGANIZATION',
-            owner_name = instance.name,
-            owner_id = instance.id,
-        )
-        # Create a NetworkMember record
-        instance.network_member_profile = NetworkMember.objects.create_network_member_record(
-            member_type = 'NEWSORGANIZATION',
-            member_name = instance.name,
-            member_id = instance.id,
-        )
-        # Create an Anchor record
-        instance.anchor_profile = Anchor.objects.create_anchor_record(
-            anchor_type = 'NEWSORGANIZATION',
-            anchor_name = instance.name,
-            anchor_id = instance.id,
-        )
-        # Create Partner record
-        instance.partner_profile = Partner.objects.create_partner_record(
-            partner_type = 'NEWSORGANIZATION',
-            partner_name = instance.name,
-            partner_id = instance.id,
-        )
-        # Save Instance before adding Discussion
-        instance.save()
-        # Create Discussion, channel = 'main'
-        # Retrieve instance anchor_profile
-        main_discussion = Discussion.objects.create_discussion(
-            anchor=instance.anchor_profile,
-            channel='Main',
-        )
-        # Final Save
-        instance.save()
+# @receiver(post_save, sender=NewsOrganization)
+# def create_org_meta(sender, instance, created, **kwargs):
+#     # Make a new NewsOrganization
+#     if created:
+#         # Create an EntityOwner record
+#         instance.entity_owner_profile = EntityOwner.objects.create_entity_owner_record(
+#             owner_type = 'NEWSORGANIZATION',
+#             owner_name = instance.name,
+#             owner_id = instance.id,
+#         )
+#         # Create a NetworkMember record
+#         instance.network_member_profile = NetworkMember.objects.create_network_member_record(
+#             member_type = 'NEWSORGANIZATION',
+#             member_name = instance.name,
+#             member_id = instance.id,
+#         )
+#         # Create an Anchor record
+#         instance.anchor_profile = Anchor.objects.create_anchor_record(
+#             anchor_type = 'NEWSORGANIZATION',
+#             anchor_name = instance.name,
+#             anchor_id = instance.id,
+#         )
+#         # Create Partner record
+#         instance.partner_profile = Partner.objects.create_partner_record(
+#             partner_type = 'NEWSORGANIZATION',
+#             partner_name = instance.name,
+#             partner_id = instance.id,
+#         )
+#         # Save Instance before adding Discussion
+#         instance.save()
+#         # Create Discussion, channel = 'main'
+#         # Retrieve instance anchor_profile
+#         main_discussion = Discussion.objects.create_discussion(
+#             anchor=instance.anchor_profile,
+#             channel='Main',
+#         )
+#         # Final Save
+#         instance.save()

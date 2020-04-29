@@ -38,7 +38,7 @@ class NetworkMember(models.Model):
     member_type = models.CharField(
         max_length=250,
         choices=MEMBER_TYPE_CHOICES,
-        help_text='What kind of member it is.'
+        help_text='What kind of member it is.',
     )
 
     member_name = models.CharField(
@@ -67,4 +67,4 @@ class NetworkMember(models.Model):
 
     @property
     def type(self):
-        return "Entity Owner Profile"
+        return "Member Profile"

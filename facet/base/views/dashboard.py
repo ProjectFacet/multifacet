@@ -23,7 +23,19 @@ class DashboardTemplateView(LoginRequiredMixin, TemplateView):
     """ Returns participant's unique dashboard.
 
     A freelancer gets their freelance dashboard.
-    A staff journalist will see their staff dashboard.
+    - active assignments
+    - active pitches (all status except complete)
+    - active calls
+    - active invoices
+    - new comments since last login
+
+    A staff journalist gets their staff dashboard.
+    - newsorganization
+    - their projects, stories
+    - new stories associated with the organization (top 10 since last login)
+    - stories associated with organization running today
+    - tasks with upcoming due dates
+    - events with upcoming dates they are associated with
     """
 
     template_name = 'dashboard.html'
@@ -31,10 +43,22 @@ class DashboardTemplateView(LoginRequiredMixin, TemplateView):
     def get_context_data(self):
         participant = self.request.user
 
-        #If participant has a Staff Journalist profile
-        # if participant.staffjournalist:
-        #     org = participant.staffjournalist.newsorganization
-
-
+        # If participant has a Staff Journalist profile
+        if participant.staffjournalist:
+            org = participant.staffjournalist.newsorganization
+            current_projects = []
+            current_stories = []
+            new_org_stories = []
+            running_org_stories = []
+            upcoming_tasks = []
+            upcoming_events = []
 
         # If Participant has a Freelance profile
+        if participant.freelancejournalist:
+            active_assignments = []
+            active_pitches = []
+            active_calls = []
+            active_invoices = []
+            new_comments = []
+
+        return context
