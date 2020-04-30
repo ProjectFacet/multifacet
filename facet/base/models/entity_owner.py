@@ -70,3 +70,9 @@ class EntityOwner(models.Model):
     @property
     def type(self):
         return "Entity Owner Profile"
+
+
+    def get_partners_vocab(self):
+        """Retrieve appropriate partners for the entity."""
+
+        pass

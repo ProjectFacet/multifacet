@@ -88,7 +88,7 @@ class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
     """
 
     model = Project
-    template_name = 'project/project_detail.html'
+    template_name = 'project/project_overview.html'
 
     def get_form_kwargs(self):
         """Pass entity, participant to form."""
@@ -102,7 +102,7 @@ class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
     def stories(self):
         """Get all stories associated with project."""
 
-        return self.story_set.filter(original_story=True).all()
+        return self.object.story_set.filter(original=True).all()
 
     def assets(self):
         """Retrieve all assets associated with a project through story items."""
@@ -179,12 +179,32 @@ class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
         return {'documents': documents, 'form': form, 'addform': addform,}
 
 
-
 class ProjectUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
     """
-
+    Update a project.
     """
-    pass
+
+    model = Project
+    template_name = 'project/project_form.html'
+    form_class = ProjectForm
+
+    form_invalid_message = "Something went wrong."
+    form_valid_message = "Project created."
+
+    def get_form_kwargs(self):
+        """Pass entity, participant to form."""
+
+        kw = super(ProjectUpdateView, self).get_form_kwargs()
+        if self.object.entity_owner:
+            kw.update({'entity_owner': self.object.entity_owner})
+        if self.object.participant_owner == self.request.user:
+            kw.update({'participant_owner': self.request.user})
+        return kw
+
+    def get_success_url(self):
+        """Return project."""
+
+        return super(ProjectUpdateView, self).get_success_url()
 
 
 class ProjectDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
@@ -222,7 +242,6 @@ class ProjectTeamUpdateView(FormMessagesMixin, UpdateView):
 
     """
     pass
-
 
 
 

@@ -137,6 +137,27 @@
       display: none;
     }
 
+    .content {
+    min-height: 100vh;
+    height: auto;
+    transition: all 0.2s ease-in-out;
+    }
+
+    .button-collapse {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    z-index: 10;
+    }
+
+    @media(min-width: 1440px) {
+    .content {
+    padding-left: 250px;
+    }
+    }
+
+
+
   </style>
   {% block head %}
   <!-- Child Head Items -->
@@ -949,6 +970,7 @@
       $('#slide-out').addClass('slim');
     });
   </script>
+
 
   {# Don't change/remove this next line; used to show render times on staging. #}
     <!-- RENDER_TIME -->

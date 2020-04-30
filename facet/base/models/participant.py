@@ -105,3 +105,9 @@ class Participant(AbstractUser):
     def initials(self):
         "Return's participant's initials based on their credit_name."
         return ''.join( [ letter[0] for letter in self.credit_name.split() ] )
+
+
+    def get_partners_vocab(self):
+        """Retrieve appropriate partners for the participant."""
+
+        pass 
