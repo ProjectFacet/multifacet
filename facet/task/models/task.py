@@ -54,10 +54,10 @@ class Task(models.Model):
         blank=True,
     )
 
-    assigned_to = models.ManyToManyField(
+    team = models.ManyToManyField(
         # There can be multiple participants listed as assigned to the task.
         Participant,
-        related_name='taskassignedparticipant',
+        related_name='task_team',
         help_text='The participants assigned to the task.',
         blank=True,
     )

@@ -17,7 +17,7 @@ class EntityOwner(models.Model):
     Project, Story, Item, ItemTemplates
 
     _Organizations and _Networks point at an EntityOwner record as the
-    owner_entity_profile
+    entity_owner_profile
 
     Owned models point to EntityOwner records as the owner.
 
@@ -75,4 +75,10 @@ class EntityOwner(models.Model):
     def get_partners_vocab(self):
         """Retrieve appropriate partners for the entity."""
 
-        pass
+        if self.newsorganization:
+            partners = self.newsorganization.get_partners_vocab()
+            return partners
+
+        if self.newsorganizationnetwork:
+            partners = self.newsorganizationnetwork.get_partners_vocab()
+            return partners

@@ -1,6 +1,8 @@
 from django.db import models
+from django.db.models import Q
 
 from base.models import BaseNetwork, NetworkMember
+from .organization_news import NewsOrganization
 
 class NewsOrganizationNetwork(BaseNetwork):
     """A group of organizations.
@@ -20,6 +22,7 @@ class NewsOrganizationNetwork(BaseNetwork):
     members = models.ManyToManyField(
         NetworkMember,
         related_name='network_members',
+        blank=True,
     )
 
     class Meta:
@@ -44,6 +47,15 @@ class NewsOrganizationNetwork(BaseNetwork):
 
     # def get_absolute_url(self):
     #     return reverse('network_detail', kwargs={'pk': self.id})
+
+    def get_member_newsorganizations(self):
+        """Return member newsorganizations and owners."""
+
+        # organizations = NewsOrganization.objects.filter(Q(network_member_profile__in=self.members) | Q(entity_owner_profile=self.entity_owner))
+        # # organizations = NewsOrganization.objects.filter(Q(network_member_profile=self.members))
+        #
+        # return organizations
+        pass
 
     # def get_network_shared_stories(self):
     #     """ Return list of stories shared with a network.

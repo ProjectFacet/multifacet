@@ -214,27 +214,7 @@ class ProjectDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
     pass
 
 
-class ProjectListView(LoginRequiredMixin, ListView):
-    """Displays a filterable table of projects.
 
-    Initial display organizes listings by creation date."""
-
-    model = Project
-    template_name = 'project/project_list.html'
-
-    def get_queryset(self):
-        """Retrieve appropriate project list."""
-
-        #TODO replace this temporary queryset
-        projects = Project.objects.all()
-
-        return projects
-
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['x'] = 'x'
-    #     return context
 
 
 class ProjectTeamUpdateView(FormMessagesMixin, UpdateView):
@@ -278,3 +258,73 @@ class ProjectScheduleView(LoginRequiredMixin, FormMessagesMixin, TemplateView):
 
     """
     pass
+
+# ------------------------
+
+class StaffJournalistProjectListView(LoginRequiredMixin, ListView):
+    """."""
+    pass
+
+
+class UnaffiliatedStaffJournalistProjectListView(LoginRequiredMixin, ListView):
+    """."""
+    pass
+
+
+class FreelanceJournalistProjectListView(LoginRequiredMixin, ListView):
+    """."""
+    pass
+
+
+class NewsOrganizationProjectListView(LoginRequiredMixin, ListView):
+    """."""
+    pass
+
+
+class NewsOrganizationNetworkProjectListView(LoginRequiredMixin, ListView):
+    """."""
+    pass
+
+
+class ProjectListView(LoginRequiredMixin, ListView):
+    """Displays a filterable table of projects.
+
+    Initial display organizes listings by creation date."""
+
+    model = Project
+    template_name = 'project/project_list.html'
+
+    def get_context_data(self, pk, type):
+        if newsorganization:
+            newsorganization = get_object_or_404(NewsOrganization, pk=pk)
+            projects = NewsOrganization.get_projects(newsorganization)
+        if newsorganizationnetwork:
+            newsorganizationnetwork = get_object_or_404(NewsOrganizationNetwork, pk=pk)
+            projects = NewsOrganizationNetwork.get_projects(newsorganizationnetwork)
+
+        if staffjournalist:
+            staffjournalist = get_object_or_404(StaffJournalist, pk=pk)
+            projects = StaffJournalist.get_projects(staffjournalist)
+        if unaffiliatedstaffjournalist:
+            unaffiliatedstaffjournalist = get_object_or_404(UnaffiliatedStaffJournalist, pk=pk)
+            projects = UnaffiliatedStaffJournalist.get_projects(unaffiliatedstaffjournalist)
+        if freelancejournalist:
+            freelancejournalist = get_object_or_404(FreelanceJournalist, pk=pk)
+            projects = FreelanceJournalist.get_projects(freelancejournalist)
+
+
+
+
+    def get_queryset(self):
+        """Retrieve appropriate project list."""
+
+        #TODO replace this temporary queryset
+        projects = Project.objects.all()
+
+        return projects
+
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['x'] = 'x'
+    #     return context

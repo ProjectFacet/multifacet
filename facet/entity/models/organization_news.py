@@ -1,9 +1,11 @@
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from base.models import BaseOrganization
 from base.models import Participant
+
 # from editorial.models import Item
 
 class NewsOrganization(BaseOrganization):
@@ -273,6 +275,51 @@ class NewsOrganization(BaseOrganization):
     @property
     def type(self):
         return "News Organization"
+
+
+    def get_networks(self):
+        """Retrieve networks that the newsorganization manages or is a member of."""
+
+        # from .network_newsorganization import NewsOrganizationNetwork
+        # networks = NewsOrganizationNetwork.objects.filter(Q(Q(entity_owner=self.entity_owner_profile) | Q(members=self.network_member_profile)))
+        # return networks
+
+        pass
+
+    def get_partners_vocab(self):
+        """Retrieve appropriate partners for the newsorganization."""
+
+        pass
+
+        # partners = []
+        # # get networks newsorganization is affiliated with as owner or member
+        # networks = self.get_networks()
+        # # get all member and owner associations of the networks
+        # for network in networks:
+        #     members = network.get_member_newsorganizations()
+        #     #FIXME exclude self
+        # partners.extend(associations)
+        # return partners
+
+
+    def get_org_team_vocab(self):
+        """Retrieve team for newsorganization. These are all the staff journalists
+        associated with the organization.
+        """
+
+        pass
+        # return StaffJournalist.objects.filter(newsorganization=self)
+
+
+    # def get_org_verified_freelancers(self):
+    #
+    #     verified_freelancers = FreelanceJournalist.objects.filter()
+
+
+
+
+
+
 
     # def get_org_participants(self):
     #     """ Return queryset of all participants in a news organization.

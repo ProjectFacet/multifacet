@@ -9,7 +9,7 @@ from note.models import Note
 
 class BaseNetwork(models.Model):
     """A group of organizations, partipants +
-
+    
     A network is a collection of two or more organizations or participant types.
     """
 
@@ -17,7 +17,8 @@ class BaseNetwork(models.Model):
     # Participant that owns this network (optional)
     participant_owner = models.ForeignKey(
         Participant,
-        help_text='Participant who owns this organization.',
+        help_text='Participant who owns this network.',
+        blank=True,
         null=True,
         on_delete = models.SET_NULL,
     )

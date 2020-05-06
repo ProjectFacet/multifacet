@@ -21,9 +21,9 @@ class TaskForm(forms.ModelForm):
 
         # TODO future: make assignment team include org users, partner users and collaborators assigned to content
         if task:
-            self.fields['assigned_to'].queryset = task.get_task_assignment_vocab()
+            self.fields['team'].queryset = task.get_task_assignment_vocab()
         else:
-            self.fields['assigned_to'].queryset = org.get_org_users()
+            self.fields['team'].queryset = org.get_org_users()
 
         # limit projects and stories to those owned by org or part of content and org is collaborator for
         self.fields['project'].queryset = Project.objects.filter(
@@ -49,7 +49,7 @@ class TaskForm(forms.ModelForm):
         fields = [
             'name',
             'text',
-            'assigned_to',
+            'team',
             'status',
             'important',
             'due_date',
@@ -59,7 +59,7 @@ class TaskForm(forms.ModelForm):
                 attrs={'class': 'form-control', 'rows': 2, 'placeholder': 'Name'}),
             'text': Textarea(attrs={'class': 'form-control', 'id': 'task-text', 'rows': 17,
                                     'placeholder': 'Details'}),
-            'assigned_to': ArrayFieldSelectMultiple(
+            'team': ArrayFieldSelectMultiple(
                 attrs={'class': 'chosen-select form-control task-assign-select',
                        'id': 'task-team', 'data-placeholder': 'Assign to'}),
             'status': Select(attrs={'class': 'custom-select', 'id': 'task-status'}),

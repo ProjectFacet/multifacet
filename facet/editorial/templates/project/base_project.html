@@ -20,9 +20,17 @@
     <!-- Side navigation links -->
     <li>
       <ul class="collapsible collapsible-accordion">
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-chevron-right"></i> Overview<i class="fas fa-angle-down rotate-icon"></i></a>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-info-circle"></i> Overview<i class="fas fa-angle-down rotate-icon"></i></a>
+          <div class="collapsible-body">
+            <ul>
+              <li><a href="#" class="waves-effect">
+                <span class="sv-slim"> <i class="fas fa-users-cog"></i> </span>
+                <span class="sv-normal">Team</span></a>
+              </li>
+            </ul>
+          </div>
         </li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-hand-point-right"></i> Discussions<i class="fas fa-angle-down rotate-icon"></i></a>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-comments"></i> Discussions<i class="fas fa-angle-down rotate-icon"></i></a>
           <div class="collapsible-body">
             <ul>
               <li><a href="#" class="waves-effect">
@@ -36,7 +44,7 @@
             </ul>
           </div>
         </li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Timeline<i class="fas fa-angle-down rotate-icon"></i></a>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-calendar-alt"></i> Timeline<i class="fas fa-angle-down rotate-icon"></i></a>
           <div class="collapsible-body">
             <ul>
               <li><a href="#" class="waves-effect">
@@ -58,9 +66,14 @@
             </ul>
           </div>
         </li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-eye"></i> Story Budget<i class="fas fa-angle-down rotate-icon"></i></a></li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Stories<i class="fas fa-angle-down rotate-icon"></i></a></li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Story Media<i class="fas fa-angle-down rotate-icon"></i></a>
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-th-list"></i> Story Budget<i class="fas fa-angle-down rotate-icon"></i></a></li>
+
+        {% if view.stories %}
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-file-alt"></i> Stories<i class="fas fa-angle-down rotate-icon"></i></a></li>
+        {% else %}
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-plus blue-grey-text"></i> Stories</a></li>
+        {% endif %}
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-image"></i> Story Media<i class="fas fa-angle-down rotate-icon"></i></a>
           <div class="collapsible-body">
             <ul>
               <li><a href="#" class="waves-effect">
@@ -82,9 +95,19 @@
             </ul>
           </div>
         </li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Tasks<i class="fas fa-angle-down rotate-icon"></i></a></li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Notes<i class="fas fa-angle-down rotate-icon"></i></a></li>
-        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-envelope"></i> Project Assets<i class="fas fa-angle-down rotate-icon"></i></a></li>
+
+        {% if view.tasks %}
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-tasks"></i> Tasks<i class="fas fa-angle-down rotate-icon"></i></a></li>
+        {% else %}
+        <li><a class="collapsible-header waves-effect arrow-r blue-grey-text"><i class="sv-slim-icon fas fa-plus blue-grey-text"></i> Tasks</a></li>
+        {% endif %}
+
+        {% if view.notes %}
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon fas fa-sticky-note"></i> Notes<i class="fas fa-angle-down rotate-icon"></i></a></li>
+        {% else %}
+        <li><a class="collapsible-header waves-effect arrow-r blue-grey-text"><i class="sv-slim-icon fas fa-plus blue-grey-text"></i> Notes</a></li>
+        {% endif %}
+        <li><a class="collapsible-header waves-effect arrow-r"><i class="sv-slim-icon far fa-images"></i> Project Assets<i class="fas fa-angle-down rotate-icon"></i></a></li>
         <li><a id="toggle" class="waves-effect"><i class="sv-slim-icon fas fa-angle-double-left"></i>Minimize</a>
         </li>
       </ul>

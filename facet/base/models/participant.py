@@ -110,4 +110,14 @@ class Participant(AbstractUser):
     def get_partners_vocab(self):
         """Retrieve appropriate partners for the participant."""
 
-        pass 
+        if self.staffjournalist:
+            partners = self.staffjournalist.get_partners_vocab()
+            return partners
+
+        if self.unaffiliatedstaffjournalist:
+            partners = self.unaffiliatedstaffjournalist.get_partners_vocab()
+            return partners
+
+        if self.freelancejournalist:
+            partners = self.freelancejournalist.get_partners_vocab()
+            return partners
