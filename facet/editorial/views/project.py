@@ -18,6 +18,7 @@ ProjectDetailView: View that presents all of the details and associations for a 
 ProjectAssetTemplateView: Presents asset library of a Project
 ProjectStoryListTemplateView: Presents list of stories associated with a Project
 
+
 """
 
 from django.shortcuts import render
@@ -259,58 +260,61 @@ class ProjectScheduleView(LoginRequiredMixin, FormMessagesMixin, TemplateView):
     """
     pass
 
-# ------------------------
+# ----------------------------------
 
 class StaffJournalistProjectListView(LoginRequiredMixin, ListView):
-    """."""
+    """Return projects of a staff journalist."""
     pass
 
 
 class UnaffiliatedStaffJournalistProjectListView(LoginRequiredMixin, ListView):
-    """."""
+    """Return projects of an unaffiliated staff journalist."""
     pass
 
 
 class FreelanceJournalistProjectListView(LoginRequiredMixin, ListView):
-    """."""
+    """Return projects of a freelance journalist."""
     pass
 
 
 class NewsOrganizationProjectListView(LoginRequiredMixin, ListView):
-    """."""
+    """Return projects for a news organization."""
     pass
 
 
 class NewsOrganizationNetworkProjectListView(LoginRequiredMixin, ListView):
-    """."""
+    """Return projects for a news organization network."""
     pass
 
 
-class ProjectListView(LoginRequiredMixin, ListView):
-    """Displays a filterable table of projects.
-
-    Initial display organizes listings by creation date."""
-
-    model = Project
-    template_name = 'project/project_list.html'
-
-    def get_context_data(self, pk, type):
-        if newsorganization:
-            newsorganization = get_object_or_404(NewsOrganization, pk=pk)
-            projects = NewsOrganization.get_projects(newsorganization)
-        if newsorganizationnetwork:
-            newsorganizationnetwork = get_object_or_404(NewsOrganizationNetwork, pk=pk)
-            projects = NewsOrganizationNetwork.get_projects(newsorganizationnetwork)
-
-        if staffjournalist:
-            staffjournalist = get_object_or_404(StaffJournalist, pk=pk)
-            projects = StaffJournalist.get_projects(staffjournalist)
-        if unaffiliatedstaffjournalist:
-            unaffiliatedstaffjournalist = get_object_or_404(UnaffiliatedStaffJournalist, pk=pk)
-            projects = UnaffiliatedStaffJournalist.get_projects(unaffiliatedstaffjournalist)
-        if freelancejournalist:
-            freelancejournalist = get_object_or_404(FreelanceJournalist, pk=pk)
-            projects = FreelanceJournalist.get_projects(freelancejournalist)
+# class ProjectListView(LoginRequiredMixin, ListView):
+#     """Displays a filterable table of projects.
+#
+#     Initial display organizes listings by creation date."""
+#
+#     model = Project
+#     template_name = 'project/project_list.html'
+#
+#     def get_context_data(self, pk, type):
+#         if type=='newsorganization':
+#             newsorganization = get_object_or_404(NewsOrganization, pk=pk)
+#             projects = NewsOrganization.get_projects(newsorganization)
+#
+#         if type=='newsorganizationnetwork':
+#             newsorganizationnetwork = get_object_or_404(NewsOrganizationNetwork, pk=pk)
+#             projects = NewsOrganizationNetwork.get_projects(newsorganizationnetwork)
+#
+#         if type=='staffjournalist':
+#             staffjournalist = get_object_or_404(StaffJournalist, pk=pk)
+#             projects = StaffJournalist.get_projects(staffjournalist)
+#
+#         if type=='unaffiliatedstaffjournalist':
+#             unaffiliatedstaffjournalist = get_object_or_404(UnaffiliatedStaffJournalist, pk=pk)
+#             projects = UnaffiliatedStaffJournalist.get_projects(unaffiliatedstaffjournalist)
+#
+#         if type=='freelancejournalist':
+#             freelancejournalist = get_object_or_404(FreelanceJournalist, pk=pk)
+#             projects = FreelanceJournalist.get_projects(freelancejournalist)
 
 
 
