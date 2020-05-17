@@ -13,7 +13,7 @@ urlpatterns = [
     path('project/<pk>/update/', project.ProjectUpdateView.as_view(), name='project_edit'),
     path('project/<pk>/delete/', project.ProjectDeleteView.as_view(), name='project_delete'),
 
-    path('project/list/', project.ProjectListView.as_view(), name='project_list'),
+    # path('project/list/', project.ProjectListView.as_view(), name='project_list'),
     path('project/<pk>/team/edit/', project.ProjectTeamUpdateView.as_view(), name='project_team_edit'),
 
     path('project/<pk>/stories/', project.ProjectStoryView.as_view(), name='project_stories'),

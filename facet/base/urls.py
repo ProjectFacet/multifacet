@@ -7,7 +7,7 @@ from .views import (
 
 app_name = 'base'
 urlpatterns = [
-    # ex: /polls/
     path('', dashboard.LandingTemplateView.as_view(), name='landing'),
-    path('dashboard/', dashboard.DashboardTemplateView.as_view(), name='dashboard'),
+    path('dashboard/', dashboard.DashboardDeterminationView.as_view(), name='dashboard'),
+    path('dashboard/account-requested/', dashboard.PreAccountApprovalDashboardView.as_view(), name='dashboard_account_requested'),
 ]

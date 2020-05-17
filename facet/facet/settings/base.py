@@ -133,6 +133,8 @@ AUTHENTICATION_BACKENDS = (
 # Email
 SERVER_EMAIL = DEFAULT_FROM_EMAIL = "collaborate@projectfacet.org"
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Email these people when errors happen on production sites
 ADMINS = [
     ('Heather', 'heather@projectfacet.org'),

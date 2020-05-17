@@ -1,0 +1,164 @@
+{% extends 'base_editorial.html' %}
+{% load i18n %}
+
+{% load static %}
+<!-------------------------------------------->
+<!--      BREADCRUMB NAVIGATION             -->
+<!-------------------------------------------->
+
+{% block breadcrumb %}
+
+{% endblock breadcrumb %}
+
+<!-------------------------------------------->
+<!--            Main Section                -->
+<!-------------------------------------------->
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-xs-12">
+        <h4>You don't appear to have a profile. Let's fix that.</h4>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-xs-12 col-sm-6 col-offset-sm-3">
+        <p>Select which account best suits how you want to use Facet.</p>
+      </div>
+  </div>
+
+  <!-- Grid row -->
+  <div class="row mt-5">
+
+    <!-- Grid column -->
+    <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+
+      <!-- Pricing card -->
+      <div class="card pricing-card white-text">
+
+        <!-- Price -->
+        <div class="aqua-gradient rounded-top">
+          <h4 class="option">Staff Journalist</h4>
+        </div>
+
+        <!-- Features -->
+        <div class="card-body striped green-striped card-background px-5">
+
+          <h2 class="my-4 pb-3 h1">$x</h2>
+          <ul>
+            <li><p>Add and manage your organization's team</p></li>
+            <li><p>Create and manage projects and stories.</p></li>
+            <li><p>Create networks of organizations.</p></li>
+            <li><p>Communicate at group, individual and content levels.</p></li>
+            <li><p>Track and manage details for partnerships.</p></li>
+            <li><p>Manage projects and priorities through dashboards.</p></li>
+          </ul>
+          <button class="mb-3 mt-3 btn aqua-gradient btn-rounded">Request a Staff Journalist Account</button>
+
+        </div>
+        <!-- Features -->
+
+      </div>
+
+      <!-- Pricing card -->
+
+    </div>
+    <!-- Grid column -->
+
+    {% comment %}
+    <!-- Grid column -->
+    <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
+
+      <!-- Pricing card -->
+      <div class="card pricing-card white-text">
+
+        <!-- Price -->
+        <div class="peach-gradient rounded-top">
+          <h4 class="option">PRO</h4>
+        </div>
+
+        <!-- Features -->
+        <div class="card-body striped orange-striped card-background px-5">
+
+          <h2 class="my-4 pb-3 h1">80$</h2>
+          <ul>
+            <li>
+              <p><strong>1</strong> project</p>
+            </li>
+            <li>
+              <p><strong>100</strong> components</p>
+            </li>
+            <li>
+              <p><strong>150</strong> features</p>
+            </li>
+            <li>
+              <p><strong>200</strong> members</p>
+            </li>
+          </ul>
+          <button class="mb-3 mt-3 btn peach-gradient btn-rounded">Buy now</button>
+
+        </div>
+        <!-- Features -->
+
+      </div>
+      <!-- Pricing card -->
+
+    </div>
+    <!-- Grid column -->
+    {% endcomment %}
+
+    <!-- Grid column -->
+    <div class="col-lg-4 col-md-6">
+
+      <!-- Pricing card -->
+      <div class="card pricing-card white-text">
+
+        <!-- Price -->
+        <div class="purple-gradient rounded-top">
+          <h4 class="option">Freelance Journalist</h4>
+        </div>
+
+        <!-- Features -->
+        <div class="card-body striped purple-striped card-background px-5">
+
+          <h2 class="my-4 pb-3 h1">Free</h2>
+          <ul>
+            <li><p>Be publicly listed and discoverable as a freelancer.</p></li>
+            <li><p>Create and manage pitches to editors.</p></li>
+            <li><p>Communicate directly with editors.</p></li>
+            <li><p>Manage the editorial process for assignments.</p></li>
+            <li><p>Be added to organization's projects and content.</p></li>
+            <li><p>Manage work and progress through dashboards.</p></li>
+          </ul>
+          <button class="mb-3 mt-3 btn purple-gradient btn-rounded">Request a Freelancer Account</button>
+
+        </div>
+        <!-- Features -->
+
+      </div>
+      <!-- Pricing card -->
+
+    </div>
+    <!-- Grid column -->
+
+  </div>
+  <!-- Grid row -->
+
+  <div class="row mt-5">
+      <div class="col-xs-12 col-sm-6 col-offset-sm-3">
+        <h5>Why do we have account requests instead of automated signup?</h5>
+        <p>One of the biggest values of Facet is that it facilitates collaborative work with
+        people who value quality journalism.</p>
+        <p>To help maintain a community of people with this shared value, we're working shared
+        to ensure that bots, scammers, trolls, and shell newsrooms aren't in this space.</p>
+        <p>For more details about this and other policies, check out our FAQ and About</p>
+      </div>
+  </div>
+
+
+
+</div>
+
+{% endblock %}

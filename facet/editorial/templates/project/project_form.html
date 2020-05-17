@@ -14,7 +14,16 @@
       <div class="col-xs-12">
         <div class="login-page text-center animated fadeIn delay-1000">
           <h6 class="cover-heading center">Project Form</h6>
+          <form id="project_form" method="POST" class="post-form forms-basic">{% csrf_token %}
           {{ form.as_p }}
+
+          <button form="project_form" type="submit" class="save btn btn-default">Save</button>
+          {% if project %}
+          <a href="{% url 'editorial:project_detail' project.id %}"><button class="btn btn-danger-100">Cancel</button></a>
+          {% else %}
+          <a href="{% url 'base:dashboard' %}"><button class="btn btn-light">Cancel</button></a>
+          {% endif %}
+          </form>
         </div>
       </div>
     </div>
