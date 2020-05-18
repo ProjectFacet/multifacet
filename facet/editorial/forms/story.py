@@ -23,14 +23,10 @@ class StoryForm(forms.ModelForm):
         story = kwargs.pop("story", None)
         super(StoryForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['partner_with'].queryset = entity.get_partners_vocab()
-            self.fields['share_with'].queryset = entity.get_distribution_vocab()
-            self.fields['project'].queryset = entity.get_projects_vocab()
-        elif participant:
-            self.fields['partner_with'].queryset = participant.get_partners_vocab()
-            self.fields['share_with'].queryset = participant.get_distribution_vocab()
-            self.fields['project'].queryset = participant.get_projects_vocab()
+        # if entity:
+        #     self.fields['partner_with'].queryset = entity.get_partners_vocab()
+        # elif participant:
+        #     self.fields['partner_with'].queryset = participant.get_partners_vocab()
 
         self.fields['project'].empty_label = 'Optional: Add to Project'
 
@@ -51,35 +47,35 @@ class StoryForm(forms.ModelForm):
     class Meta:
         model = Story
         fields = ['name',
-                  'sketch',
+                  'desc',
                   'project',
                   'collaborate',
-                  'partner_with',
+                  # 'partner_with',
                   'embargo',
                   # 'embargo_datetime',
                   'sensitive',
                   'share',
                   'ready_to_share',
-                  'share_with',
+                  # 'share_with',
                   # 'share_with_date',
                   'archived',
                   ]
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Story Name'}),
-            'sketch': Textarea(
+            'desc': Textarea(
                 attrs={'class': 'form-control', 'placeholder': 'Description'}),
             'project': Select(attrs={'class':'mdb-select md-form colorful-select dropdown-ins', 'placeholder': 'Add to Project'}),
             'collaborate': CheckboxInput(),
-            'partner_with': ArrayFieldSelectMultiple(
-                attrs={'class': 'chosen-select form-control facet-select',
-                       'id': 'partner-with', 'data-placeholder': 'Select Partners'}),
+            # 'partner_with': ArrayFieldSelectMultiple(
+            #     attrs={'class': 'chosen-select form-control facet-select',
+            #            'id': 'partner-with', 'data-placeholder': 'Select Partners'}),
             'embargo': CheckboxInput(),
             'sensitive': CheckboxInput(),
             'share': CheckboxInput(),
             'ready_to_share': CheckboxInput(),
-            'share_with': ArrayFieldSelectMultiple(
-                attrs={'class': 'chosen-select form-control facet-select',
-                       'id': 'partner-with', 'data-placeholder': 'Select Recipients'}),
+            # 'share_with': ArrayFieldSelectMultiple(
+            #     attrs={'class': 'chosen-select form-control facet-select',
+            #            'id': 'partner-with', 'data-placeholder': 'Select Recipients'}),
             'archived': CheckboxInput(),
         }
 

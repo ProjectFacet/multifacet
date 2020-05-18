@@ -1,4 +1,4 @@
-{% extends 'base_editorial.html' %}
+{% extends 'story/base_story.html' %}
 {% load i18n %}
 
 {% load static %}
@@ -7,15 +7,54 @@
 <!--            Main Section                -->
 <!-------------------------------------------->
 
-{% block content %}
+{% block story_detail %}
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="login-page text-center animated fadeIn delay-1000">
-          <h6 class="cover-heading center">Story Detail</h6>
+  <div class="row">
+    <div class="col-2">
+
+    </div>
+    <div class="col-10">
+      <div class="row">
+        <div class="col-6">
+          <h5>Details</h5>
+
+        </div>
+        <div class="col-6">
+          <h5>Discussion</h5>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-6">
+          <h5>Items</h5>
+          {% for item in view.items %}
+          <p>{{ item.name }}</p>
+          {% endfor %}
+
+        </div>
+        <div class="col-6">
+          <h5>Calendar</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <h5>Item Media</h5>
+        </div>
+        <div class="col-6">
+          <h5>Notes</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <h5>Story Assets</h5>
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+
     </div>
   </div>
 

@@ -1,7 +1,7 @@
 """Forms for Projects and related entities."""
 
 from django import forms
-from django.forms import Textarea, TextInput, CheckboxInput
+from django.forms import Textarea, TextInput, CheckboxInput, Select
 
 from editorial.models import (
     Project,
@@ -30,11 +30,11 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        # fields = ['name', 'sketch', 'collaborate', 'partner_with']
-        fields = ['name', 'sketch', 'collaborate']
+        # fields = ['name', 'desc', 'collaborate', 'partner_with']
+        fields = ['name', 'desc', 'collaborate']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Project Name'}),
-            'sketch': Textarea(
+            'desc': Textarea(
                 attrs={'class': 'form-control', 'placeholder': 'Description'}),
             'collaborate': CheckboxInput(),
             # 'partner_with': ArrayFieldSelectMultiple(

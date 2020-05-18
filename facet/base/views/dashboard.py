@@ -7,9 +7,7 @@ from django.views.generic import UpdateView, DetailView, CreateView, View, Templ
 
 # import models
 
-
 # import forms
-
 
 # Index page of entire app projectfacet.com/
 class LandingTemplateView(TemplateView):
@@ -17,7 +15,6 @@ class LandingTemplateView(TemplateView):
     that is appropriate for their goals."""
 
     template_name = 'landing.html'
-
 
 
 class DashboardDeterminationView(LoginRequiredMixin, TemplateView):
@@ -41,7 +38,6 @@ class DashboardDeterminationView(LoginRequiredMixin, TemplateView):
             return redirect('freelance:dashboard_freelance')
         else:
             return redirect('dashboard_account_requested')
-
 
 
 class PreAccountApprovalDashboardView(LoginRequiredMixin, TemplateView):

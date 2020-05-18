@@ -54,10 +54,11 @@ class Project(models.Model):
         help_text='The name identifying the project.'
     )
 
-    sketch = models.TextField(
+    desc = models.TextField(
         blank=True,
-        help_text='Short description of a project.',
+        help_text='Short description of a story.'
     )
+
 
     creation_date = models.DateTimeField(
         auto_now_add=True,
@@ -114,7 +115,7 @@ class Project(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('project_detail', kwargs={'pk': self.id})
+        return reverse('editorial:project_detail', kwargs={'pk': self.id})
 
     @property
     def description(self):

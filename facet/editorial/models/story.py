@@ -1,5 +1,5 @@
 import time as timemk
-# from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 # from django.db.models import Q
 # from django.shortcuts import get_object_or_404
@@ -57,10 +57,11 @@ class Story(models.Model):
         help_text='The name by which the story is identified.'
     )
 
-    sketch = models.TextField(
-        help_text="Short description of the story.",
+    desc = models.TextField(
         blank=True,
+        help_text='Short description of the story.'
     )
+
 
     original = models.BooleanField(
         default=True,
@@ -146,8 +147,8 @@ class Story(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('story_detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse('editorial:story_detail', kwargs={'pk': self.id})
 
     @property
     def description(self):

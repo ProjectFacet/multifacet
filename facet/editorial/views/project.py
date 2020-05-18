@@ -9,6 +9,7 @@ ProjectListView: List of projects appropriate for context.
                                           NewsOrganizationNetwork
     - A FreelanceJournalist would see:
         /dashboard/projects: all projects they are included in as a partner
+
 ProjectCreateView: View that handles creating a new Project
 ProjectUpdateView: View that handles updating a Project's attributes
 ProjectTeamUpdateView: View to edit a Project's team
@@ -16,12 +17,15 @@ ProjectDeleteView: View to delete a Project. A project can be deleted by Partici
     who created it or by an admin of the entity the project is associated with.
 ProjectDetailView: View that presents all of the details and associations for a Project
 ProjectAssetTemplateView: Presents asset library of a Project
-ProjectStoryListTemplateView: Presents list of stories associated with a Project
-
+ProjectStoryView: Presents list of stories associated with a Project
+ProjectTaskView: Presents all tasks associated with a Project
+ProjectNoteView: Presents all notes associated with a Project
+ProjectScheduleView: Presents all calendar items associated with a Project
 
 """
 
 from django.shortcuts import render
+from django.shortcuts import redirect
 from braces.views import LoginRequiredMixin, FormMessagesMixin
 from django.views.generic import TemplateView, UpdateView, DetailView, ListView, CreateView, DeleteView, FormView, View
 
@@ -78,7 +82,8 @@ class ProjectCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
         self.object.participant_owner = participant
         if participant.staffjournalist:
             entity = participant.staffjournalist.newsorganization
-            self.object.entity_owner = entity
+            eo = entity.entity_owner_profile
+            self.object.entity_owner = eo
         self.object.save()
         return redirect(self.object)
 
@@ -89,13 +94,14 @@ class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
     """
 
     model = Project
-    template_name = 'project/project_overview.html'
+    template_name = 'project/project_detail.html'
 
     def get_form_kwargs(self):
-        """Pass entity, participant to form."""
+        """Pass entity_owner, participant_owner to form."""
 
         kw = super(ProjectDetailView, self).get_form_kwargs()
-        kw.update({'entity_owner': self.request.user.organization})
+        if self.object.entity_owner:
+            kw.update({'entity_owner': self.object.entity_owner})
         if self.object.participant_owner == self.request.user:
             kw.update({'participant_owner': self.request.user})
         return kw
@@ -103,7 +109,7 @@ class ProjectDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
     def stories(self):
         """Get all stories associated with project."""
 
-        return self.object.story_set.filter(original=True).all()
+        return self.object.story_set.all()
 
     def assets(self):
         """Retrieve all assets associated with a project through story items."""
@@ -190,7 +196,7 @@ class ProjectUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
     form_class = ProjectForm
 
     form_invalid_message = "Something went wrong."
-    form_valid_message = "Project created."
+    form_valid_message = "Project updated."
 
     def get_form_kwargs(self):
         """Pass entity, participant to form."""

@@ -32,7 +32,7 @@ urlpatterns = [
     path('story/list/', story.StoryListView.as_view(), name='story_list'),
     path('story/<pk>/team/edit/', story.StoryTeamUpdateView.as_view(), name='story_team_edit'),
 
-    path('story/<pk>/stories/', story.StoryStoryView.as_view(), name='story_stories'),
+    path('story/<pk>/items/', story.StoryItemView.as_view(), name='story_items'),
     path('story/<pk>/assets/', story.StoryAssetView.as_view(), name='story_assets'),
     path('story/<pk>/tasks/', story.StoryTaskView.as_view(), name='story_tasks'),
     path('story/<pk>/notes/', story.StoryNoteView.as_view(), name='story_notes'),
