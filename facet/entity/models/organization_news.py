@@ -277,47 +277,84 @@ class NewsOrganization(BaseOrganization):
         return "News Organization"
 
 
+    def get_staff_team(self):
+        """Return participants of an organization."""
+
+        return [staffjournalist.participant for staffjournalist in self.staffjournalist_set.all()]
+
+
+    def get_freelance_team(self):
+        """Return freelancers associated with an organization."""
+
+        return [freelancejournalist.participant for freelancejournalist in self.freelanceraffiliationrecord_set.all()]
+
+
     def get_networks(self):
         """Retrieve networks that the newsorganization manages or is a member of."""
 
-        # from .network_newsorganization import NewsOrganizationNetwork
-        # networks = NewsOrganizationNetwork.objects.filter(Q(Q(entity_owner=self.entity_owner_profile) | Q(members=self.network_member_profile)))
-        # return networks
-
-        pass
-
-    def get_partners_vocab(self):
-        """Retrieve appropriate partners for the newsorganization."""
-
-        pass
-
-        # partners = []
-        # # get networks newsorganization is affiliated with as owner or member
-        # networks = self.get_networks()
-        # # get all member and owner associations of the networks
-        # for network in networks:
-        #     members = network.get_member_newsorganizations()
-        #     #FIXME exclude self
-        # partners.extend(associations)
-        # return partners
+        return NewsOrganizationNetwork.objects.filter(Q(Q(entity_owner=self.entity_owner_profile) | Q(member=self.network_member_profile)))
 
 
-    def get_org_team_vocab(self):
-        """Retrieve team for newsorganization. These are all the staff journalists
-        associated with the organization.
+    def get_partner_vocab(self):
+        """
+        Returns partner_profiles of networks, entities and participents eligible for partnering.
+        Any Network the NewsOrganization is a member or owner of.
+        Any connections of the NewsOrganization.
         """
 
-        pass
-        # return StaffJournalist.objects.filter(newsorganization=self)
+        connections_and_networks = []
+        connections = self.connections
+        networks = NewsOrganization.get_networks(self)
+        network_partner_profiles = [network.partner_profile for network in networks]
+        connections_and_networks.extend(connections)
+        connections_and_networks.extend(network_partner_profiles)
+        return connections_and_networks
 
 
-    # def get_org_verified_freelancers(self):
-    #
-    #     verified_freelancers = FreelanceJournalist.objects.filter()
+    def get_projects(self):
+        """Retrieve projects owned by a news organization."""
+
+        return Project.objects.filter(entity_owner=self.entity_owner_profile)
 
 
+    def get_collaborative_projects(self):
+        """Retrieve collaborative projects owned by another entity but partnered
+        on."""
+
+        return Project.objects.filter(partner_with=self.partner_profile)
 
 
+    def get_item_templates(self):
+        """Return queryset of item templates that should be available."""
+
+        from editorial.models import ItemTemplate
+
+        return ItemTemplate.objects.filter(Q(sitewide=True) | Q(entity_owner=self.entity_owner_profile) & Q(is_active=True))
+
+
+    def get_image_library(self):
+        """Retrieve appropriate image library."""
+
+        return ImageAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+    def get_document_library(self):
+        """Retrieve appropriate document library."""
+
+        return DocumentAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+    def get_audio_library(self):
+        """Retrieve appropriate audio library."""
+
+        return AudioAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+    def get_video_library(self):
+        """Retrieve appropriate video library."""
+
+        return VideoAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
 
 
 

@@ -13,7 +13,12 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="login-page text-center animated fadeIn delay-1000">
-          <h6 class="cover-heading center">Item Template Delete</h6>
+          <h6 class="cover-heading center">{{ itemtemplate }} Delete</h6>
+
+            <form method="POST" class="post-form">
+              {% csrf_token %}
+              <input type="submit" value="Delete">
+            </form>
         </div>
       </div>
     </div>

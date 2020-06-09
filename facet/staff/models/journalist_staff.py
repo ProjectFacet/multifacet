@@ -82,6 +82,26 @@ class StaffJournalist(models.Model):
         return "Staff Journalist"
 
 
+    def get_projects(self):
+        """Return list of all project a staff journalist is associated with."""
+
+        participant = self.participant
+        projects_owner = participant.participant_owner.all()
+        projects_team = participant.project_team_member.all()
+        staff_journalist_projects = []
+        staff_journalist_projects.extend(projects_owner)
+        staff_journalist_projects.extend(projects_team)
+        return staff_journalist_projects
+
+
+    def get_itemtemplates(self):
+        """Return queryset of item templates that should be available."""
+
+        from editorial.models import ItemTemplate
+
+        return ItemTemplate.objects.filter(Q(sitewide=True) | Q(participant_owner=self.participant) & Q(is_active=True))
+
+
     # def get_staffjournalist_content(self):
     #     """Return list of all content staff journalist is associated with as
     #     owner, editor or credit.

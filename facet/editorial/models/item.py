@@ -149,6 +149,7 @@ class Item(models.Model):
 
     content_license = models.ForeignKey(
         ContentLicense,
+        blank=True,
         null=True,
         on_delete = models.SET_NULL,
     )
@@ -382,22 +383,79 @@ class Item(models.Model):
     #     print "new id", self.id
     #     return self
 
-    # def get_item_images(self):
-    #     """Retrieve all images objects associated with an item."""
-    #
-    #     return self.image_assets.all()
+    def get_item_images(self):
+        """Retrieve all images objects associated with an item."""
+        return self.image_assets.all()
 
-    # def get_item_documents(self):
-    #     """Retrieve all documents objects associated with an item."""
-    #     return self.document_assets.all()
+    def get_item_documents(self):
+        """Retrieve all documents objects associated with an item."""
+        return self.document_assets.all()
 
-    # def get_item_audio(self):
-    #     """Retrieve all audio objects associated with an item."""
-    #     return self.audio_assets.all()
+    def get_item_audio(self):
+        """Retrieve all audio objects associated with an item."""
+        return self.audio_assets.all()
 
-    # def get_item_video(self):
-    #     """Retrieve all video objects associated with an item."""
-    #     return self.video_assets.all()
+    def get_item_video(self):
+        """Retrieve all video objects associated with an item."""
+        return self.video_assets.all()
+
+    def get_image_library(self):
+        """Retrieve appropriate image library for an item."""
+
+        # if self.entity_owner, use the image library of the entity
+        if self.entity_owner:
+            if self.entity_owner.type=='NEWSORGANIZATION':
+                image_library = NewsOrganization.get_image_library(self.entity_owner.newsorganization)
+            if self.entity_owner.type=='NEWSORGANIZATIONNETWORK':
+                image_library = NewsOrganizationNetwork.get_image_library(self.entity_owner.newsorganization)
+        # else use library available to participant
+        else:
+            image_library = Participant.get_image_library(self.participant_owner)
+        # FIXME account for visibility of library to partner
+
+    def get_document_library(self):
+        """Retrieve appropriate document library for an item."""
+
+        # if self.entity_owner, use the document library of the entity
+        if self.entity_owner:
+            if self.entity_owner.type=='NEWSORGANIZATION':
+                document_library = NewsOrganization.get_document_library(self.entity_owner.newsorganization)
+            if self.entity_owner.type=='NEWSORGANIZATIONNETWORK':
+                document_library = NewsOrganizationNetwork.get_document_library(self.entity_owner.newsorganization)
+        # else use library available to participant
+        else:
+            document_library = Participant.get_document_library(self.participant_owner)
+        # FIXME account for visibility of library to partner
+
+    def get_audio_library(self):
+        """Retrieve appropriate audio library for an item."""
+
+        # if self.entity_owner, use the audio library of the entity
+        if self.entity_owner:
+            if self.entity_owner.type=='NEWSORGANIZATION':
+                audio_library = NewsOrganization.get_audio_library(entity_owner.newsorganization)
+            if self.entity_owner.type=='NEWSORGANIZATIONNETWORK':
+                audio_library = NewsOrganizationNetwork.get_audio_library(entity_owner.newsorganization)
+        # else use library available to participant
+        else:
+            audio_library = Participant.get_audio_library(self.participant_owner)
+        # FIXME account for visibility of library to partner
+
+    def get_video_library(self):
+        """Retrieve appropriate video library for an item."""
+
+        # if self.entity_owner, use the video library of the entity
+        if self.entity_owner:
+            if self.entity_owner.type=='NEWSORGANIZATION':
+                video_library = NewsOrganization.get_video_library(entity_owner.newsorganization)
+            if self.entity_owner.type=='NEWSORGANIZATIONNETWORK':
+                video_library = NewsOrganizationNetwork.get_video_library(entity_owner.newsorganization)
+        # else use library available to participant
+        else:
+            video_library = Participant.get_video_library(self.participant_owner)
+        # FIXME account for visibility of library to partner
+
+
 
     # def get_item_download(self):
     #     """ Return rst formatted string for downloading item and its meta."""

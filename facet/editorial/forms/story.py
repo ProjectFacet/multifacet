@@ -23,10 +23,10 @@ class StoryForm(forms.ModelForm):
         story = kwargs.pop("story", None)
         super(StoryForm, self).__init__(*args, **kwargs)
 
-        # if entity:
-        #     self.fields['partner_with'].queryset = entity.get_partners_vocab()
-        # elif participant:
-        #     self.fields['partner_with'].queryset = participant.get_partners_vocab()
+        if entity:
+            self.fields['partner_with'].queryset = entity.get_partners_vocab()
+        elif participant:
+            self.fields['partner_with'].queryset = participant.get_partners_vocab()
 
         self.fields['project'].empty_label = 'Optional: Add to Project'
 
@@ -93,7 +93,9 @@ class StoryTeamForm(forms.ModelForm):
         story = kwargs.pop("story", None)
         super(StoryTeamForm, self).__init__(*args, **kwargs)
 
-        if entity:
+        if story:
+            self.fields['team'].queryset = story.get_team_vocab()
+        elif entity:
             self.fields['team'].queryset = entity.get_team_vocab()
         elif participant:
             self.fields['team'].queryset = participant.get_team_vocab()

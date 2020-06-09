@@ -48,14 +48,88 @@ class NewsOrganizationNetwork(BaseNetwork):
     # def get_absolute_url(self):
     #     return reverse('network_detail', kwargs={'pk': self.id})
 
-    def get_member_newsorganizations(self):
+    #FIXME Consider how a network may be a member or partner to others
+    def get_partner_vocab(self):
+        """
+        Returns partner_profiles of networks, entities and participents eligible for partnering.
+        Any Network the NewsOrganizationNetwork is a partner of.
+        """
+
+        # connections_and_networks = []
+        # connections = self.connections
+        # networks = NewsOrganizationNetwork.get_networks(self)
+        # network_partner_profiles = [network.partner_profile for network in networks]
+        # connections_and_networks.extend(connections)
+        # connections_and_networks.extend(network_partner_profiles)
+        return []
+
+
+    def convert_members_to_partners(self):
+        """Retrieve partner_profiles of a network's members."""
+
+        # get network members
+        members = self.member_set.all()
+        # get network member actuals
+        newsorganizations = [member.newsorganization for member in members]
+        # get partner_profiles of member actuals
+        # partner_profiles = [newsorganization.partner_profile for newsorganization in newsorganizations]
+        partner_profiles = Partner.objects.filter(Q(self.newsorganization__in==newsorganizations))
+
+        return partner_profiles
+
+
+    def get_associated_newsorganizations(self):
         """Return member newsorganizations and owners."""
 
-        # organizations = NewsOrganization.objects.filter(Q(network_member_profile__in=self.members) | Q(entity_owner_profile=self.entity_owner))
-        # # organizations = NewsOrganization.objects.filter(Q(network_member_profile=self.members))
-        #
-        # return organizations
-        pass
+        return NewsOrganization.objects.filter(Q(network_member_profile__in=self.members) | Q(entity_owner_profile=self.entity_owner))
+
+
+    def get_projects(self):
+        """Retrieve projects owned by a news organization network."""
+
+        return Project.objects.filter(entity_owner=self.entity_owner_profile)
+
+
+    def get_collaborative_projects(self):
+        """Retrieve collaborative projects owned by another entity but partnered
+        on."""
+
+        return Project.objects.filter(partner_with=self.partner_profile)
+
+
+    def get_item_templates(self):
+        """Return queryset of item templates that should be available."""
+
+        from editorial.models import ItemTemplate
+
+        return ItemTemplate.objects.filter(Q(sitewide=True) | Q(entity_owner=self.entity_owner_profile) & Q(is_active=True))
+
+
+    def get_image_library(self):
+        """Retrieve appropriate image library."""
+
+        return ImageAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+    def get_document_library(self):
+        """Retrieve appropriate document library."""
+
+        return DocumentAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+    def get_audio_library(self):
+        """Retrieve appropriate audio library."""
+
+        return AudioAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+    def get_video_library(self):
+        """Retrieve appropriate video library."""
+
+        return VideoAsset.objects.filter(entity_owner==self.entity_owner_profile)
+        # FIXME account for visibility of library to partner
+
+
 
     # def get_network_shared_stories(self):
     #     """ Return list of stories shared with a network.

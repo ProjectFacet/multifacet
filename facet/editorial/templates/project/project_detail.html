@@ -17,6 +17,7 @@
       <div class="row">
         <div class="col-6">
           <h5>Details</h5>
+          <a href="{% url 'editorial:project_update' project.id %}">Edit Project</a>
 
         </div>
         <div class="col-6">
@@ -38,7 +39,7 @@
         <div class="col-6">
           <h5>Stories</h5>
           {% for story in view.stories %}
-          <p>{{ story.name }}</p>
+          <a href="{% url 'editorial:story_detail' story.id %}">{{ story.name }}</a>
           {% endfor %}
         </div>
         <div class="col-6">

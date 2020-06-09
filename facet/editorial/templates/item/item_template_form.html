@@ -9,14 +9,466 @@
 
 {% block content %}
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="login-page text-center animated fadeIn delay-1000">
-          <h6 class="cover-heading center">Item Template Form</h6>
-        </div>
-      </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      {% if itemtemplate %}
+      <h4>Template: {{ itemtemplate.entity_owner.name }}</h4>
+      {% else %}
+      <h4>Create new item template</h4>
+      {% endif %}
     </div>
   </div>
+
+{% if itemtemplate.entity_owner or not itemtemplate %}
+
+  <form method="POST">
+    {% csrf_token %}
+    <div class="row">
+      <!-- Left Column -->
+      <div class="col-xs-12 col-md-3">
+        <!-- Name -->
+        <div class="md-form form-group mt-5">
+          {{ form.name }}
+          {% if form.name.errors %}
+          <small class="text-muted">{{ form.name.errors }}</small>
+          {% endif %}
+          <label>{{ form.name.label_tag }}</label>
+        </div>
+        <!-- Description -->
+        <div class="md-form form-group mt-5">
+          {{ form.description }}
+          {% if form.description.errors %}
+          <small class="text-muted">{{ form.description.errors }}</small>
+          {% endif %}
+          <label>{{ form.description.label_tag }}</label>
+        </div>
+        <!-- Active -->
+        <div class="form-check">
+          {{ form.is_active }}
+          {% if form.is_active.errors %}
+          <small class="text-muted">{{ form.is_active.errors }}</small>
+          {% endif %}
+            <label class="form-check-label" for="materialUnchecked">{{ form.is_active.label_tag }}</label>
+        </div>
+        <!-- Default Fields -->
+        <div class="row mt-5">
+          <p class="f-s-14 f-w-400 slim-margin mb-3">Default Fields</p>
+          <p class="f-s-12 f-w-300 mb-3 color-default">Included for all items. Select Base Template to use <span class="f-w-600">only</span> these fields.</p>
+          <div class="col-xs-12 col-sm-6">
+            <p>
+              <span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Name</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Headline</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Credit</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Editor</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Description</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Content</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Keywords</span>
+            </p>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <p>
+              <span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Status</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Due for Edit</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Run Date</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Images</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Documents</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Audio</span>
+              <br><span class="sameline subtle"><i class="fa fa-check-square subtle" aria-hidden="true"></i> </span><span class="f-s-12 f-w-300 slim-margin m-l-5 m-b-10"> Video</span>
+            </p>
+          </div>
+        </div>
+        <!-- Save -->
+        <input type="hidden" name="itemtemplate.entity_owner" value="{{ itemtemplate.entity_owner.owner_id }}" />
+        <button type="submit" class="btn btn-info content-bottom-10 btn btn-block no-border m-t-20" name="form">Save</button>
+
+      </div>
+      <!-- Right Column Column -->
+      <div class="col-xs-12 col-md-9">
+        <!-- If fields are editable - A non-sitewide template -->
+        <div class="row">
+          <p>Fields</p>
+          <p>Select fields to include in template</p>
+        </div>
+        <div class="row">
+          <!-- Outer Left Column-->
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            {% if "excerpt" in itemtemplate.fields_used %}
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Excerpt</label>
+              </div>
+            {% else %}
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Excerpt</label>
+              </div>
+            {% endif %}
+            {% if "update_note" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Update Note</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Update Note</label>
+            </div>
+            {% endif %}
+            {% if "share_note" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Share Note</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Share Note</label>
+            </div>
+            {% endif %}
+            {% if "edit_note" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Edit Note</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Edit Note</label>
+            </div>
+            {% endif %}
+            {% if "dateline" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Dateline</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Dateline</label>
+            </div>
+            {% endif %}
+            {% if "topic_code" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Topic Code</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Topic Code</label>
+            </div>
+            {% endif %}
+            {% if "internal_code" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Internal Code</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Internal Code</label>
+            </div>
+            {% endif %}
+            {% if "content_license" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Content License</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" >
+              <label class="form-check-label" for="materialUnchecked">Content License</label>
+            </div>
+            {% endif %}
+          </div>
+          <!-- Inner Left Column-->
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            {% if "length" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Length</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Length</label>
+            </div>
+            {% endif %}
+            {% if "wordcount" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Wordcount</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Wordcount</label>
+            </div>
+            {% endif %}
+            {% if "related_links" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Related Links</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Related Links</label>
+            </div>
+            {% endif %}
+            {% if "github_link" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Github Link</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Github Link</label>
+            </div>
+            {% endif %}
+            {% if "embeds" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Embeds</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Embeds</label>
+            </div>
+            {% endif %}
+            {% if "sources" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Sources</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Sources</label>
+            </div>
+            {% endif %}
+            {% if "pronounciations" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Pronounciations</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Pronounciations</label>
+            </div>
+            {% endif %}
+            {% if "sponsors" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Sponsors</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Sponsors</label>
+            </div>
+            {% endif %}
+          </div>
+          <!-- Inner Right Column-->
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            {% if "pull_quotes" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Pull Quotes</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Pull Quotes</label>
+            </div>
+            {% endif %}
+            {% if "sidebar_content" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Sidebar Content</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Sidebar Content</label>
+            </div>
+            {% endif %}
+            {% if "producer" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Producer</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Producer</label>
+            </div>
+            {% endif %}
+            {% if "series_title" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Series Title</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Series Title</label>
+            </div>
+            {% endif %}
+            {% if "episode_number" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Episode Number</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Episode Number</label>
+            </div>
+            {% endif %}
+            {% if "usage_rights" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Usage Rights</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Usage Rights</label>
+            </div>
+            {% endif %}
+            {% if "tape_datetime" in itemtemplate.fields_used %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" checked>
+                <label class="form-check-label" for="materialUnchecked">Tape DateTime</label>
+            </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Tape DateTime</label>
+            </div>
+            {% endif %}
+            {% if "locations" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Locations</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Locations</label>
+            </div>
+            {% endif %}
+          </div>
+          <!-- Outer Right Column-->
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            {% if "custom_one" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Custom One</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Custom One</label>
+            </div>
+            {% endif %}
+            {% if "custom_two" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Custom Two</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Custom Two</label>
+            </div>
+            {% endif %}
+            {% if "custom_three" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Custom Three</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Custom Three</label>
+            </div>
+            {% endif %}
+            {% if "custom_four" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Custom Four</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Custom Four</label>
+            </div>
+            {% endif %}
+            {% if "custom_five" in itemtemplate.fields_used %}
+              <div class="form-check">
+                  <input type="checkbox" class="form-check-input" checked>
+                  <label class="form-check-label" for="materialUnchecked">Custom Five</label>
+              </div>
+            {% else %}
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label" for="materialUnchecked">Custom Five</label>
+            </div>
+            {% endif %}
+          </div>
+      </div>
+
+
+    </div>
+  </form>
+
+
+{% else %}
+
+<div class="row m-t-50">
+  <div class="col-xs-12">
+    <p class="f-r-10 f-w-300 text-center">Sorry, but you are not allowed to edit this template.</p>
+  </div>
+</div>
+{% endif %}
+
+
+  <!-- ================================================= -->
+                    <!-- JS SCRIPTS -->
+  <!-- ================================================= -->
+
+  <script>
+    $(".chosen-select").chosen()
+  </script>
+
+  <!-- Item Delete Confirmation alerts -->
+  <script>
+    $('.itemtemplate.entity_owner-delete a').on('click', function(e) {
+         e.preventDefault();
+            swal({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this item template. Do not delete templates associated with items until you select a new template for the item.',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                closeOnConfirm: true
+            }, function(result) {
+                if (result) {
+                  $(".itemtemplate.entity_owner-delete").attr("method", "POST").submit();
+                } else {
+                  // do nothing on cancel
+              }
+            });
+          });
+  </script>
+
 
 {% endblock %}

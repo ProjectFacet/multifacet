@@ -28,7 +28,7 @@
         <div class="col-6">
           <h5>Items</h5>
           {% for item in view.items %}
-          <p>{{ item.name }}</p>
+          <a href="{% url 'editorial:item_update' pk=item.id story=story.id  %}">{{ item.name }}</a>
           {% endfor %}
 
         </div>

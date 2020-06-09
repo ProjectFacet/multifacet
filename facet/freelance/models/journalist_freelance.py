@@ -100,6 +100,34 @@ class FreelanceJournalist(models.Model):
         return "Freelance Journalist"
 
 
+    def get_partner_vocab(self):
+        """Retrieve eligible partners.
+        Returns individual partner connections.
+        """
+
+        return self.connections
+
+
+    def get_projects(self):
+        """Return list of all project a freelancer is associated with."""
+
+        participant = self.participant
+        projects_owner = participant.participant_owner.all()
+        projects_team = participant.project_team_member.all()
+        freelance_journalist_projects = []
+        freelance_journalist_projects.extend(projects_owner)
+        freelance_journalist_projects.extend(projects_team)
+        return freelance_journalist_projects
+
+
+    def get_itemtemplates(self):
+        """Return queryset of item templates that should be available."""
+
+        from editorial.models import ItemTemplate
+
+        return ItemTemplate.objects.filter(Q(sitewide=True) | Q(participant_owner=self.participant) & Q(is_active=True))
+
+
     # def get_active_assignments(self):
     #     """Return all active assignment."""
     #     return self.assignment_set.filter(complete=False)

@@ -3,7 +3,7 @@ from django.db import models
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from .call import Call
-from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
+# from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
 
 
 class Pitch(models.Model):
@@ -69,10 +69,12 @@ class Pitch(models.Model):
     )
 
     # simple assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
+    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
+    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
+    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
+
+    tags = models.ManyToManyField('editorial.Tag', blank=True)
 
     class Meta:
         verbose_name = 'Freelance Pitch'

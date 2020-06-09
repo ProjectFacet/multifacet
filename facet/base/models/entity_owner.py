@@ -72,13 +72,25 @@ class EntityOwner(models.Model):
         return "Entity Owner Profile"
 
 
-    def get_partners_vocab(self):
+    def get_partner_vocab(self):
         """Retrieve appropriate partners for the entity."""
 
         if self.newsorganization:
-            partners = self.newsorganization.get_partners_vocab()
+            partners = self.newsorganization.get_partner_vocab()
             return partners
 
         if self.newsorganizationnetwork:
-            partners = self.newsorganizationnetwork.get_partners_vocab()
+            partners = self.newsorganizationnetwork.get_partner_vocab()
             return partners
+
+
+    def get_item_templates(self):
+        """Retrieve appropriate item templates for the entity."""
+
+        if self.newsorganization:
+            templates = self.newsorganization.get_item_templates()
+            return templates
+
+        if self.newsorganizationnetwork:
+            templates = self.newsorganizationnetwork.get_item_templates()
+            return templates

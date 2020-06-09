@@ -17,6 +17,986 @@
         </div>
       </div>
     </div>
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-10">
+      <h5>Details
+      {% if item %}
+      <form class="item-delete sameline" method="GET"
+            action="{% url 'editorial:item_delete' pk=item.id story=item.story.id %}">
+            <!-- onsubmit="return confirm('Do you want to delete this task?')"> -->
+            {% csrf_token %}
+        <a href="javascript:$('.item-delete').submit();" title="Delete this item"><i class="fa fa-trash subtle m-l-20" aria-hidden="true"></i></a>
+        <!-- <input type="submit" class="btn btn-sm btn-danger-100" value="Delete"> -->
+      </form>
+        {% if item.template.organization %}
+        <a href="{% url 'editorial:item_template_edit' pk=item.template.id %}" title="Edit item template"><i class="fa fa-pencil-square-o m-l-20 subtle" aria-hidden="true"></i></a>
+        {% else %}
+        <a href="{% url 'editorial:item_template_detail' pk=item.template.id %}" title="View item template"><i class="fa fa-info-square m-l-20 subtle" aria-hidden="true"></i></a>
+        {% endif %}
+
+      {% endif %}
+      </h5>
+        <form method="POST" class="post-form">
+            {% csrf_token %}
+            <div class="row">
+                <!-- ================================================= -->
+                        <!-- BASE FORM FIELDS-->
+                <!-- ================================================= -->
+                <!-- Left column -->
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-3">
+
+                    <!-- Item Template -->
+                    <fieldset class="form-group m-b-20">
+                        <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.template.label_tag }}</label>
+                        {{ form.template }}
+                        {% if form.template.errors %}
+                          <small class="text-muted">{{ form.template.errors }}</small>
+                        {% endif %}
+                    </fieldset>
+
+                    <!-- Item Status -->
+                    <fieldset class="form-group m-b-20">
+                        <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.status.label_tag }}</label>
+                        {{ form.status }}
+                        {% if form.status.errors %}
+                          <small class="text-muted">{{ form.status.errors }}</small>
+                        {% endif %}
+                    </fieldset>
+
+                    <!-- Item Name -->
+                    <fieldset class="form-group m-b-10">
+                      <label class="f-s-12 f-s-400 spread-01 subtle slim-margin"> Label: </label>
+                      {{ form.name }}
+                      {% if form.name.errors %}
+                        <small class="text-muted">{{ form.name.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                    <!-- Item Description -->
+                    <fieldset class="form-group m-b-10">
+                      <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">Description</label>
+                      {{ form.description }}
+                      {% if form.description.errors %}
+                        <small class="text-muted">{{ form.description.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                    <!-- Item Due Edit -->
+                    <fieldset class="form-group m-b-10">
+                      <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.due_edit.label_tag }}</label>
+                      {{ form.due_edit }}
+                      {% if form.due_edit.errors %}
+                      <small class="text-muted">{{ form.due_edit.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                    <!-- Item Run Date -->
+                    <fieldset class="form-group m-b-10">
+                      <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.run_date.label_tag }}</label>
+                      {{ form.run_date }}
+                      {% if form.run_date.errors %}
+                      <small class="text-muted">{{ form.run_date.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                    <!-- Item Team -->
+                    <fieldset class="form-group m-b-10">
+                      <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.credit.label_tag }}</label>
+                      {{ form.credit }}
+                      {% if form.credit.errors %}
+                        <small class="text-muted">{{ form.credit.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                    <!-- Item Editor -->
+                    <fieldset class="form-group m-b-10">
+                      <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.editor.label_tag }}</label>
+                      {{ form.editor }}
+                      {% if form.editor.errors %}
+                        <small class="text-muted">{{ form.editor.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                </div>
+                <!-- Center column -->
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-9">
+                    <div class="row m-b-10">
+                        <div class="col-xs-12 col-md-8 col-lg-10">
+
+                            {% if not item %}
+                            <p class="f-r-8 color-info"><i class="fa fa-exclamation color-info"></i> Add a headline and click save to complete creation of this item.</p>
+                            {% endif %}
+
+                            <!-- Item Headline -->
+                            <fieldset class="form-group">
+                              {% comment %}
+                              <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.headline.label_tag }}</label>
+                              {% endcomment %}
+                              {{ form.headline }}
+                              {% if form.headline.errors %}
+                                <small class="text-muted">{{ form.headline.errors }}</small>
+                              {% endif %}
+                            </fieldset>
+
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-lg-2">
+                            <!-- Save Button -->
+                            <button type="submit" class="btn btn-info btn-sm btn-block" name="form">Save Changes</button>
+                        </div>
+                    </div>
+
+                    <!-- Item Content -->
+                    <fieldset class="form-group m-b-10">
+                      {{ form.content }}
+                      {% if form.content.errors %}
+                        <small class="text-muted">{{ form.content.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                    <!-- Item Keywords -->
+                    <fieldset class="form-group m-b-10">
+                      {% comment %}<label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ form.keywords.label_tag }}</label>{% endcomment %}
+                      {{ form.keywords }}
+                      {% if form.keywords.errors %}
+                        <small class="text-muted">{{ form.keywords.errors }}</small>
+                      {% endif %}
+                    </fieldset>
+
+                </div>
+            </div>
+            <!-- ================================================= -->
+                      <!-- ASSETS -->
+            <!-- ================================================= -->
+            {% if item %}
+              <div class="row m-t-20">
+                      <!-- Image Assets -->
+                      {% with view.item_image_assets as item_images %}
+                      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <p class="f-r-12 f-w-300 m-b-20">Images <a href="#" data-toggle="modal" data-target="#ImageAssetModal" data-item="item_image" title="Add Image"><i class="fa fa-plus sameline subtle"></i></a></p>
+                        <div id="image-thumbs">
+                          <div class="row m-b-10">
+                            {% for image in item_images.images %}
+                              {% if image.display_photo %}
+                                <div class="col-xs-4 hover-remove-{{image.id}}">
+                                  <!-- Image thumbnail and link to item image gallery -->
+                                  <a href="{{ image.display_photo.url }}" class="thumbnail"><img src="{{ image.display_photo.url }}" alt="{{ image.description }}" class="img-fluid"></a>
+                                  <!-- Opens modal to remove image -->
+                                  <button type="button" class="btn btn-sm clear-button f-r-6 subtle" title="Remove this image" data-toggle="modal" data-target="#removeImageModal" data-imageid="{{ image.id }}" data-imageurl="{{ image.display_photo.url }}" data-actionurl="{% url 'image_asset_remove' image=image.id item=item.id %}">Remove</button>
+                                </div>
+                                {% comment %}
+                                <script>
+                                  $(".hover-remove-{{image.id}}").mouseover(function() { $(".remove-image-link-{{image.id}}").css('visibility','visible'); });
+                                  $(".hover-remove-{{image.id}}").mouseout(function() { $(".remove-image-link-{{image.id}}").css('visibility','hidden'); });
+                                </script>
+                                {% endcomment %}
+                                {% if forloop.counter|divisibleby:"3" and not forloop.last %}
+                                  </div><div class="row m-b-10">
+                                {% endif %}
+                              {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div>
+                      </div>
+                      {% endwith %}
+                      <!-- Document Assets -->
+                      {% with view.item_document_assets as item_documents %}
+                      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <p class="f-r-12 f-w-300 m-b-20">Documents <a href="#" data-toggle="modal" data-target="#DocumentAssetModal" data-item="item_document" title="Add Document"><i class="fa fa-plus sameline subtle"></i></a></p>
+                        <div class="row">
+                        {% for document in item_documents.documents %}
+                        <div class="col-xs-12 col-md-6">
+                            <!-- Display of document title and icon -->
+                            {% if document.asset_type == 'OTHER' %}
+                                <a href="{% url 'editorial:document_asset_detail' document.id %}" title="{{ document.description }}" target="_blank"><p class="f-w-300 f-r-9 m-b-0"><i class="fa fa-file-o color-warning m-r-5"></i> {{ document.title }}</p></a>
+                            {% endif %}
+                            {% if document.asset_type == 'TEXT' %}
+                                <a href="{% url 'editorial:document_asset_detail' document.id %}" title="{{ document.description }}" target="_blank"><p class="f-w-300 f-r-9 m-b-0"><i class="fa fa-file-text-o color-primary m-r-5"></i> {{ document.title }}</p></a>
+                            {% endif %}
+                            {% if document.asset_type == 'WORD DOC' %}
+                                <a href="{% url 'editorial:document_asset_detail' document.id %}" title="{{ document.description }}" target="_blank"><p class="f-w-300 f-r-9 m-b-0"><i class="fa fa-file-word-o color-info m-r-5"></i> {{ document.title }}</p></a>
+                            {% endif %}
+                            {% if document.asset_type == 'EXCEL' %}
+                                <a href="{% url 'editorial:document_asset_detail' document.id %}" title="{{ document.description }}" target="_blank"><p class="f-w-300 f-r-9 m-b-0"><i class="fa fa-file-excel-o color-success m-r-5"></i> {{ document.title }}</p></a>
+                            {% endif %}
+                            {% if document.asset_type == 'PDF' %}
+                                <a href="{% url 'editorial:document_asset_detail' document.id %}" title="{{ document.description }}" target="_blank"><p class="f-w-300 f-r-9 m-b-0"><i class="fa fa-file-pdf-o color-danger m-r-5"></i> {{ document.title }}</p></a>
+                            {% endif %}
+                            {% if document.asset_type == 'COMMA SEPARATED' %}
+                                <a href="{% url 'editorial:document_asset_detail' document.id %}" title="{{ document.description }}" target="_blank"><p class="f-w-300 f-r-9 m-b-0"><i class="fa fa-file-o color-success m-r-5"></i> {{ document.title }}</p></a>
+                            {% endif %}
+                            <!-- Opens modal to remove document -->
+                            <button type="button"
+                                    class="btn btn-sm clear-button f-r-6 subtle m-b-10"
+                                    title="Remove this document"
+                                    data-toggle="modal"
+                                    data-target="#removeDocumentModal"
+                                    data-detailurl="{% url 'editorial:document_asset_detail' document.id %}"
+                                    data-actionurl="{% url 'editorial:document_asset_remove' document=document.id item=item.id %}"
+                                    data-doctitle="{{ document.title }}"
+                                    data-doctype="{{ document.asset_type }}">
+                                    Remove
+                            </button>
+                          {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+                        </div><div class="row">
+                          {% endif %}
+                        </div>
+                        {% endfor %}
+                        </div>
+                      </div>
+                      {% endwith %}
+                      <!-- Audio Assets -->
+                      {% with view.item_audio_assets as item_audio %}
+                      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <p class="f-r-12 f-w-300 m-b-20">Audio <a href="#" data-toggle="modal" data-target="#AudioAssetModal" data-item="item_audio" title="Add Audio"><i class="fa fa-plus sameline subtle"></i></a></p>
+                        {% for audio in item_audio.audio %}
+                        <div class="col-xs-12">
+                          {% if audio.asset_type == 'MP3' or audio.asset_type == 'WAV' %}
+                              <div id="jplayer_audio_{{audio.pk}}" class="jp-jplayer"></div>
+
+                              <div id="jp_container_audio_{{audio.pk}}" class="jp-flat-audio m-t-10" role="application" aria-label="media player">
+                                <div class="jp-play-control jp-control">
+                                  <button class="jp-play jp-button" role="button" aria-label="play" tabindex="0"></button>
+                                </div>
+                                <div class="jp-bar">
+                                  <div class="jp-seek-bar jp-seek-bar-display"></div>
+                                  <div class="jp-seek-bar">
+                                    <div class="jp-play-bar"></div>
+                                    <div class="jp-details"><span class="jp-title" aria-label="title"></span></div>
+                                    <div class="jp-timing"><span class="jp-duration" role="timer" aria-label="duration"></span></div>
+                                  </div>
+                                </div>
+                                <div class="jp-no-solution">
+                                  Media Player Error<br />
+                                  Update your browser or Flash plugin
+                                </div>
+                              </div>
+                              <script>
+                                jQuery(document).ready(function($) {
+                                $("#jplayer_audio_{{audio.pk}}").jPlayer({
+                                  ready: function(event) {
+                                    $(this).jPlayer("setMedia", {
+                                      title: "{{audio.title}}",
+                                      wav: "{{audio.audio.url}}",
+                                      mp3: "{{audio.audio.url}}",
+                                    });
+                                  },
+                                  play: function() { // Avoid multiple jPlayers playing together.
+                                    $(this).jPlayer("pauseOthers");
+                                  },
+                                  timeFormat: {
+                                    padMin: false
+                                  },
+                                  swfPath: "js",
+                                  supplied: "wav, mp3",
+                                  cssSelectorAncestor: "#jp_container_audio_{{audio.pk}}",
+                                  useStateClassSkin: true,
+                                  autoBlur: false,
+                                  smoothPlayBar: true,
+                                  remainingDuration: true,
+                                  keyEnabled: true,
+                                  keyBindings: {
+                                    // Disable some of the default key controls
+                                    loop: null,
+                                    muted: null,
+                                    volumeUp: null,
+                                    volumeDown: null
+                                  },
+                                  wmode: "window"
+                                });
+                              });
+                              </script>
+                            {% endif %}
+                            {% if audio.asset_type == 'SC' %}
+                                <a href="{{ audio.link }}" title="{{ audio.description }}" target="_blank"><i class="fa fa-soundcloud sameline"></i> <span class="small-text dark sameline">{{ audio.title }}</span></a>
+                            {% endif %}
+                            <!-- Button to open modal to remove audio file -->
+                            <button type="button"
+                                    class="btn btn-sm clear-button f-r-6 subtle"
+                                    title="Remove this audio"
+                                    data-toggle="modal"
+                                    data-target="#removeAudioModal"
+                                    data-actionurl="{% url 'editorial:audio_asset_remove' audio=audio.id item=item.id %}"
+                                    data-audiotitle="{{ audio.title }}"
+                                    data-audiotype="{{ audio.asset_type }}"
+                                    data-audioid="{{audio.id}}"
+                                    data-audiourl="{{audio.audio.url}}">
+                                    Remove
+                            </button>
+                          {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+                            </div><div class="row m-b-10">
+                          {% endif %}
+                        </div>
+                        {% endfor %}
+                      </div>
+                      {% endwith %}
+                      <!-- Video Assets -->
+                      {% with view.item_video_assets as item_video %}
+                      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <p class="f-r-12 f-w-300 m-b-20">Video <a href="#" data-toggle="modal" data-target="#VideoAssetModal" data-item="item_video" title="Add Video"><i class="fa fa-plus sameline subtle"></i></a></p>
+                        {% for video in item_video.videos %}
+                            <div class="col-xs-12">
+                              {% if video.asset_type == 'MP4' %}
+                                  <div id="jp_container_video_{{video.pk}}" class="jp-flat-video" role="application" aria-label="media player">
+                                    <div id="jplayer_video_{{video.pk}}" class="jp-jplayer"></div>
+                                    <div class="jp-gui">
+                                      <div class="jp-play-control jp-control">
+                                        <button class="jp-play jp-button" role="button" aria-label="play" tabindex="0"></button>
+                                      </div>
+                                      <div class="jp-bar">
+                                        <div class="jp-seek-bar jp-seek-bar-display"></div>
+                                        <div class="jp-seek-bar">
+                                          <div class="jp-play-bar"></div>
+                                          <div class="jp-details"><span class="jp-title" aria-label="title"></span></div>
+                                          <div class="jp-timing"><span class="jp-duration" role="timer" aria-label="duration"></span></div>
+                                        </div>
+                                      </div>
+                                      <div class="jp-screen-control jp-control">
+                                        <button class="jp-full-screen jp-button" role="button" aria-label="full screen" tabindex="0"></button>
+                                      </div>
+                                    </div>
+                                    <div class="jp-no-solution">
+                                      Media Player Error<br />
+                                      Update your browser or Flash plugin
+                                    </div>
+                                  </div>
+                                  <script>
+                                      $(document).ready(function($) {
+                                      $("#jplayer_video_{{video.pk}}").jPlayer({
+                                        ready: function(event) {
+                                          var $this = $(this).jPlayer("setMedia", {
+                                            title: "Big Buck Bunny Trailer",
+                                            m4v: "http://jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
+                                            ogv: "http://jplayer.org/video/ogv/Big_Buck_Bunny_Trailer.ogv",
+                                            webmv: "http://jplayer.org/video/webm/Big_Buck_Bunny_Trailer.webm",
+                                            poster: "http://jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+                                          });
+
+                                          // Fix GUI when Full Screen button is hidden.
+                                          if(event.jPlayer.status.noFullWindow) {
+                                            var $anc = $($this.jPlayer("option", "cssSelectorAncestor"));
+                                            $anc.find('.jp-screen-control').hide();
+                                            $anc.find('.jp-bar').css({"right":"0"});
+                                          }
+
+                                          // Fix the responsive size for iOS and Flash.
+                                          var fix_iOS_flash = function() {
+                                            var w = $this.data("jPlayer").ancestorJq.width(),
+                                              h = w * 9 / 16; // Change to suit your aspect ratio. Used 16:9 HDTV ratio.
+                                            $this.jPlayer("option", "size", {
+                                              width: w + "px",
+                                              height: h + "px"
+                                            });
+                                          };
+                                          var plt = $.jPlayer.platform;
+                                          if(plt.ipad || plt.iphone || plt.ipod || event.jPlayer.flash.used) {
+                                            $(window).on("resize", function() {
+                                              fix_iOS_flash();
+                                            });
+                                            fix_iOS_flash();
+                                          }
+                                        },
+                                        timeFormat: {
+                                          padMin: false
+                                        },
+                                        swfPath: "js",
+                                        supplied: "webmv, ogv, m4v",
+                                        cssSelectorAncestor: "#jp_container_video_{{video.pk}}",
+                                        // See the CSS for more info on changing the size.
+                                        size: {
+                                          width: "100%",
+                                          height: "auto",
+                                          cssClass: "jp-flat-video-responsive"
+                                        },
+                                        sizeFull: {
+                                          cssClass: "jp-flat-video-full"
+                                        },
+                                        autohide: {
+                                          full: false,
+                                          restored: false
+                                        },
+                                        // While playing, allow the GUI to hide
+                                        play: function() {
+                                          $(this).jPlayer("option", "autohide", {
+                                            full: true,
+                                            restored: true
+                                          });
+                                          // Avoid multiple jPlayers playing together.
+                                          $(this).jPlayer("pauseOthers");
+                                        },
+                                        // When paused, show the GUI
+                                        pause: function() {
+                                          $(this).jPlayer("option", "autohide", {
+                                            full: false,
+                                            restored: false
+                                          });
+                                        },
+                                        // Enable clicks on the video to toggle play/pause
+                                        click: function(event) {
+                                          if(event.jPlayer.status.paused) {
+                                            $(this).jPlayer("play");
+                                          } else {
+                                            $(this).jPlayer("pause");
+                                          }
+                                        },
+                                        useStateClassSkin: true,
+                                        autoBlur: false,
+                                        smoothPlayBar: !($.jPlayer.browser.msie && $.jPlayer.browser.version < 9), // IE8 did not like the hidden animated progress bar.
+                                        remainingDuration: true,
+                                        keyEnabled: true,
+                                        keyBindings: {
+                                          // Disable some of the default key controls
+                                          loop: null,
+                                          muted: null,
+                                          volumeUp: null,
+                                          volumeDown: null
+                                        }
+                                      });
+                                    });
+                                  </script>
+                              {% endif %}
+                              {% if video.asset_type == 'YOUTUBE' %}
+                                <a href="{{ video.link }}" title="View {{ video.title }}" class="embedded-video"><p class="f-r-10 f-w-300 f-r-9 m-b-0"><i class="fa fa-youtube-play subtle"></i> {{ video.title }}</p></a>
+                              {% endif %}
+                              {% if video.asset_type == 'VIMEO' %}
+                                <a href="{{ video.link }}" title="View {{ video.title }}" class="embedded-video"><p class="f-r-10 f-w-300 f-r-9 m-b-0"><i class="fa fa-vimeo subtle"></i> {{ video.title }}</p></a>
+                              {% endif %}
+                              <button type="button"
+                                      class="btn btn-sm clear-button f-r-6 subtle"
+                                      title="Remove this video"
+                                      data-toggle="modal"
+                                      data-target="#removeVideoModal"
+                                      data-actionurl="{% url 'editorial:video_asset_remove' video=video.id item=item.id %}"
+                                      data-videotitle="{{ video.title }}"
+                                      data-videotype="{{ video.asset_type }}"
+                                      data-videoid="{{video.id}}">
+                                      Remove
+                              </button>
+                            {% if forloop.counter|divisibleby:"2" and not forloop.last %}
+                          </div><div class="row m-b-5">
+                            {% endif %}
+                            </div>
+                        {% endfor %}
+                      </div>
+                      {% endwith %}
+              </div>
+            {% else %}
+              <div class="row m-t-20">
+                <p class="f-r-9 subtle italic m-l-20 m-t-40">Click 'Save Changes' to complete creating this item and start adding media assets.</p>
+                  <!-- Image Assets -->
+                  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <p class="f-r-12 f-w-300 m-b-20 subtle">Images <i class="fa fa-plus sameline subtle"></i></p>
+                  </div>
+                  <!-- Document Assets -->
+                  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <p class="f-r-12 f-w-300 m-b-20 subtle">Documents <i class="fa fa-plus sameline subtle"></i></p>
+                  </div>
+                  <!-- Audio Assets -->
+                  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <p class="f-r-12 f-w-300 m-b-20 subtle">Audio <i class="fa fa-plus sameline subtle"></i></p>
+                  </div>
+                  <!-- Video Assets -->
+                  <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <p class="f-r-12 f-w-300 m-b-20 subtle">Video <i class="fa fa-plus sameline subtle"></i></p>
+                  </div>
+              </div>
+            {% endif %}
+            <!-- ================================================= -->
+                <!-- CUSTOM FORM FIELDS -->
+            <!-- ================================================= -->
+            {% if item.template.name != "Base" %}
+            <div class="row m-b-20">
+              <p class="f-r-12 m-l-20 f-w-300 m-t-20">Additional Information</p>
+              {% for f in form.get_fields_to_show %}
+                <div class="col-xs-12 col-sm-3">
+                    <fieldset class="form-group m-b-10">
+                    <label class="f-s-12 f-s-400 spread-01 subtle slim-margin">{{ f.label_tag }}</label>
+                    {{ f }}
+                    {% if f.errors %}
+                      <small class="text-muted">{{ f.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+                </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+
+        </form>
+
+    </div>
+
+
+    <!-- Right column -->
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+
+        <!-- ================================================= -->
+                        <!-- DISCUSSION -->
+        <!-- ================================================= -->
+
+        {% if item %}
+        <!-- Item Discussion -->
+        <p class="f-r-12 f-w-300">Discussion</p>
+        {% with view.item_discussion as discussion %}
+        <!-- Display Comments -->
+        <div class="itemdiscussion">
+            <div class="row">
+              {% if discussion.comments %}
+                {% for comment in discussion.comments %}
+                  <div class="col-md-10">
+                    <p class="f-s-12">{{ comment.text }} <span class="f-s-10 color-default">| {{ comment.date|date:'D, M j g:i a' }}</span></p>
+                  </div>
+                  <div class="col-md-2">
+                    {% if comment.user.display_photo %}
+                    <a href="" title="{{ comment.user.first_name }}"><img class="media-object img-circle neg-m-l-10" width="32" src="{{ comment.user.display_photo.url }}" alt="user"></a>
+                    {% else %}
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p class="f-r-8 subtle text-center italic m-b-40 m-t-40">This is where you will see comments <br> from the item discussion.</p>
+                <p class="f-r-8 subtle text-center italic m-b-40 m-t-40">Add a comment below to <br>start the conversation.</p>
+              {% endif %}
+            </div>
+        </div>
+        <!-- Comment Form -->
+        {% comment %}
+        <div class="comment">
+            <div class="row">
+              <form action="{% url 'create_itemcomment' %}" method="POST" class="post-form" role="form">
+                <div class="col-xs-12">
+                    {% csrf_token %}
+                    <div class="input-group">
+                      {{ discussion.form.text }}
+
+                      {% if discussion.form.text.errors %}
+                        <div class="alert alert-warning" role="alert">
+                        {{ discussion.form.text.errors }}
+                        </div>
+                      {% endif %}
+                      <!-- Hidden Inputs -->
+                      <input type="hidden" name="association" value="item" />
+                      <input type="hidden" name="item" value="{{ item.pk }}" />
+                      <span class="input-group-btn">
+                        <button id="itemcommentbutton" class="btn btn-default btn-lg" type="submit" name="itemcommentform"><i class="fa fa-paper-plane"></i></button>
+                      </span>
+                    </div>
+                </div>
+              </form>
+            </div>
+        </div>
+        {% endcomment %}
+        {% endwith %}
+        {% else %}
+        <p class="f-r-12 f-w-300 subtle">Discussion</p>
+        <p class="f-r-9 subtle text-center italic m-t-40">Click 'Save Changes' to complete creating this item and start a discussion.</p>
+
+        {% endif %}
+
+        {% comment %}
+        <!-- Item Edit History -->
+        <p class="f-r-12 f-w-300 m-t-20">Edit History</p>
+        {% endcomment %}
+
+    </div>
+</div>
+
+
+
   </div>
+
+  <script>
+    $(".chosen-select").chosen()
+
+    $('#image-thumbs').magnificPopup({
+      delegate: 'a',
+      class: 'thumbnail',
+      type: 'image',
+      gallery: {enabled:true}
+    });
+  </script>
+
+  <!-- Embedded Video Popup -->
+  <script>
+    $('.embedded-video').magnificPopup({
+      type: 'iframe',
+      iframe: {
+          patterns: {
+              youtube: {
+                  index: 'youtu.be/',
+                  id: function(url) {
+                      var m = url.match(/[\\?\\&]v=([^\\?\\&]+)/);
+                      if ( !m || !m[1] ) return null;
+                      return m[1];
+                  },
+                  src: '//www.youtube.com/embed/%id%?autoplay=1'
+              },
+              vimeo: {
+                  index: 'vimeo.com/',
+                  id: function(url) {
+                      var m = url.match(/(https?:\/\/)?(www.)?(player.)?vimeo.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/);
+                      if ( !m || !m[5] ) return null;
+                      return m[5];
+                  },
+                  src: '//player.vimeo.com/video/%id%?autoplay=1'
+              }
+          }
+      }
+    });
+  </script>
+
+  <!-- Item Delete Confirmation alerts -->
+  <script>
+    $('.item-delete a').on('click', function(e) {
+         e.preventDefault();
+            swal({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this item.',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                closeOnConfirm: true
+            }, function(result) {
+                if (result) {
+                  $(".item-delete").attr("method", "POST").submit();
+                } else {
+                  // do nothing on cancel
+              }
+            });
+          });
+  </script>
+
+  <script>
+
+    // Remove Asset Modals
+    $(document).ready(function () {
+
+      // Remove Image Modal
+      $('#removeImageModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var imageURL = button.data('imageurl') // Extract info from data-* attributes
+        var action = button.data('actionurl')
+        var modal = $(this)
+        modal.find('#img_src').attr('src', imageURL);
+        modal.find('#removeform').attr('action', action);
+      });
+
+      // Remove Document Modal
+      $('#removeDocumentModal').on('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = $(event.relatedTarget)
+        // Extract info from data-* attributes
+        var detailURL = button.data('detailurl')
+        var documentTitle = button.data('doctitle')
+        var documentType = button.data('doctype')
+        documentType = documentType.replace(/\s+/g, '');
+        var action = button.data('actionurl')
+        var modal = $(this)
+        // Replace modal attributes
+        modal.find('#'+ documentType).show();
+        modal.find('#'+ documentType).attr('href', detailURL);
+        modal.find('#removeform').attr('action', action);
+        modal.find('p#title').html(documentTitle);
+        // When modal is closed change style back to hidden to prevent multiple previews in modal
+        $('#removeDocumentModal').on('hidden.bs.modal', function () {
+          modal.find('#'+ documentType).attr('style', 'display:none');
+        });
+
+      });
+
+      // Remove Audio Modal
+      $('#removeAudioModal').on('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = $(event.relatedTarget)
+        // Extract info from data-* attributes
+        var audioID = button.data('audioid')
+        console.log(audioID);
+        var audioTitle = button.data('audiotitle')
+        console.log(audioTitle);
+        var audioURL = button.data('audiourl')
+        console.log(audioURL);
+        var audioType = button.data('audiotype')
+        console.log(audioType);
+        var action = button.data('actionurl')
+        console.log(action);
+        var modal = $(this)
+        // Replace modal attributes
+        // modal.find('#'+ audioType +"'").attr('style', "visibile")
+        modal.find('#jplayer_audio').attr('title', audioTitle)
+        modal.find('#jplayer_audio').attr('wav', audioURL);
+        modal.find('#jplayer_audio').attr('mp3', audioURL);
+        modal.find('#removeform').attr('action', action);
+        modal.find('h4#display-audio-title').html(audioTitle);
+      });
+
+      // Remove Video Modal
+      $('#removeVideoModal').on('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = $(event.relatedTarget)
+        // Extract info from data-* attributes
+        var videoID = button.data('videoid')
+        console.log(videoID);
+        var videoTitle = button.data('videotitle')
+        console.log(videoTitle);
+        var videoType = button.data('videotype')
+        console.log(videoType);
+        var action = button.data('actionurl')
+        console.log(action);
+        var modal = $(this)
+        // Replace modal attributes
+        // modal.find('#'+ videoType +"'").attr('style', "visibile")
+        modal.find('#removeform').attr('action', action);
+        modal.find('h4#display-video-title').html(videoTitle);
+      });
+
+    });
+
+  </script>
+
+  {% block modals %}
+
+
+  <div class="modal" id="removeImageModal" tabindex="-1" role="dialog" aria-labelledby="removeImageModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title sameline" id="removeImageLabel">Remove Image</h5>
+          <button type="button" class="close sameline" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="img_src" src="{{ image.display_photo.url }}" alt="{{ image.description }}" class="img-fluid"></a>
+          <form id="removeform" action="#" method="POST" class="post-form">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-sm f-r-8 m-t-20" title="Remove this image">Remove</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="removeDocumentModal" tabindex="-1" role="dialog" aria-labelledby="removeDocumentModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title sameline" id="removeDocumentLabel">Remove Document</h5>
+          <button type="button" class="close sameline" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Display Asset Here -->
+          <div id="document-asset-library">
+            <!-- PDF -->
+            <a id="PDF" href="#" target="_blank" style="display: none;">
+              <div class="card bs-card">
+                <div class="card-block bg-danger-500">
+                  <p class="f-r-14 f-w-300 text-center m-t-10"> <i class="fa fa-file-pdf-o fa-1x text-center m-b-10"></i> .pdf </p>
+                </div>
+                <div class="card-block">
+                  <p id="title" class="f-r-10 f-w-500"></p>
+                </div>
+              </div>
+            </a>
+            <!-- WORD DOC -->
+            <a id="WORDDOC" href="#" target="_blank" style="display: none;">
+              <div class="card bs-card">
+                <div class="card-block bg-info-500">
+                  <p class="f-r-14 f-w-300 text-center m-t-10"> <i class="fa fa-file-word-o fa-1x text-center m-b-10"> </i> .docx </p>
+                </div>
+                <div class="card-block">
+                  <p id="title" class="f-r-10 f-w-500"></p>
+                </div>
+              </div>
+            </a>
+            <!-- TEXT -->
+            <a id="TEXT" href="#" target="_blank" style="display: none;">
+              <div class="card bs-card">
+                <div class="card-block bg-primary-500">
+                  <p class="f-r-14 f-w-300 text-center m-t-10"> <i class="fa fa-file-text-o fa-1x text-center m-b-10"> </i> .txt </p>
+                </div>
+                <div class="card-block">
+                  <p id="title" class="f-r-10 f-w-500"></p>
+                </div>
+              </div>
+            </a>
+            <!-- COMMA SEPARATED -->
+            <a id="COMMASEPARATED" href="#" target="_blank" style="display: none;">
+              <div class="card bs-card">
+                <div class="card-block bg-success-500">
+                  <p class="f-r-14 f-w-300 text-center m-t-10"> <i class="fa fa-file-excel-o fa-1x text-center m-b-10"> </i> .csv </p>
+                </div>
+                <div class="card-block">
+                  <p id="title" class="f-r-10 f-w-500"></p>
+                </div>
+              </div>
+            </a>
+            <!-- EXCEL -->
+            <a id="EXCEL" href="#" target="_blank" style="display: none;">
+              <div class="card bs-card">
+                <div class="card-block bg-success-500">
+                  <p class="f-r-14 f-w-300 text-center m-t-10"> <i class="fa fa-file-excel-o fa-1x text-center m-b-10"> </i> .xls </p>
+                </div>
+                <div class="card-block">
+                  <p id="title" class="f-r-10 f-w-500"></p>
+                </div>
+              </div>
+            </a>
+            <!-- OTHER -->
+            <a id="OTHER" href="#" target="_blank" style="display: none;">
+              <div class="card bs-card">
+                <div class="card-block bg-warning-500">
+                  <p class="f-r-14 f-w-300 text-center m-t-10"> <i class="fa fa-file-o fa-1x text-center m-b-10"> </i> other </p>
+                </div>
+                <div class="card-block">
+                  <p id="title" class="f-r-10 f-w-500"></p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <form id="removeform" action="#" method="POST" class="post-form">
+          {% csrf_token %}
+          <button type="submit" class="remove-document-link-{{document.id}} btn btn-primary btn-sm f-r-8 m-t-20" title="Remove this document">Remove</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="removeAudioModal" tabindex="-1" role="dialog" aria-labelledby="removeAudioModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title sameline" id="removeAudioLabel">Remove Audio</h5>
+          <button type="button" class="close sameline" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Display asset -->
+          {% comment %}
+          <div id="jplayer_audio" class="jp-jplayer"></div>
+          <div id="jp_container_audio" class="jp-flat-audio m-t-10" role="application" aria-label="media player">
+            <div class="jp-play-control jp-control">
+              <button class="jp-play jp-button" role="button" aria-label="play" tabindex="0"></button>
+            </div>
+            <div class="jp-bar">
+              <div class="jp-seek-bar jp-seek-bar-display"></div>
+              <div class="jp-seek-bar">
+                <div class="jp-play-bar"></div>
+                <div class="jp-details"><span class="jp-title" aria-label="title"></span></div>
+                <div class="jp-timing"><span class="jp-duration" role="timer" aria-label="duration"></span></div>
+              </div>
+            </div>
+            <div class="jp-no-solution">
+              Media Player Error<br />
+              Update your browser or Flash plugin
+            </div>
+          </div>
+          <script>
+              jQuery(document).ready(function($) {
+              $("#jplayer_audio").jPlayer({
+                ready: function(event) {
+                  $(this).jPlayer("setMedia", {
+                    title: "",
+                    wav: "",
+                    mp3: "",
+                  });
+                },
+                play: function() { // Avoid multiple jPlayers playing together.
+                  $(this).jPlayer("pauseOthers");
+                },
+                timeFormat: {
+                  padMin: false
+                },
+                swfPath: "js",
+                supplied: "wav, mp3",
+                cssSelectorAncestor: "#jp_container_audio",
+                useStateClassSkin: true,
+                autoBlur: false,
+                smoothPlayBar: true,
+                remainingDuration: true,
+                keyEnabled: true,
+                keyBindings: {
+                  // Disable some of the default key controls
+                  loop: null,
+                  muted: null,
+                  volumeUp: null,
+                  volumeDown: null
+                },
+                wmode: "window"
+              });
+              });
+          </script>
+          {% endcomment %}
+          <h4 id="display-audio-title"></h4>
+          <form id="removeform" action="#" method="POST" class="post-form">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-sm f-r-8 m-t-20" title="Remove this audio">Remove</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="removeVideoModal" tabindex="-1" role="dialog" aria-labelledby="removeVideoModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title sameline" id="removeVideoLabel">Remove Video</h5>
+          <button type="button" class="close sameline" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Display asset -->
+          <h4 id="display-video-title"></h4>
+          <form id="removeform" action="#" method="POST" class="post-form">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-sm f-r-8 m-t-20" title="Remove this video">Remove</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================= -->
+              <!-- NEW FACET  MODAL -->
+  <!-- ================================================= -->
+
+    {% include "item/_item_precreate_modal.html" %}
+
+  <!-- ================================================= -->
+              <!-- IMAGE MODAL -->
+  <!-- ================================================= -->
+
+    {% include "item/_item_imageasset_modal.html" %}
+
+  <!-- ================================================= -->
+              <!-- DOCUMENT MODAL -->
+  <!-- ================================================= -->
+
+    {% include "item/_item_documentasset_modal.html" %}
+
+  <!-- ================================================= -->
+              <!-- AUDIO MODAL -->
+  <!-- ================================================= -->
+
+    {% include "item/_item_audioasset_modal.html" %}
+
+  <!-- ================================================= -->
+              <!-- VIDEO MODAL -->
+  <!-- ================================================= -->
+
+    {% include "item/_item_videoasset_modal.html" %}
+
+
+  {% endblock modals %}
 
 {% endblock %}

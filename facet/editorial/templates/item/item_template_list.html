@@ -17,6 +17,83 @@
         </div>
       </div>
     </div>
+
+    <div class="row m-b-40">
+  <div class="col-xs-12">
+    <h5 class="m-b-20"> Item Templates <span class="pull-right">Add new template <a href="{% url 'item_template_create' org=request.user.organization_id %}" title="Add New Template"><i class="m-l-20 fa fa-plus" aria-hidden="true"></i></a></span></h5>
   </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-lg-3">
+    <h5 class="m-b-20 underline-default underline-120">Base <span class="subtle f-s-14 f-w-600 m-l-10">( {{ basetemplates.count}} )</span></h5>
+    <div class="activity-widget-1">
+      <div class="row">
+        <div class="col-xs-12">
+          <ul class="list-group">
+            {% for itemtemplate in basetemplates %}
+                <li class="list-group-item">
+                  <span class="color-default-300 text-xs pull-right">In Use: {{ itemtemplate.item_set.count }}</span>
+                  <span>
+                    <a href="{% url 'item_template_detail' template=itemtemplate.id %}" title="Go to template details">{{ itemtemplate.name }}</a>
+                  </span>
+                </li>
+            {% endfor %}
+           </ul>
+         </div>
+       </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-lg-6">
+    <h5 class="m-b-20 underline-success underline-120">Active <span class="subtle f-s-14 f-w-600 m-l-10">( {{ activetemplates.count }} )</span></h5>
+    <div class="activity-widget-1">
+      <div class="row">
+        <div class="col-xs-12">
+          <ul class="list-group">
+            {% for itemtemplate in activetemplates %}
+            <li class="list-group-item">
+              <!-- Pulled right -->
+              <span class="color-success-300 text-xs pull-right m-l-50">In Use: {{ itemtemplate.item_set.count }}</span>
+              <span class="text-xs pull-right">Fields: {{ itemtemplate.fields_used|length }}</span>
+              <!-- Pulled Left -->
+              <span class="pull-left">
+              <a href="{% url 'item_template_edit'  org=request.user.organization_id template=itemtemplate.id %}" title="Go to template details">{{ itemtemplate.name }}</a>
+              </span>
+              <!-- Regular -->
+              <span class="m-l-30">
+              <a href="{% url 'item_template_edit'  org=request.user.organization_id template=itemtemplate.id %}" title="Go to template details">{{ itemtemplate.description }}</a>
+              </span>
+              </li>
+            {% endfor %}
+           </ul>
+         </div>
+       </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-lg-3">
+    <h5 class="m-b-20 underline-danger underline-120">InActive <span class="subtle f-s-14 f-w-600 m-l-10">( {{ inactivetemplates.count }} )</span></h5>
+    <div class="activity-widget-1">
+      <div class="row">
+        <div class="col-xs-12">
+          <ul class="list-group">
+            {% for itemtemplate in inactivetemplates %}
+                <li class="list-group-item">
+                  <span class="color-danger-300 text-xs pull-right">In Use: {{ itemtemplate.item_set.count }}</span>
+                  <span>
+                    <a href="{% url 'item_template_edit'  org=request.user.organization_id template=itemtemplate.id %}" title="Go to template details">{{ itemtemplate.name }}</a>
+                  </span>
+                </li>
+            {% endfor %}
+           </ul>
+         </div>
+       </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+  <script>
+    $(".chosen-select").chosen()
+  </script>
 
 {% endblock %}

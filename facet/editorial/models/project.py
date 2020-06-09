@@ -133,13 +133,66 @@ class Project(models.Model):
     # Methods
     #---------------------------------------------------------------------------
 
-    # FIXME : Participant > Staff Journalist + Freelancer filtering needed
-    # def get_project_team_vocab(self):
-    #     """Return queryset with org participants and participants from collaboration orgs for a project."""
-    #
-    #     collaborators = self.partner_with.all()
-    #     project_team = Participant.objects.filter(Q(Q(organization=self.organization) | Q(organization__in=collaborators)))
-    #     return project_team
+    def get_team_vocab(self):
+        """
+        Team vocab should include:
+        if partner_with:
+            partipants from partner_profiles of actors or entities listed
+        if entity_owner:
+            staff_team of entity_owner
+        if assignment.project = self:
+            freelancer
+        if project.guest:
+            guest participant
+        if participant_owner:
+            participant_owner
+        """
+
+        from entity.models import NewsOrganization, NewsOrganizationNetwork
+        from freelance.models import Assignment
+
+        partner_profiles = []
+        team_vocab = []
+        if self.partner_with:
+            # retrieve partner profiles of participants and entities
+            partners = self.partner_with.all()
+            for entry in partners:
+                if entry.partner_type=='PARTICIPANT' or entry.partner_type=='NEWS ORGANIZATION':
+                    partner_profiles.extend(entry)
+                if entry.partner_type=='NEWS ORGANIZATION NETWORK':
+                    m_to_p = NewsOrganizationNetwork.convert_members_to_partners(entry)
+                    partner_profiles.extend(m_to_p)
+        else:
+            # retrieve partner vocabulary based on owner
+            if self.entity_owner and entity_owner.type=='NewsOrganization':
+                newsorganization = NewsOrganization.objects.get(id=entity_owner.owner_id)
+                associations_and_networks = NewsOrganization.get_partner_vocab(newsorganization)
+                for entry in associations_and_networks:
+                    if entry.type=='PARTICIPANT':
+                        partner_profiles.extend(entry)
+                    else:
+                        m_to_p = NewsOrganizationNetwork.convert_members_to_partners(entry)
+                        partner_profiles.extend(m_to_p)
+            # if no entity_owner, participant_owner is team
+            elif self.participant_owner and not entity_owner:
+                team_vocab.extend(self.participant_owner)
+
+        # convert profiles to participants
+        for entry in partner_profiles:
+            if entry.partner_type=='PARTICIPANT':
+                team_vocab.extend(entry.participant)
+            else:
+                team = NewsOrganization.get_staff_team(entry.newsorganization)
+                team_vocab.extend(team_vocab)
+
+        # Check for freelance assignment
+        assignment = Assignment.objects.filter(project=self)
+        if assignment:
+            team_vocab.extend(assignment.freelancer.participant)
+        # Check for guests
+        # TODO
+        return team_vocab
+
 
     def get_project_images(self):
         """Return all image assets associated with items that are part of a project."""

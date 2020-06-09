@@ -1,6 +1,6 @@
 from braces.views import UserPassesTestMixin
 
-
+#FIXME add user test for org
 class CustomUserTest(UserPassesTestMixin):
     """User must be a member of this organization to view this content.
 

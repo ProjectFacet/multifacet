@@ -29,6 +29,7 @@ class ParticipantAdmin(UserAdmin):
         'city',
         'postal_code',
         'expertise',
+        'partner_profile',
     )}), )
 
 

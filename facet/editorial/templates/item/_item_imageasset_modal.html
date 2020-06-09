@@ -1,10 +1,116 @@
+<!-- Image Asset Modal -->
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="login-page text-center animated fadeIn delay-1000">
-          <h6 class="cover-heading center">Image Asset Modal</h6>
+<div class="modal fade" id="ImageAssetModal" tabindex="-1" role="dialog" aria-labelledby="ImageAssetModal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="bs-nav-tabs nav-tabs-default">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <ul class="nav nav-tabs nav-animated-border-from-left">
+            <li class="nav-item"> <a  ng-href="" class="nav-link active" data-toggle="tab" data-target="#uploadimage">Upload a Photo</a></li>
+            <li class="nav-item"> <a id="selectimagelibrary" ng-href="" class="nav-link" data-toggle="tab" data-target="#imagelibrary">Select From Library</a></li>
+          </ul>
         </div>
+        {% with view.item_image_assets as image_assets %}
+        <div class="modal-body" id="imagemodalbody">
+          <div class="tab-content">
+            <!-- UPLOAD PANEL -->
+            <div role="tabpanel" class="tab-pane active" id="uploadimage">
+              <div class="uploadpanel" data-toggle="slimScroll" style="height:500px" data-color="#5D9CEC" data-allow-page-scroll="false">
+              <form action="{% url 'upload_image' %}" method="POST" class="post-form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <!-- Left Col -->
+              <div class="col-md-6">
+
+                <fieldset class="form-group m-b-10">
+                  <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ image_assets.uploadform.photo.label_tag }}</label>
+                  {{ image_assets.uploadform.photo }}
+                  {% if image_assets.uploadform.photo.errors %}
+                    <small class="text-muted">{{ image_assets.uploadform.photo.errors }}</small>
+                  {% endif %}
+                </fieldset>
+
+                <fieldset class="form-group m-b-10">
+                  <label class="f-s-14 f-s-400 spread-01 subtle slim-margin"><span class="field-label">{{ image_assets.uploadform.title.label_tag }}</label>
+                  {{ image_assets.uploadform.title }}
+                  {% if image_assets.uploadform.title.errors %}
+                    <small class="text-muted">{{ image_assets.uploadform.title.errors }}</small>
+                  {% endif %}
+                </fieldset>
+
+                <fieldset class="form-group m-b-10">
+                  <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ image_assets.uploadform.asset_type.label_tag }}</label>
+                  {{ image_assets.uploadform.asset_type }}
+                  {% if image_assets.uploadform.asset_type.errors %}
+                    <small class="text-muted">{{ image_assets.uploadform.asset_type.errors }}</small>
+                  {% endif %}
+                </fieldset>
+
+                <fieldset class="form-group m-b-10">
+                  <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ image_assets.uploadform.keywords.label_tag }}</label>
+                  {{ image_assets.uploadform.keywords }}
+                  {% if image_assets.uploadform.keywords.errors %}
+                    <small class="text-muted">{{ image_assets.uploadform.keywords.errors }}</small>
+                  {% endif %}
+                </fieldset>
+
+              </div>
+              <!-- End Left Col -->
+              <!-- Right Col -->
+              <div class="col-md-6">
+
+                <fieldset class="form-group m-b-10">
+                  <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ image_assets.uploadform.description.label_tag }}</label>
+                  {{ image_assets.uploadform.description }}
+                  {% if image_assets.uploadform.description.errors %}
+                    <small class="text-muted">{{ image_assets.uploadform.description.errors }}</small>
+                  {% endif %}
+                </fieldset>
+
+                <fieldset class="form-group m-b-10">
+                  <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ image_assets.uploadform.attribution.label_tag }}</label>
+                  {{ image_assets.uploadform.attribution }}
+                  {% if image_assets.uploadform.attribution.errors %}
+                    <small class="text-muted">{{ image_assets.uploadform.attribution.errors }}</small>
+                  {% endif %}
+                </fieldset>
+
+              </div>
+              <!-- End Right Col -->
+              <!-- ===================================== -->
+              <!-- ===================================== -->
+              <div class="hidden-image-inputs">
+                  <input type="hidden" name="item" value="{{ item.pk }}" />
+              </div>
+              <!-- ===================================== -->
+              <!-- ===================================== -->
+              <div>
+                <button type="submit" class="btn btn-primary m-l-20">Save Image</button>
+              </div>
+              </form>
+              </div>
+            </div>
+            <!-- END UPLOAD PANEL -->
+
+            <!-- LIBRARY PANEL -->
+            <div role="tabpanel" class="tab-pane" id="imagelibrary">
+                <!-- Loading _libraryimage.html -->
+            </div>
+            <!-- END LIBRARY PANEL -->
+          </div>
+        </div>
+        {% endwith %}
+        </div>
+        <div class="modal-footer"></div>
       </div>
     </div>
   </div>
+</div>
+
+{% if item %}
+<script>
+  $("#selectimagelibrary").on("show.bs.tab", function (e) {
+      $("#imagelibrary").load("{% url 'libraryimage_add' item=item.id story=item.story.id %}")
+  })
+</script>
+{% endif %}

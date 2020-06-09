@@ -23,10 +23,10 @@ class ProjectForm(forms.ModelForm):
         project = kwargs.pop("project", None)
         super(ProjectForm, self).__init__(*args, **kwargs)
 
-        # if entity:
-        #     self.fields['partner_with'].queryset = entity.get_partners_vocab()
-        # elif participant:
-        #     self.fields['partner_with'].queryset = participant.get_partners_vocab()
+        if entity:
+            self.fields['partner_with'].queryset = entity.get_partner_vocab()
+        elif participant:
+            self.fields['partner_with'].queryset = participant.get_partner_vocab()
 
     class Meta:
         model = Project
@@ -37,9 +37,9 @@ class ProjectForm(forms.ModelForm):
             'desc': Textarea(
                 attrs={'class': 'form-control', 'placeholder': 'Description'}),
             'collaborate': CheckboxInput(),
-            # 'partner_with': ArrayFieldSelectMultiple(
-            #     attrs={'class': 'chosen-select form-control facet-select',
-            #            'id': 'partner-with', 'data-placeholder': 'Select Partners'}),
+            'partner_with': ArrayFieldSelectMultiple(
+                attrs={'class': 'chosen-select form-control facet-select',
+                       'id': 'partner-with', 'data-placeholder': 'Select Partners'}),
         }
 
 
@@ -56,7 +56,9 @@ class ProjectTeamForm(forms.ModelForm):
         project = kwargs.pop("project", None)
         super(ProjectTeamForm, self).__init__(*args, **kwargs)
 
-        if entity:
+        if project:
+            self.fields['team'].queryset = project.get_team_vocab()
+        elif entity:
             self.fields['team'].queryset = entity.get_team_vocab()
         elif participant:
             self.fields['team'].queryset = participant.get_team_vocab()

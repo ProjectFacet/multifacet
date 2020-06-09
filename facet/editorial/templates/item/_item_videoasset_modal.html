@@ -1,10 +1,137 @@
+<!-- Video Asset Modal -->
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="login-page text-center animated fadeIn delay-1000">
-          <h6 class="cover-heading center">Video Asset Modal</h6>
+{% load embed_video_tags %}
+
+<div class="modal fade" id="VideoAssetModal" tabindex="-1" role="dialog" aria-labelledby="VideoAssetModal">
+  <div class="modal-dialog modal-lg" role="video">
+    <div class="modal-content">
+      <div class="bs-nav-tabs nav-tabs-default">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <ul class="nav nav-tabs nav-animated-border-from-left">
+            <li class="nav-item"> <a ng-href="" class="nav-link active" data-toggle="tab" data-target="#uploadvideo">Upload a Video</a></li>
+            <li class="nav-item"> <a id="selectvideolibrary" ng-href="" class="nav-link" data-toggle="tab" data-target="#videolibrary">Select From Video Library</a></li>
+          </ul>
         </div>
+        {% with view.item_video_assets as video_assets %}
+        <div class="modal-body" id="videomodalbody">
+          <div class="tab-content">
+            <!-- UPLOAD PANEL -->
+            <div role="tabpanel" class="tab-pane active" id="uploadvideo">
+              <div class="uploadpanel" data-toggle="slimScroll" style="height:500px" data-color="#5D9CEC" data-allow-page-scroll="false">
+              <form action="{% url 'upload_video' %}" method="POST" class="post-form" enctype="multipart/form-data">
+              {% csrf_token %}
+
+                <!-- Left Col -->
+                <div class="col-md-6">
+
+                  {% comment %}
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.video.label_tag }}</label>
+                    {{ video_assets.uploadform.video }}
+                    {% if video_assets.uploadform.video.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.video.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+                  {% endcomment %}
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.link.label_tag }}</label>
+                    {{ video_assets.uploadform.link }}
+                    {% if video_assets.uploadform.link.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.link.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.embed.label_tag }}</label>
+                    {{ video_assets.uploadform.embed }}
+                    {% if video_assets.uploadform.embed.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.embed.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.title.label_tag }}</label>
+                    {{ video_assets.uploadform.title }}
+                    {% if video_assets.uploadform.title.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.title.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.asset_type.label_tag }}</label>
+                    {{ video_assets.uploadform.asset_type }}
+                    {% if video_assets.uploadform.asset_type.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.asset_type.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.keywords.label_tag }}</label>
+                    {{ video_assets.uploadform.keywords }}
+                    {% if video_assets.uploadform.keywords.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.keywords.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                </div>
+                <!-- End Left Col -->
+                <!-- Right Col -->
+                <div class="col-md-6">
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.description.label_tag }}</label>
+                    {{ video_assets.uploadform.description }}
+                    {% if video_assets.uploadform.description.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.description.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                  <fieldset class="form-group m-b-10">
+                    <label class="f-s-14 f-s-400 spread-01 subtle slim-margin">{{ video_assets.uploadform.attribution.label_tag }}</label>
+                    {{ video_assets.uploadform.attribution }}
+                    {% if video_assets.uploadform.attribution.errors %}
+                      <small class="text-muted">{{ video_assets.uploadform.attribution.errors }}</small>
+                    {% endif %}
+                  </fieldset>
+
+                </div>
+                <!-- End Right Col -->
+                <!-- ===================================== -->
+                <!-- ===================================== -->
+                <div class="hidden-video-inputs">
+                    <input type="hidden" name="item" value="{{ item.pk }}" />
+                </div>
+                <!-- ===================================== -->
+                <!-- ===================================== -->
+                <div>
+                    <button type="submit" class="btn btn-primary m-l-20">Save Video</button>
+                </div>
+
+              </form>
+              </div>
+            </div>
+            <!-- END UPLOAD PANEL -->
+
+            <!-- LIBRARY PANEL -->
+            <div role="tabpanel" class="tab-pane" id="videolibrary">
+              <!-- Loading _libraryvideo.html -->
+            </div>
+            <!-- END LIBRARY PANEL -->
+          </div>
+        </div>
+        {% endwith %}
+        </div>
+        <div class="modal-footer"></div>
       </div>
     </div>
   </div>
+
+{% if item %}
+  <script>
+    $("#selectvideolibrary").on("show.bs.tab", function (e) {
+        $("#videolibrary").load("{% url 'libraryvideo_add' item=item.id story=item.story.id %}")
+    })
+  </script>
+  {% endif %}

@@ -107,17 +107,54 @@ class Participant(AbstractUser):
         return ''.join( [ letter[0] for letter in self.credit_name.split() ] )
 
 
-    def get_partners_vocab(self):
+    def get_partner_vocab(self):
         """Retrieve appropriate partners for the participant."""
 
         if self.staffjournalist:
-            partners = self.staffjournalist.get_partners_vocab()
+            partners = self.staffjournalist.get_partner_vocab()
             return partners
 
         if self.unaffiliatedstaffjournalist:
-            partners = self.unaffiliatedstaffjournalist.get_partners_vocab()
+            partners = self.unaffiliatedstaffjournalist.get_partner_vocab()
             return partners
 
         if self.freelancejournalist:
-            partners = self.freelancejournalist.get_partners_vocab()
+            partners = self.freelancejournalist.get_partner_vocab()
             return partners
+
+
+    def get_image_library(self):
+        """Retrieve appropriate image library for a participant."""
+
+        if self.staffjournalist:
+            return NewsOrganization.get_image_library(self.staffjournalist.newsorganization)
+        else:
+            return ImageAsset.objects.filter(participant_owner=self)
+        # FIXME account for visibility of library to partner
+
+    def get_document_library(self):
+        """Retrieve appropriate document library for a participant."""
+
+        if self.staffjournalist:
+            return NewsOrganization.get_document_library(self.staffjournalist.newsorganization)
+        else:
+            return DocumentAsset.objects.filter(participant_owner=self)
+        # FIXME account for visibility of library to partner
+
+    def get_audio_library(self):
+        """Retrieve appropriate audio library for a participant."""
+
+        if self.staffjournalist:
+            return NewsOrganization.get_audio_library(self.staffjournalist.newsorganization)
+        else:
+            return AudioAsset.objects.filter(participant_owner=self)
+        # FIXME account for visibility of library to partner
+
+    def get_video_library(self):
+        """Retrieve appropriate video library for a participant."""
+
+        if self.staffjournalist:
+            return NewsOrganization.get_video_library(self.staffjournalist.newsorganization)
+        else:
+            return VideoAsset.objects.filter(participant_owner=self)
+        # FIXME account for visibility of library to partner

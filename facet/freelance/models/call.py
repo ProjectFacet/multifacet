@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 from .journalist_freelancemanager import FreelanceManager
 from entity.models import NewsOrganization
-from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo, Tag
+# from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo, Tag
 
 
 class Call(models.Model):
@@ -84,12 +84,12 @@ class Call(models.Model):
     )
 
     # simple assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
+    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
+    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
+    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
 
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField('editorial.Tag', blank=True)
 
     class Meta:
         verbose_name = 'Call for Pitch'

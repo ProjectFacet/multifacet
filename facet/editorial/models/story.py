@@ -162,6 +162,77 @@ class Story(models.Model):
     def type(self):
         return "Story"
 
+
+    def get_team_vocab(self):
+        """
+        Team vocab should include:
+        if story.project:
+          use project.get_team_vocab()
+        else:
+          if partner_with:
+              partipants from partner_profiles of actors or entities listed
+          if entity_owner:
+              staff_team of entity_owner
+          if assignment.project = self:
+              freelancer
+          if story.guest:
+              guest participant
+          if participant_owner:
+              participant_owner
+        """
+
+        partner_profiles = []
+        vocab = []
+        if self.project:
+            # return project team
+            vocab = Project.get_team_vocab(self.project)
+        else:
+            if self.partner_with:
+              # retrieve partner profiles of participants and entities
+              partners = self.partner_with.all()
+              for entry in partners:
+                  if entry.partner_type=='PARTICIPANT' or entry.partner_type=='NEWS ORGANIZATION':
+                      partner_profiles.extend(entry)
+                  if entry.partner_type=='NEWS ORGANIZATION NETWORK':
+                      m_to_p = Network.convert_members_to_partners(entry)
+                      partner_profiles.extend(m_to_p)
+            else:
+                # retrieve partner vocabulary based on owner
+                if self.entity_owner and entity_owner.type=='NewsOrganization':
+                    newsorganization = NewsOrganization.objects.get(id=entity_owner.owner_id)
+                    associations_and_networks = NewsOrganization.get_partner_vocab(newsorganization)
+                    for entry in associations_and_networks:
+                        if entry.type=='PARTICIPANT':
+                            partner_profiles.extend(entry)
+                        else:
+                            m_to_p = Network.convert_members_to_partners(entry)
+                            partner_profiles.extend(m_to_p)
+                # if no entity_owner, participant_owner is team
+                elif self.participant_owner and not entity_owner:
+                    vocab.extend(self.participant_owner)
+
+        # convert profiles to participants
+        for entry in partner_profiles:
+            if entry.partner_type=='PARTICIPANT':
+                vocab.extend(entry.participant)
+            else:
+                team = NewsOrganization.get_staff_team(entry.newsorganization)
+                vocab.extend(team_vocab)
+
+        # Check for freelance assignment
+        from freelance.models import Assignment
+        assignment = Assignment.objects.filter(story=self)
+        if assignment:
+            vocab.extend(assignment.freelancer.participant)
+        # Check for guests
+        # TODO
+
+        # Janky way of converting list back to a queryset so item form is happy
+        # FIXME eventually
+        team_vocab = Participant.objects.filter(id__in=vocab)
+
+        return team_vocab
+
     # FIXME account for organization and participant filtering
     # def copy_story(self):
     #     """ Create a copy of a story for a partner organization in a network.
