@@ -17,7 +17,7 @@
             <!-- UPLOAD PANEL -->
             <div role="tabpanel" class="tab-pane active" id="uploaddocument">
               <div class="uploadpanel" data-toggle="slimScroll" style="height:500px" data-color="#5D9CEC" data-allow-page-scroll="false">
-              <form action="{% url 'upload_document' %}" method="POST" class="post-form" enctype="multipart/form-data">
+              <form action="{% url 'editorial:upload_document' %}" method="POST" class="post-form" enctype="multipart/form-data">
               {% csrf_token %}
               <!-- Left Col -->
               <div class="col-md-6">
@@ -110,7 +110,7 @@
 {% if facet %}
 <script>
   $("#selectdocumentlibrary").on("show.bs.tab", function (e) {
-      $("#documentlibrary").load("{% url 'librarydocument_add' facet=facet.id story=facet.story.id %}")
+      $("#documentlibrary").load("{% url 'editorial:library_document_add' facet=facet.id story=facet.story.id %}")
   })
 </script>
 {% endif %}

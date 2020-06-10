@@ -182,7 +182,7 @@
                                   <!-- Image thumbnail and link to item image gallery -->
                                   <a href="{{ image.display_photo.url }}" class="thumbnail"><img src="{{ image.display_photo.url }}" alt="{{ image.description }}" class="img-fluid"></a>
                                   <!-- Opens modal to remove image -->
-                                  <button type="button" class="btn btn-sm clear-button f-r-6 subtle" title="Remove this image" data-toggle="modal" data-target="#removeImageModal" data-imageid="{{ image.id }}" data-imageurl="{{ image.display_photo.url }}" data-actionurl="{% url 'image_asset_remove' image=image.id item=item.id %}">Remove</button>
+                                  <button type="button" class="btn btn-sm clear-button f-r-6 subtle" title="Remove this image" data-toggle="modal" data-target="#removeImageModal" data-imageid="{{ image.id }}" data-imageurl="{{ image.display_photo.url }}" data-actionurl="{% url 'editorial:image_asset_remove' image=image.id item=item.id %}">Remove</button>
                                 </div>
                                 {% comment %}
                                 <script>

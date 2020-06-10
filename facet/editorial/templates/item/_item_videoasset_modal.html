@@ -1,7 +1,5 @@
 <!-- Video Asset Modal -->
 
-{% load embed_video_tags %}
-
 <div class="modal fade" id="VideoAssetModal" tabindex="-1" role="dialog" aria-labelledby="VideoAssetModal">
   <div class="modal-dialog modal-lg" role="video">
     <div class="modal-content">
@@ -19,7 +17,7 @@
             <!-- UPLOAD PANEL -->
             <div role="tabpanel" class="tab-pane active" id="uploadvideo">
               <div class="uploadpanel" data-toggle="slimScroll" style="height:500px" data-color="#5D9CEC" data-allow-page-scroll="false">
-              <form action="{% url 'upload_video' %}" method="POST" class="post-form" enctype="multipart/form-data">
+              <form action="{% url 'editorial:upload_video' %}" method="POST" class="post-form" enctype="multipart/form-data">
               {% csrf_token %}
 
                 <!-- Left Col -->
@@ -131,7 +129,7 @@
 {% if item %}
   <script>
     $("#selectvideolibrary").on("show.bs.tab", function (e) {
-        $("#videolibrary").load("{% url 'libraryvideo_add' item=item.id story=item.story.id %}")
+        $("#videolibrary").load("{% url 'editorial:library_video_add' item=item.id story=item.story.id %}")
     })
   </script>
   {% endif %}

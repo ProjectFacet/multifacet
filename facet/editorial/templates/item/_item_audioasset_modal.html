@@ -17,7 +17,7 @@
             <!-- UPLOAD PANEL -->
             <div role="tabpanel" class="tab-pane active" id="uploadaudio">
               <div class="uploadpanel" data-toggle="slimScroll" style="height:500px" data-color="#5D9CEC" data-allow-page-scroll="false">
-              <form action="{% url 'upload_audio' %}" method="POST" class="post-form" enctype="multipart/form-data">
+              <form action="{% url 'editorial:upload_audio' %}" method="POST" class="post-form" enctype="multipart/form-data">
               {% csrf_token %}
 
                 <!-- Left Col -->
@@ -120,7 +120,7 @@
 {% if facet %}
 <script>
   $("#selectaudiolibrary").on("show.bs.tab", function (e) {
-      $("#audiolibrary").load("{% url 'libraryaudio_add' facet=facet.id story=facet.story.id %}")
+      $("#audiolibrary").load("{% url 'editorial:library_audio_add' facet=facet.id story=facet.story.id %}")
   })
 </script>
 {% endif %}
