@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-# from simple_history.models import HistoricalRecords
+# from internal_history.models import HistoricalRecords
 
 from base.models import Participant, EntityOwner, Anchor
 from entity.models import NewsOrganization

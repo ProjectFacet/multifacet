@@ -6,7 +6,7 @@ from .asset_base import BaseAsset, BaseAssetMetadata
 class BaseAudio(BaseAsset):
     """Base type for audio files.
 
-    Subclassed by AudioAsset and SimpleAudio.
+    Subclassed by AudioAsset and InternalAudio.
     """
 
     # metadata for search system
@@ -83,15 +83,15 @@ class AudioAsset(BaseAudio, BaseAssetMetadata):
         return "Audio Asset"
 
 
-class SimpleAudio(BaseAudio):
+class InternalAudio(BaseAudio):
     """Simple Audio (attaches to an event, task, etc.)"""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
-        the simple asset is associated with."""
+        the internal asset is associated with."""
 
         associations = []
-        orgs = self.organization_simple_audio.all()
+        orgs = self.organization_internal_audio.all()
         networks = self.network_set.all()
         projects = self.project_set.all()
         events = self.event_set.all()
@@ -105,7 +105,7 @@ class SimpleAudio(BaseAudio):
         return associations
 
     # def get_absolute_url(self):
-    #     return reverse('simple_audio_detail', kwargs={'pk': self.id})
+    #     return reverse('internal_audio_detail', kwargs={'pk': self.id})
 
     @property
     def type(self):

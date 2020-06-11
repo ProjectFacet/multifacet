@@ -19,7 +19,7 @@ class PickupStoryView(LoginRequiredMixin, View):
     A user should be able to click and pickup a partner story
     this should make a pickup of the story for the new organization
     it should come with all associated assets - image, doc, audio, video
-    it should not come with events, notes, tasks, or simple assets
+    it should not come with events, notes, tasks, or internal assets
     After a user has copied a story, there should be a visual cue in the interface
     or a js alert (something) that notifies a user should they try to pickup a
     story that another user from their org has already copied that specific story.

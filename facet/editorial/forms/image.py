@@ -5,7 +5,7 @@ from django.forms import Form, Textarea, TextInput, CheckboxInput, Select
 
 from editorial.models import (
     ImageAsset,
-    SimpleImage,
+    InternalImage,
 )
 
 from editorial.widgets import (
@@ -52,21 +52,33 @@ class LibraryImageAssociateForm(Form):
         participant = kwargs.pop("participant_owner", None)
         super(LibraryImageAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
+        if entity.newsorganization:
             self.fields['images'] = forms.ModelMultipleChoiceField(
-                queryset=org.imageasset_set.all(),
+                queryset=entity.newsorganization.imageasset_set.all(),
                 required=False)
-        elif participant:
+        elif entity.newsorganizationnetwork:
+            self.fields['images'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.imageasset_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['images'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.imageasset_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['images'] = forms.ModelMultipleChoiceField(
+                queryset=participant.imageasset_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
             self.fields['images'] = forms.ModelMultipleChoiceField(
                 queryset=participant.imageasset_set.all(),
                 required=False)
 
 
-class SimpleImageForm(forms.ModelForm):
-    """Upload a simple image."""
+class InternalImageForm(forms.ModelForm):
+    """Upload a internal image."""
 
     class Meta:
-        model = SimpleImage
+        model = InternalImage
 
         fields = [
             'title',
@@ -80,8 +92,8 @@ class SimpleImageForm(forms.ModelForm):
         }
 
 
-class SimpleImageLibraryAssociateForm(Form):
-    """Form for adding existing simple images to an Organization, Network,
+class InternalImageLibraryAssociateForm(Form):
+    """Form for adding existing internal images to an Organization, Network,
     Project, Series, Task or Event."""
 
     def __init__(self, *args, **kwargs):
@@ -89,13 +101,25 @@ class SimpleImageLibraryAssociateForm(Form):
 
         entity = kwargs.pop("entity_owner", None)
         participant = kwargs.pop("participant_owner", None)
-        super(SimpleImageLibraryAssociateForm, self).__init__(*args, **kwargs)
+        super(InternalImageLibraryAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['simpleimages'] = forms.ModelMultipleChoiceField(
-                queryset=org.simpleimage_set.all(),
+        if entity.newsorganization:
+            self.fields['internalimages'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganization.internalimage_set.all(),
                 required=False)
-        elif participant:
-            self.fields['simpleimages'] = forms.ModelMultipleChoiceField(
-                queryset=participant.simpleimage_set.all(),
+        elif entity.newsorganizationnetwork:
+            self.fields['internalimages'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.internalimage_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['internalimages'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.internalimage_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['internalimages'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internalimage_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
+            self.fields['internalimages'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internalimage_set.all(),
                 required=False)

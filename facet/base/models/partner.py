@@ -30,7 +30,7 @@ class Partner(models.Model):
 
     This allows for consistency across multiple kinds of Partners.
 
-    Additional simple information is included on the record for easy access.
+    Additional internal information is included on the record for easy access.
     """
 
     # TODO Need for passthrough table to denote whether a partner is active for

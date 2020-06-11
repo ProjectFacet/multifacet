@@ -1,7 +1,7 @@
 from .project import ProjectForm, ProjectTeamForm
 from .story import StoryForm, StoryTeamForm
 from .item import ItemTemplateForm, get_item_form_for_template, ItemPreCreateForm
-from .image import ImageAssetForm, LibraryImageAssociateForm, SimpleImageForm, SimpleImageLibraryAssociateForm
-from .document import DocumentAssetForm, LibraryDocumentAssociateForm, SimpleDocumentForm, SimpleDocumentLibraryAssociateForm
-from .audio import AudioAssetForm, LibraryAudioAssociateForm, SimpleAudioForm, SimpleAudioLibraryAssociateForm
-from .video import VideoAssetForm, LibraryVideoAssociateForm, SimpleVideoForm, SimpleVideoLibraryAssociateForm
+from .image import ImageAssetForm, LibraryImageAssociateForm, InternalImageForm, InternalImageLibraryAssociateForm
+from .document import DocumentAssetForm, LibraryDocumentAssociateForm, InternalDocumentForm, InternalDocumentLibraryAssociateForm
+from .audio import AudioAssetForm, LibraryAudioAssociateForm, InternalAudioForm, InternalAudioLibraryAssociateForm
+from .video import VideoAssetForm, LibraryVideoAssociateForm, InternalVideoForm, InternalVideoLibraryAssociateForm

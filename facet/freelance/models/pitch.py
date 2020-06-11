@@ -3,7 +3,7 @@ from django.db import models
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from .call import Call
-# from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
+# from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 
 
 class Pitch(models.Model):
@@ -68,11 +68,11 @@ class Pitch(models.Model):
         help_text='Is this pitch for an assignment exclusive to the recipient?',
     )
 
-    # simple assets
-    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
-    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
-    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
-    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
+    # internal assets
+    internal_image_assets = models.ManyToManyField('editorial.InternalImage', blank=True)
+    internal_document_assets = models.ManyToManyField('editorial.InternalDocument', blank=True)
+    internal_audio_assets = models.ManyToManyField('editorial.InternalAudio', blank=True)
+    internal_video_assets = models.ManyToManyField('editorial.InternalVideo', blank=True)
 
     tags = models.ManyToManyField('editorial.Tag', blank=True)
 

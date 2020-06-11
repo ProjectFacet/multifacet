@@ -5,7 +5,7 @@ from django.forms import Form, Textarea, TextInput, CheckboxInput, Select
 
 from editorial.models import (
     DocumentAsset,
-    SimpleDocument,
+    InternalDocument,
 )
 
 from editorial.widgets import (
@@ -52,21 +52,33 @@ class LibraryDocumentAssociateForm(Form):
         participant = kwargs.pop("participant_owner", None)
         super(LibraryDocumentAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
+        if entity.newsorganization:
             self.fields['documents'] = forms.ModelMultipleChoiceField(
-                queryset=org.documentasset_set.all(),
+                queryset=entity.newsorganization.documentasset_set.all(),
                 required=False)
-        elif participant:
+        elif entity.newsorganizationnetwork:
+            self.fields['documents'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.documentasset_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['documents'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.documentasset_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['documents'] = forms.ModelMultipleChoiceField(
+                queryset=participant.documentasset_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
             self.fields['documents'] = forms.ModelMultipleChoiceField(
                 queryset=participant.documentasset_set.all(),
                 required=False)
 
 
-class SimpleDocumentForm(forms.ModelForm):
-    """Upload a simple document."""
+class InternalDocumentForm(forms.ModelForm):
+    """Upload a internal document."""
 
     class Meta:
-        model = SimpleDocument
+        model = InternalDocument
 
         fields = [
             'title',
@@ -80,8 +92,8 @@ class SimpleDocumentForm(forms.ModelForm):
         }
 
 
-class SimpleDocumentLibraryAssociateForm(Form):
-    """Form for adding existing simple documents to an Organization, Network,
+class InternalDocumentLibraryAssociateForm(Form):
+    """Form for adding existing internal documents to an Organization, Network,
     Project, Series, Task or Event."""
 
     def __init__(self, *args, **kwargs):
@@ -89,13 +101,25 @@ class SimpleDocumentLibraryAssociateForm(Form):
 
         entity = kwargs.pop("entity_owner", None)
         participant = kwargs.pop("participant_owner", None)
-        super(SimpleDocumentLibraryAssociateForm, self).__init__(*args, **kwargs)
+        super(InternalDocumentLibraryAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['simpledocuments'] = forms.ModelMultipleChoiceField(
-                queryset=org.simpledocument_set.all(),
+        if entity.newsorganization:
+            self.fields['internaldocuments'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganization.internaldocument_set.all(),
                 required=False)
-        elif participant:
-            self.fields['simpledocuments'] = forms.ModelMultipleChoiceField(
-                queryset=participant.simpledocument_set.all(),
+        elif entity.newsorganizationnetwork:
+            self.fields['internaldocuments'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.internaldocument_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['internaldocuments'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.internaldocument_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['internaldocuments'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internaldocument_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
+            self.fields['internaldocuments'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internaldocument_set.all(),
                 required=False)

@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Q
 
 from base.models import Participant, Anchor, EntityOwner
-from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo
+from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 from note.models import Note
 
 #-----------------------------------------------------------------------#
@@ -110,11 +110,11 @@ class Task(models.Model):
     # notes
     notes = models.ManyToManyField(Note, blank=True)
 
-    # simple assets
-    simple_image_assets = models.ManyToManyField(SimpleImage, blank=True)
-    simple_document_assets = models.ManyToManyField(SimpleDocument, blank=True)
-    simple_audio_assets = models.ManyToManyField(SimpleAudio, blank=True)
-    simple_video_assets = models.ManyToManyField(SimpleVideo, blank=True)
+    # internal assets
+    internal_image_assets = models.ManyToManyField(InternalImage, blank=True)
+    internal_document_assets = models.ManyToManyField(InternalDocument, blank=True)
+    internal_audio_assets = models.ManyToManyField(InternalAudio, blank=True)
+    internal_video_assets = models.ManyToManyField(InternalVideo, blank=True)
 
     class Meta:
         verbose_name = 'Task'

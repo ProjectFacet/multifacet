@@ -30,7 +30,7 @@ class Anchor(models.Model):
 
     This allows for consistency across multiple kinds of Anchors.
 
-    Additional simple information is included on the record for easy access.
+    Additional internal information is included on the record for easy access.
     """
 
     # Choices for Anchor Type

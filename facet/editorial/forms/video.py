@@ -5,7 +5,7 @@ from django.forms import Form, Textarea, TextInput, CheckboxInput, Select
 
 from editorial.models import (
     VideoAsset,
-    SimpleVideo,
+    InternalVideo,
 )
 
 from editorial.widgets import (
@@ -54,21 +54,33 @@ class LibraryVideoAssociateForm(Form):
         participant = kwargs.pop("participant_owner", None)
         super(LibraryVideoAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['videos'] = forms.ModelMultipleChoiceField(
-                queryset=org.videoasset_set.all(),
+        if entity.newsorganization:
+            self.fields['video'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganization.videoasset_set.all(),
                 required=False)
-        elif participant:
-            self.fields['videos'] = forms.ModelMultipleChoiceField(
+        elif entity.newsorganizationnetwork:
+            self.fields['video'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.videoasset_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['video'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.videoasset_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['video'] = forms.ModelMultipleChoiceField(
+                queryset=participant.videoasset_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
+            self.fields['video'] = forms.ModelMultipleChoiceField(
                 queryset=participant.videoasset_set.all(),
                 required=False)
 
 
-class SimpleVideoForm(forms.ModelForm):
-    """Upload a simple video."""
+class InternalVideoForm(forms.ModelForm):
+    """Upload a internal video."""
 
     class Meta:
-        model = SimpleVideo
+        model = InternalVideo
 
         fields = [
             'title',
@@ -82,8 +94,8 @@ class SimpleVideoForm(forms.ModelForm):
         }
 
 
-class SimpleVideoLibraryAssociateForm(Form):
-    """Form for adding existing simple videos to an Organization, Network,
+class InternalVideoLibraryAssociateForm(Form):
+    """Form for adding existing internal videos to an Organization, Network,
     Project, Series, Task or Event."""
 
     def __init__(self, *args, **kwargs):
@@ -91,13 +103,25 @@ class SimpleVideoLibraryAssociateForm(Form):
 
         entity = kwargs.pop("entity_owner", None)
         participant = kwargs.pop("participant_owner", None)
-        super(SimpleVideoLibraryAssociateForm, self).__init__(*args, **kwargs)
+        super(InternalVideoLibraryAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['simplevideos'] = forms.ModelMultipleChoiceField(
-                queryset=org.simplevideo_set.all(),
+        if entity.newsorganization:
+            self.fields['internalvideo'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganization.internalvideo_set.all(),
                 required=False)
-        elif participant:
-            self.fields['simplevideos'] = forms.ModelMultipleChoiceField(
-                queryset=participant.simplevideo_set.all(),
+        elif entity.newsorganizationnetwork:
+            self.fields['internalvideo'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.internalvideo_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['internalvideo'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.internalvideo_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['internalvideo'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internalvideo_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
+            self.fields['internalvideo'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internalvideo_set.all(),
                 required=False)

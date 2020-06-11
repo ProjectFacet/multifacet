@@ -467,38 +467,38 @@ class NewsOrganization(BaseOrganization):
     #
     #     return recentmedia
 
-    # def get_org_simple_image_library(self):
-    #     """ Return queryset of all simple images associated with a news organization."""
+    # def get_org_internal_image_library(self):
+    #     """ Return queryset of all internal images associated with a news organization."""
     #
-    #     return self.simpleimage_set.all()
+    #     return self.internalimage_set.all()
 
-    # def get_org_simple_document_library(self):
-    #     """ Return queryset of all simple documents associated with an organizaiton."""
+    # def get_org_internal_document_library(self):
+    #     """ Return queryset of all internal documents associated with an organizaiton."""
     #
-    #     return self.simpledocument_set.all()
+    #     return self.internaldocument_set.all()
 
-    # def get_org_simple_audio_library(self):
-    #     """ Return queryset of all simple audio associated with a news organization."""
+    # def get_org_internal_audio_library(self):
+    #     """ Return queryset of all internal audio associated with a news organization."""
     #
-    #     return self.simpleaudio_set.all()
+    #     return self.internalaudio_set.all()
 
-    # def get_org_simple_video_library(self):
-    #     """ Return queryset of all simple video associated with a news organization."""
+    # def get_org_internal_video_library(self):
+    #     """ Return queryset of all internal video associated with a news organization."""
     #
-    #     return self.simplevideo_set.all()
+    #     return self.internalvideo_set.all()
 
-    # def get_org_simple_asset_library(self):
-    #     """ Return organization simple assets."""
+    # def get_org_internal_asset_library(self):
+    #     """ Return organization internal assets."""
     #
     #     recent_internal_assets = []
-    #     simple_images = self.simpleimage_set.all().order_by("-creation_date")[:12]
-    #     simple_documents = self.simpledocument_set.all().order_by("-creation_date")[:12]
-    #     simple_audio = self.simpleaudio_set.all().order_by("-creation_date")[:12]
-    #     simple_video = self.simplevideo_set.all().order_by("-creation_date")[:12]
-    #     recent_internal_assets.extend(simple_images)
-    #     recent_internal_assets.extend(simple_documents)
-    #     recent_internal_assets.extend(simple_audio)
-    #     recent_internal_assets.extend(simple_video)
+    #     internal_images = self.internalimage_set.all().order_by("-creation_date")[:12]
+    #     internal_documents = self.internaldocument_set.all().order_by("-creation_date")[:12]
+    #     internal_audio = self.internalaudio_set.all().order_by("-creation_date")[:12]
+    #     internal_video = self.internalvideo_set.all().order_by("-creation_date")[:12]
+    #     recent_internal_assets.extend(internal_images)
+    #     recent_internal_assets.extend(internal_documents)
+    #     recent_internal_assets.extend(internal_audio)
+    #     recent_internal_assets.extend(internal_video)
     #
     #     return recent_internal_assets
 

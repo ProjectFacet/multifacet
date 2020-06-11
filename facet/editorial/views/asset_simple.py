@@ -22,28 +22,28 @@ class SimpleAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
     pass
 
 
-class SimpleImageAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
+class InternalImageAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
     """
 
     """
     pass
 
 
-class SimpleDocumentAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
+class InternalDocumentAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
     """
 
     """
     pass
 
 
-class SimpleAudioAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
+class InternalAudioAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
     """
 
     """
     pass
 
 
-class SimpleVideoAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
+class InternalVideoAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
     """
 
     """
@@ -52,35 +52,35 @@ class SimpleVideoAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
 
 # Simple Image Views
 
-class SimpleImageCreateView(LoginRequiredMixin, CreateView):
+class InternalImageCreateView(LoginRequiredMixin, CreateView):
     """
 
     """
     pass
 
 
-class SimpleImageLibraryAssociateView(LoginRequiredMixin, FormView):
+class InternalImageLibraryAssociateView(LoginRequiredMixin, FormView):
     """
 
     """
     pass
 
 
-class SimpleImageUpdateView(LoginRequiredMixin, UpdateView):
+class InternalImageUpdateView(LoginRequiredMixin, UpdateView):
     """
 
     """
     pass
 
 
-class SimpleImageAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
+class InternalImageAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
     """
 
     """
     pass
 
 
-class SimpleImageAssetDisassociateView(LoginRequiredMixin, View):
+class InternalImageAssetDisassociateView(LoginRequiredMixin, View):
     """
 
     """
@@ -89,35 +89,35 @@ class SimpleImageAssetDisassociateView(LoginRequiredMixin, View):
 
 # Simple Document Views
 
-class SimpleDocumentCreateView(LoginRequiredMixin, CreateView):
+class InternalDocumentCreateView(LoginRequiredMixin, CreateView):
     """
 
     """
     pass
 
 
-class SimpleDocumentUpdateView(LoginRequiredMixin, UpdateView):
+class InternalDocumentUpdateView(LoginRequiredMixin, UpdateView):
     """
 
     """
     pass
 
 
-class SimpleDocumentAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
+class InternalDocumentAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
     """
 
     """
     pass
 
 
-class SimpleDocumentLibraryAssociateView(LoginRequiredMixin, FormView):
+class InternalDocumentLibraryAssociateView(LoginRequiredMixin, FormView):
     """
 
     """
     pass
 
 
-class SimpleDocumentAssetDisassociateView(LoginRequiredMixin, View):
+class InternalDocumentAssetDisassociateView(LoginRequiredMixin, View):
     """
 
     """
@@ -126,35 +126,35 @@ class SimpleDocumentAssetDisassociateView(LoginRequiredMixin, View):
 
 # Simple Audio Views
 
-class SimpleAudioCreateView(LoginRequiredMixin, CreateView):
+class InternalAudioCreateView(LoginRequiredMixin, CreateView):
     """
 
     """
     pass
 
 
-class SimpleAudioUpdateView(LoginRequiredMixin, UpdateView):
+class InternalAudioUpdateView(LoginRequiredMixin, UpdateView):
     """
 
     """
     pass
 
 
-class SimpleAudioAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
+class InternalAudioAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
     """
 
     """
     pass
 
 
-class SimpleAudioLibraryAssociateView(LoginRequiredMixin, FormView):
+class InternalAudioLibraryAssociateView(LoginRequiredMixin, FormView):
     """
 
     """
     pass
 
 
-class SimpleAudioAssetDisassociateView(LoginRequiredMixin, View):
+class InternalAudioAssetDisassociateView(LoginRequiredMixin, View):
     """
 
     """
@@ -163,35 +163,35 @@ class SimpleAudioAssetDisassociateView(LoginRequiredMixin, View):
 
 # Simple Video Views
 
-class SimpleVideoCreateView(LoginRequiredMixin, CreateView):
+class InternalVideoCreateView(LoginRequiredMixin, CreateView):
     """
 
     """
     pass
 
 
-class SimpleVideoUpdateView(LoginRequiredMixin, UpdateView):
+class InternalVideoUpdateView(LoginRequiredMixin, UpdateView):
     """
 
     """
     pass
 
 
-class SimpleVideoAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
+class InternalVideoAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
     """
 
     """
     pass
 
 
-class SimpleVideoLibraryAssociateView(LoginRequiredMixin, FormView):
+class InternalVideoLibraryAssociateView(LoginRequiredMixin, FormView):
     """
 
     """
     pass
 
 
-class SimpleVideoAssetDisassociateView(LoginRequiredMixin, View):
+class InternalVideoAssetDisassociateView(LoginRequiredMixin, View):
     """
 
     """

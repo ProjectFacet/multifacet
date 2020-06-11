@@ -7,7 +7,7 @@ class BaseDocumentAsset(BaseAsset):
     """Base documents.
 
     There are subclasses of this for DocumentAssets (attached to items with lots of
-    metadata) and SimpleDocuments (attached to tasks, events, etc).
+    metadata) and InternalDocuments (attached to tasks, events, etc).
     """
 
     # type name for search system
@@ -84,15 +84,15 @@ class DocumentAsset(BaseDocumentAsset, BaseAssetMetadata):
         return "Document Asset"
 
 
-class SimpleDocument(BaseDocumentAsset):
+class InternalDocument(BaseDocumentAsset):
     """Simple Document (file upload, attached to events, tasks, etc.)"""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
-        the simple asset is associated with."""
+        the internal asset is associated with."""
 
         associations = []
-        orgs = self.organization_simple_document.all()
+        orgs = self.organization_internal_document.all()
         networks = self.network_set.all()
         projects = self.project_set.all()
         events = self.event_set.all()
@@ -107,7 +107,7 @@ class SimpleDocument(BaseDocumentAsset):
 
 
     # def get_absolute_url(self):
-    #     return reverse('simple_document_detail', kwargs={'pk': self.id})
+    #     return reverse('internal_document_detail', kwargs={'pk': self.id})
 
 
     @property

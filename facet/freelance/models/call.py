@@ -3,7 +3,7 @@ from django.contrib.postgres.fields import ArrayField
 
 from .journalist_freelancemanager import FreelanceManager
 from entity.models import NewsOrganization
-# from editorial.models import SimpleImage, SimpleDocument, SimpleAudio, SimpleVideo, Tag
+# from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo, Tag
 
 
 class Call(models.Model):
@@ -83,11 +83,11 @@ class Call(models.Model):
         help_text='Pitch status choice.'
     )
 
-    # simple assets
-    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
-    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
-    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
-    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
+    # internal assets
+    internal_image_assets = models.ManyToManyField('editorial.InternalImage', blank=True)
+    internal_document_assets = models.ManyToManyField('editorial.InternalDocument', blank=True)
+    internal_audio_assets = models.ManyToManyField('editorial.InternalAudio', blank=True)
+    internal_video_assets = models.ManyToManyField('editorial.InternalVideo', blank=True)
 
     tags = models.ManyToManyField('editorial.Tag', blank=True)
 

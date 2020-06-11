@@ -39,10 +39,10 @@ from django.views.generic import TemplateView, UpdateView, DetailView, ListView,
 from editorial.forms import (
     StoryForm,
     StoryTeamForm,
-    SimpleImageForm,
-    SimpleDocumentForm,
-    SimpleImageLibraryAssociateForm,
-    SimpleDocumentLibraryAssociateForm,
+    InternalImageForm,
+    InternalDocumentForm,
+    InternalImageLibraryAssociateForm,
+    InternalDocumentLibraryAssociateForm,
 )
 
 from task.forms import (TaskForm)
@@ -65,7 +65,7 @@ class StoryCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
     """A logged in user with the appropriate permissions can create a story.
 
     Stories can have items, assets, notes, discussions,
-    simple assets, calendar objects and meta information.
+    internal assets, calendar objects and meta information.
     """
 
     model = Story
@@ -170,20 +170,20 @@ class StoryDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
 
         return {'events': events, 'form': form}
 
-    def simple_images(self):
-        """Return simple images."""
+    def internal_images(self):
+        """Return internal images."""
 
-        images = self.object.simple_image_assets.all()
-        form = SimpleImageForm()
-        addform = SimpleImageLibraryAssociateForm(organization=self.request.user.organization)
+        images = self.object.internal_image_assets.all()
+        form = InternalImageForm()
+        addform = InternalImageLibraryAssociateForm(organization=self.request.user.organization)
         return {'images': images, 'form': form, 'addform': addform,}
 
-    def simple_documents(self):
-        """Return simple documents."""
+    def internal_documents(self):
+        """Return internal documents."""
 
-        documents = self.object.simple_document_assets.all()
-        form = SimpleDocumentForm()
-        addform = SimpleDocumentLibraryAssociateForm(organization=self.request.user.organization)
+        documents = self.object.internal_document_assets.all()
+        form = InternalDocumentForm()
+        addform = InternalDocumentLibraryAssociateForm(organization=self.request.user.organization)
         return {'documents': documents, 'form': form, 'addform': addform,}
 
 

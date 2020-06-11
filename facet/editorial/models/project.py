@@ -88,11 +88,11 @@ class Project(models.Model):
     # notes
     notes = models.ManyToManyField(Note, blank=True)
 
-    # simple assets
-    simple_image_assets = models.ManyToManyField('editorial.SimpleImage', blank=True)
-    simple_document_assets = models.ManyToManyField('editorial.SimpleDocument', blank=True)
-    simple_audio_assets = models.ManyToManyField('editorial.SimpleAudio', blank=True)
-    simple_video_assets = models.ManyToManyField('editorial.SimpleVideo', blank=True)
+    # internal assets
+    internal_image_assets = models.ManyToManyField('editorial.InternalImage', blank=True)
+    internal_document_assets = models.ManyToManyField('editorial.InternalDocument', blank=True)
+    internal_audio_assets = models.ManyToManyField('editorial.InternalAudio', blank=True)
+    internal_video_assets = models.ManyToManyField('editorial.InternalVideo', blank=True)
 
     # project_logo = models.ImageField(
     #     upload_to='projects',

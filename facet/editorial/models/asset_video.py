@@ -6,7 +6,7 @@ from .asset_base import BaseAsset, BaseAssetMetadata
 class BaseVideo(BaseAsset):
     """Base class for videos.
 
-    Subclassed by VideoAsset and SimpleVideo.
+    Subclassed by VideoAsset and InternalVideo.
     """
 
     # metadata for search system
@@ -88,15 +88,15 @@ class VideoAsset(BaseVideo, BaseAssetMetadata):
         return "Video Asset"
 
 
-class SimpleVideo(BaseVideo):
+class InternalVideo(BaseVideo):
     """Uploaded video (attaches to tasks, events, etc)"""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
-        the simple asset is associated with."""
+        the internal asset is associated with."""
 
         associations = []
-        orgs = self.organization_simple_video.all()
+        orgs = self.organization_internal_video.all()
         networks = self.network_set.all()
         projects = self.project_set.all()
         events = self.event_set.all()
@@ -110,7 +110,7 @@ class SimpleVideo(BaseVideo):
         return associations
 
     # def get_absolute_url(self):
-    #     return reverse('simple_image_detail', kwargs={'pk': self.id})
+    #     return reverse('internal_image_detail', kwargs={'pk': self.id})
 
 
     @property

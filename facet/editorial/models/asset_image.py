@@ -82,15 +82,15 @@ class ImageAsset(BaseImage, BaseAssetMetadata):
         return "Image Asset"
 
 
-class SimpleImage(BaseImage):
+class InternalImage(BaseImage):
     """Simple image (with some metadata) for attaching to tasks, events, etc."""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
-        the simple asset is associated with."""
+        the internal asset is associated with."""
 
         associations = []
-        orgs = self.organization_simple_image.all()
+        orgs = self.organization_internal_image.all()
         networks = self.network_set.all()
         projects = self.project_set.all()
         events = self.event_set.all()
@@ -104,7 +104,7 @@ class SimpleImage(BaseImage):
         return associations
 
     # def get_absolute_url(self):
-    #     return reverse('simple_image_detail', kwargs={'pk': self.id})
+    #     return reverse('internal_image_detail', kwargs={'pk': self.id})
 
     @property
     def type(self):

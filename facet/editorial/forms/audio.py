@@ -5,7 +5,7 @@ from django.forms import Form, Textarea, TextInput, CheckboxInput, Select
 
 from editorial.models import (
     AudioAsset,
-    SimpleAudio,
+    InternalAudio,
 )
 
 from editorial.widgets import (
@@ -54,21 +54,33 @@ class LibraryAudioAssociateForm(Form):
         participant = kwargs.pop("participant_owner", None)
         super(LibraryAudioAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['audios'] = forms.ModelMultipleChoiceField(
-                queryset=org.audioasset_set.all(),
+        if entity.newsorganization:
+            self.fields['audio'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganization.audioasset_set.all(),
                 required=False)
-        elif participant:
-            self.fields['audios'] = forms.ModelMultipleChoiceField(
+        elif entity.newsorganizationnetwork:
+            self.fields['audio'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.audioasset_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['audio'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.audioasset_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['audio'] = forms.ModelMultipleChoiceField(
+                queryset=participant.audioasset_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
+            self.fields['audio'] = forms.ModelMultipleChoiceField(
                 queryset=participant.audioasset_set.all(),
                 required=False)
 
 
-class SimpleAudioForm(forms.ModelForm):
-    """Upload a simple audio."""
+class InternalAudioForm(forms.ModelForm):
+    """Upload a internal audio."""
 
     class Meta:
-        model = SimpleAudio
+        model = InternalAudio
 
         fields = [
             'title',
@@ -82,8 +94,8 @@ class SimpleAudioForm(forms.ModelForm):
         }
 
 
-class SimpleAudioLibraryAssociateForm(Form):
-    """Form for adding existing simple audios to an Organization, Network,
+class InternalAudioLibraryAssociateForm(Form):
+    """Form for adding existing internal audios to an Organization, Network,
     Project, Series, Task or Event."""
 
     def __init__(self, *args, **kwargs):
@@ -91,13 +103,25 @@ class SimpleAudioLibraryAssociateForm(Form):
 
         entity = kwargs.pop("entity_owner", None)
         participant = kwargs.pop("participant_owner", None)
-        super(SimpleAudioLibraryAssociateForm, self).__init__(*args, **kwargs)
+        super(InternalAudioLibraryAssociateForm, self).__init__(*args, **kwargs)
 
-        if entity:
-            self.fields['simpleaudios'] = forms.ModelMultipleChoiceField(
-                queryset=org.simpleaudio_set.all(),
+        if entity.newsorganization:
+            self.fields['internalaudio'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganization.internalaudio_set.all(),
                 required=False)
-        elif participant:
-            self.fields['simpleaudios'] = forms.ModelMultipleChoiceField(
-                queryset=participant.simpleaudio_set.all(),
+        elif entity.newsorganizationnetwork:
+            self.fields['internalaudio'] = forms.ModelMultipleChoiceField(
+                queryset=entity.newsorganizationnetwork.internalaudio_set.all(),
+                required=False)
+        elif participant.staffjournalist:
+            self.fields['internalaudio'] = forms.ModelMultipleChoiceField(
+                queryset=participant.staffjournalist.newsorganization.internalaudio_set.all(),
+                required=False)
+        elif participant.unaffiliatedstaffjournalist:
+            self.fields['internalaudio'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internalaudio_set.all(),
+                required=False)
+        elif participant.freelancejournalist:
+            self.fields['internalaudio'] = forms.ModelMultipleChoiceField(
+                queryset=participant.internalaudio_set.all(),
                 required=False)
