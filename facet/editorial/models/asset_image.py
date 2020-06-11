@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from .asset_base import BaseAsset, BaseAssetMetadata
 
@@ -13,15 +15,15 @@ class BaseImage(BaseAsset):
     # type name for search system
     type = "Image"
 
-    # image = models.ImageField(
-    #     upload_to='photos',
-    #     blank=True,
-    # )
-    #
-    # display_images = ImageSpecField(
-    #     source='images',
-    #     format='JPEG',
-    # )
+    image = models.ImageField(
+        upload_to='photos',
+        blank=True,
+    )
+
+    display_images = ImageSpecField(
+        source='images',
+        format='JPEG',
+    )
 
     class Meta:
         abstract = True

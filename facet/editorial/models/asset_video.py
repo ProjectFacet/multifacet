@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from .asset_base import BaseAsset, BaseAssetMetadata
 
@@ -17,10 +19,10 @@ class BaseVideo(BaseAsset):
         blank=True,
     )
 
-    # poster = models.FileField(
-    #     upload_to='videos',
-    #     blank=True,
-    # )
+    thumbnail = models.FileField(
+        upload_to='videos',
+        blank=True,
+    )
 
     link = models.URLField(
         max_length=400,

@@ -7,8 +7,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# from imagekit.models import ImageSpecField
-# from pilkit.processors import SmartResize
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from entity.models import NewsOrganization
 from base.models import Participant

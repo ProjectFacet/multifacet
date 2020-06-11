@@ -1,8 +1,8 @@
 from django.urls import reverse
 from django.db import models
 # from django.db.models import Q
-# from imagekit.models import ImageSpecField
-# from pilkit.processors import SmartResize
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from base.models import Participant, Anchor, EntityOwner, Partner
 from note.models import Note
@@ -94,16 +94,16 @@ class Project(models.Model):
     internal_audio_assets = models.ManyToManyField('editorial.InternalAudio', blank=True)
     internal_video_assets = models.ManyToManyField('editorial.InternalVideo', blank=True)
 
-    # project_logo = models.ImageField(
-    #     upload_to='projects',
-    #     blank=True,
-    # )
-    #
-    # display_logo = ImageSpecField(
-    #     source='project_logo',
-    #     processors=[SmartResize(500, 500)],
-    #     format='JPEG',
-    # )
+    project_logo = models.ImageField(
+        upload_to='projects',
+        blank=True,
+    )
+
+    display_logo = ImageSpecField(
+        source='project_logo',
+        processors=[SmartResize(500, 500)],
+        format='JPEG',
+    )
 
 
     class Meta:

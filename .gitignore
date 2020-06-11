@@ -1,4 +1,7 @@
 env/
+tmpenv/
 *.pyc
 *.db
 .DS_Store
+media/
+Pipfile.lock

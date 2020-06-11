@@ -1,5 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from .participant import Participant
 from .entity_owner import EntityOwner
@@ -60,27 +62,26 @@ class BaseOrganization(models.Model):
     # --------------------------------
     # Logos and Cover Images
 
-    # FIXME Pilkit install
-    # logo = models.ImageField(
-    #     upload_to='news_organizations',
-    #     blank=True,
-    # )
+    logo = models.ImageField(
+        upload_to='news_organizations',
+        blank=True,
+    )
 
-    # display_logo = ImageSpecField(
-    #     source='logo',
-    #     processors=[SmartResize(500, 500)],
-    #     format='JPEG',
-    # )
+    display_logo = ImageSpecField(
+        source='logo',
+        processors=[SmartResize(500, 500)],
+        format='JPEG',
+    )
 
-    # cover_photo = models.ImageField(
-    #     upload_to='org_cover',
-    #     blank=True,
-    # )
+    cover_photo = models.ImageField(
+        upload_to='org_cover',
+        blank=True,
+    )
 
-    # display_cover_photo = ImageSpecField(
-    #     source='cover_photo',
-    #     format='JPEG',
-    # )
+    display_cover_photo = ImageSpecField(
+        source='cover_photo',
+        format='JPEG',
+    )
 
     class Meta:
         abstract = True

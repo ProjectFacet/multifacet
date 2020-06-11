@@ -9,8 +9,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 # from internal_history.models import HistoricalRecords
-# from imagekit.models import ImageSpecField
-# from pilkit.processors import SmartResize
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from .partner import Partner
 
@@ -82,17 +82,16 @@ class Participant(AbstractUser):
         blank=True,
     )
 
-    # FIXME Pilkit install
-    # photo = models.ImageField(
-    #     upload_to='participants',
-    #     blank=True,
-    # )
-    #
-    # display_photo = ImageSpecField(
-    #     source='photo',
-    #     processors=[SmartResize(500, 500)],
-    #     format='JPEG',
-    # )
+    photo = models.ImageField(
+        upload_to='participants',
+        blank=True,
+    )
+
+    display_photo = ImageSpecField(
+        source='photo',
+        processors=[SmartResize(500, 500)],
+        format='JPEG',
+    )
 
 
     class Meta:

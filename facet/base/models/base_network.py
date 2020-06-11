@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
 from .participant import Participant
 from .entity_owner import EntityOwner
@@ -9,7 +11,7 @@ from note.models import Note
 
 class BaseNetwork(models.Model):
     """A group of organizations, partipants +
-    
+
     A network is a collection of two or more organizations or participant types.
     """
 
@@ -51,18 +53,16 @@ class BaseNetwork(models.Model):
         auto_now_add=True
     )
 
-    # FIXME Pilkit install
-    # logo = models.ImageField(
-    #     upload_to='networks',
-    #     blank=True,
-    # )
+    logo = models.ImageField(
+        upload_to='networks',
+        blank=True,
+    )
 
-    # display_logo = ImageSpecField(
-    #     source='logo',
-    #     processors=[SmartResize(500, 500)],
-    #     format='JPEG',
-    # )
-
+    display_logo = ImageSpecField(
+        source='logo',
+        processors=[SmartResize(500, 500)],
+        format='JPEG',
+    )
 
     notes = models.ManyToManyField(Note, blank=True)
     # internal assets
