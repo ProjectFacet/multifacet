@@ -817,7 +817,18 @@
           </li>
           <!-- Profile -->
           {% if user.is_authenticated %}
-            {% if user.initials %}
+            {% if user.photo %}
+              <li class="nav-item avatar dropdown ml-3">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src="{{ user.photo.url }}" class="rounded-circle z-depth-0" alt="avatar image">
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg-right dropdown-info mdb-color darken-1" aria-labelledby="navbarDropdownProfile">
+                  <a class="dropdown-item text-white" href="#">Profile</a>
+                  <a class="dropdown-item text-white" href="{% url 'account_logout' %}">Logout</a>
+                  <a class="dropdown-item text-white" href="#">Password</a>
+                </div>
+              </li>
+            {% elif user.initials %}
               <li class="nav-item avatar dropdown ml-3">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <div class="initial-avatar">{{ user.initials }}</div>

@@ -128,11 +128,11 @@ class FreelanceJournalist(models.Model):
         return ItemTemplate.objects.filter(Q(sitewide=True) | Q(participant_owner=self.participant) & Q(is_active=True))
 
 
-    # def get_active_assignments(self):
-    #     """Return all active assignment."""
-    #     return self.assignment_set.filter(complete=False)
-    #
-    #
-    # def get_active_pitches(self):
-    #     """Return all active assignment."""
-    #     return self.pitch_set.filter(Q(status="Pitched")|Q(status="Accepted"))
+    def get_active_assignments(self):
+        """Return all active assignment."""
+        return self.assignment_set.filter(complete=False)
+
+
+    def get_active_pitches(self):
+        """Return all active assignment."""
+        return self.pitch_set.filter(Q(status="Pitched")|Q(status="Accepted"))

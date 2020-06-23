@@ -13,8 +13,10 @@ class BaseInvoice(models.Model):
         help_text='Details of the invoice.',
     )
 
-    total_due = models.IntegerField(
+    total_due = models.DecimalField(
         help_text='Total value of the invoice.',
+        max_digits=8,
+        decimal_places=2,
     )
 
     creation_date = models.DateTimeField(

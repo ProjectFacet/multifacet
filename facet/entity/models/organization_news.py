@@ -261,8 +261,8 @@ class NewsOrganization(BaseOrganization):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('org_detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse('entity:organization_news_detail', kwargs={'pk': self.id})
 
     @property
     def description(self):
@@ -393,17 +393,16 @@ class NewsOrganization(BaseOrganization):
     #
     #     return network_content
 
-    # def get_org_copied_content(self):
-    #     """Returns queryset of content that a news organization has picked up from
-    #     a network partner."""
-    #
-    #     from . import StoryCopyDetail
-    #     from . import Story
-    #
-    #     copyrecords = StoryCopyDetail.objects.exclude(original_org=self)
-    #     org_copied_content = [record.original_story for record in copyrecords]
-    #
-    #     return org_copied_content
+    def get_copied_content(self):
+        """Returns queryset of content picked up from a partner."""
+
+        from . import StoryCopyDetail
+        from . import Story
+
+        copyrecords = StoryCopyDetail.objects.filter(partner=self.partner_profile)
+        copied_content = [record.original_story for record in copyrecords]
+
+        return copied_content
 
     # # formerly get_org_collaborators
     # def get_org_collaborators_vocab(self):

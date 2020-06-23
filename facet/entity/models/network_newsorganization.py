@@ -45,8 +45,8 @@ class NewsOrganizationNetwork(BaseNetwork):
     def type(self):
         return "Network"
 
-    # def get_absolute_url(self):
-    #     return reverse('network_detail', kwargs={'pk': self.id})
+    def get_absolute_url(self):
+        return reverse('entity:network_newsorganization_detail', kwargs={'pk': self.id})
 
     #FIXME Consider how a network may be a member or partner to others
     def get_partner_vocab(self):
@@ -130,14 +130,24 @@ class NewsOrganizationNetwork(BaseNetwork):
         # FIXME account for visibility of library to partner
 
 
+    def get_network_shared_stories(self):
+        """ Return list of stories shared with a network.
 
-    # def get_network_shared_stories(self):
-    #     """ Return list of stories shared with a network.
-    #
-    #     This is used to populate the network content dashboard.
-    #     """
-    #
-    #     from .story import Story
-    #
-    #     network_stories = Story.objects.filter(Q(share_with=self))
-    #     return network_stories
+        This is used to populate the network content dashboard.
+        """
+
+        from .story import Story
+
+        network_stories = Story.objects.filter(Q(share_with=self))
+        return network_stories
+
+    def get_copied_content(self):
+        """Returns queryset of content picked up from a partner."""
+
+        from . import StoryCopyDetail
+        from . import Story
+
+        copyrecords = StoryCopyDetail.objects.filter(partner=self.partner_profile)
+        copied_content = [record.original_story for record in copyrecords]
+
+        return copied_content

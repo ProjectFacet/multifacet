@@ -1,1 +1,2 @@
-from .comment import CommentForm
+from .discussion import DiscussionForm, CommentForm
+from .directmessage import DirectMessageExchange, DirectMessage

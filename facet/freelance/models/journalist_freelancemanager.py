@@ -19,6 +19,15 @@ class FreelanceManager(models.Model):
         help_text='Is this freelance manager publicly listed?',
     )
 
+    interest = models.TextField(
+        help_text = 'Description of stories interested in.',
+        blank=True,
+    )
+
+    # TK
+    # topics
+    # formats
+
     class Meta:
         verbose_name = 'Freelance Manager'
         verbose_name_plural = 'Freelance Managers'
@@ -27,7 +36,7 @@ class FreelanceManager(models.Model):
         return self.participant.credit_name
 
     # def get_absolute_url(self):
-    #     return reverse('talent_editor_detail', kwargs={'pk': self.id})
+    #     return reverse('freelance_manager_detail', kwargs={'pk': self.id})
 
     @property
     def search_title(self):

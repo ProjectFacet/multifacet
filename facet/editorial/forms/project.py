@@ -3,11 +3,16 @@
 from django import forms
 from django.forms import Textarea, TextInput, CheckboxInput, Select
 
+from facet.widgets import (
+    ArrayFieldSelectMultiple,
+    _TextInput,
+    _Textarea,
+    _Select,
+)
+
 from editorial.models import (
     Project,
 )
-
-from editorial.widgets import ArrayFieldSelectMultiple
 
 
 class ProjectForm(forms.ModelForm):
@@ -38,7 +43,7 @@ class ProjectForm(forms.ModelForm):
                 attrs={'class': 'form-control', 'placeholder': 'Description'}),
             'collaborate': CheckboxInput(),
             'partner_with': ArrayFieldSelectMultiple(
-                attrs={'class': 'chosen-select form-control facet-select',
+                attrs={'class': 'chosen-select form-control',
                        'id': 'partner-with', 'data-placeholder': 'Select Partners'}),
         }
 

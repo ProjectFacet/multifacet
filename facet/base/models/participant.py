@@ -26,6 +26,12 @@ class Participant(AbstractUser):
     # notes
     notes = models.ManyToManyField('note.Note', blank=True)
 
+    connections = models.ManyToManyField(
+        'self',
+        blank=True,
+        help_text='Participants that are connections.',
+    )
+
     display_name = models.CharField(
         max_length=100,
         help_text='Shorter version of name used to identify participant to other participants.',
@@ -157,3 +163,14 @@ class Participant(AbstractUser):
         else:
             return VideoAsset.objects.filter(participant_owner=self)
         # FIXME account for visibility of library to partner
+
+    def get_copied_content(self):
+        """Returns queryset of content picked up from a partner."""
+
+        from . import StoryCopyDetail
+        from . import Story
+
+        copyrecords = StoryCopyDetail.objects.filter(partner=self.partner_profile)
+        copied_content = [record.original_story for record in copyrecords]
+
+        return copied_content

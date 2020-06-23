@@ -7,6 +7,13 @@ from django.forms import Textarea, TextInput, Select, CheckboxInput, CheckboxSel
 from django.contrib.postgres.forms import SimpleArrayField
 # from tinymce.widgets import TinyMCE
 
+from facet.widgets import (
+    ArrayFieldSelectMultiple,
+    _TextInput,
+    _Textarea,
+    _Select,
+)
+
 from editorial.models import (
     Story,
     Item,
@@ -15,8 +22,6 @@ from editorial.models import (
 )
 
 from editorial.models.item_template import COMMON_FIELDS
-
-from editorial.widgets import ArrayFieldSelectMultiple
 
 
 class ItemTemplateForm(forms.ModelForm):

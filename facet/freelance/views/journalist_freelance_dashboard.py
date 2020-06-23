@@ -6,9 +6,19 @@ from django.urls import reverse
 from django.views.generic import UpdateView, DetailView, CreateView, View, TemplateView
 
 # import models
+from freelance.models import (
+    FreelanceJournalist,
+    FreelanceManager,
+    Call,
+    Pitch,
+    Assignment,
+    FreelanceInvoice,
+)
 
+from freelance.forms import (
+    FreelanceJournalistForm,
+)
 
-# import forms
 
 class FreelanceJournalistDashboardView(LoginRequiredMixin, TemplateView):
     """Displays dashboard for a freelance journalist.
@@ -21,8 +31,7 @@ class FreelanceJournalistDashboardView(LoginRequiredMixin, TemplateView):
     - new comments since last login
     """
 
-
-    template_name = 'journalist_freelance_dashboard.html'
+    template_name = 'freelance_journalist_dashboard.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,5 +1,6 @@
 from django.db import models
 
+from base.models import Anchor
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from .call import Call
@@ -8,6 +9,8 @@ from .call import Call
 
 class Pitch(models.Model):
     """ Pitches for content from a freelancer to a news organization."""
+
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
 
     freelancer = models.ForeignKey(
         FreelanceJournalist,

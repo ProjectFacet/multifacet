@@ -3,15 +3,16 @@
 from django import forms
 from django.forms import Form, Textarea, TextInput, CheckboxInput, Select
 
-from editorial.models import (
-    ImageAsset,
-    InternalImage,
-)
-
-from editorial.widgets import (
+from facet.widgets import (
+    ArrayFieldSelectMultiple,
     _TextInput,
     _Textarea,
     _Select,
+)
+
+from editorial.models import (
+    ImageAsset,
+    InternalImage,
 )
 
 

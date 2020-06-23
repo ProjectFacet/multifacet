@@ -94,3 +94,13 @@ class EntityOwner(models.Model):
         if self.newsorganizationnetwork:
             templates = self.newsorganizationnetwork.get_item_templates()
             return templates
+
+
+    def get_absolute_url(self):
+        """Get get_absolute_url of actual objects."""
+
+        if self.newsorganization:
+            return self.newsorganization.get_absolute_url()
+
+        if self.newsorganizationnetwork:
+            return self.newsorganizationnetwork.get_absolute_url()

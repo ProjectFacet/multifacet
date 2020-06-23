@@ -53,11 +53,6 @@ class ParticipantDetailView(LoginRequiredMixin, DetailView):
     model = Participant
     template_name = 'base/templates/participant_detail.html'
 
-    # def temp(self):
-    #     """Do XYZ."""
-    #
-    #     return _____
-
     def notes(self):
         """Get all notes associated with participant and form for creating notes."""
 
@@ -86,11 +81,6 @@ class ParticipantDeleteView(LoginRequiredMixin, DeleteView):
 
     model = Participant
     template_name = 'base/templates/participant_delete.html'
-
-    # def temp(self):
-    #     """Do XYZ."""
-    #
-    #     return _____
 
     # TODO added necessary model fields to facilitate plain-text recording of an
     # attribution of a participant who has deleted their profile.

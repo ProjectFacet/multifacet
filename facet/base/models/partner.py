@@ -82,3 +82,17 @@ class Partner(models.Model):
     @property
     def type(self):
         return "Partner Profile"
+
+
+    def get_copied_content(self):
+        """Returns queryset of content picked up from a partner."""
+
+        if self.newsorganization:
+            copied_content = self.newsorganization.get_copied_content()
+            return copied_content
+        if self.newsorganizationnetwork:
+            copied_content = self.newsorganizationnetwork.get_copied_content()
+            return copied_content
+        if self.participant:
+            copied_content = self.participant.get_copied_content()
+            return copied_content

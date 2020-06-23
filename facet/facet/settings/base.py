@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'imagekit',
     'debug_toolbar',
 ]
 
@@ -168,3 +169,15 @@ STATICFILES_DIRS = [os.path.join(PROJECT_DIR, "static")]
 
 MEDIA_ROOT = GIT_DIR + "/media/"
 MEDIA_URL = "/media/"
+
+######################################
+# ImageKit (Django app for resizing image fields)
+
+# Be optimistic, produce URLs for images that may not exist.
+#
+# This is helpful as it means we don't need to have a media file on the development/staging
+# server in order to show a view that uses it. It will optimistically make the URL, hoping
+# it is there. This does mean that when you add/change an ImageKit field, you need to
+# regenerate the images with ``python manage.py generateimages``
+
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'

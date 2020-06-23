@@ -15,6 +15,7 @@ class Anchor(models.Model):
 
     Models that can be anchors:
     _Organization, _Network, Project, Story, Item, Task, Event +
+    Pitch, Assignment
 
     Models that can be anchored:
     Task, Event, Note, Discussion +
@@ -41,6 +42,8 @@ class Anchor(models.Model):
     ITEM = 'ITEM'
     TASK = 'TASK'
     EVENT = 'EVENT'
+    PITCH = 'PITCH'
+    ASSIGNMENT = 'ASSIGNMENT'
 
     ANCHOR_TYPE_CHOICES = (
         (NEWSORGANIZATION, 'News Organization'),
@@ -50,6 +53,8 @@ class Anchor(models.Model):
         (ITEM, 'Item'),
         (TASK, 'Task'),
         (EVENT,'Event'),
+        (PITCH, 'Pitch'),
+        (ASSIGNMENT, 'Assignment'),
     )
 
     anchor_type = models.CharField(
@@ -85,3 +90,26 @@ class Anchor(models.Model):
     @property
     def type(self):
         return "Anchor Profile"
+
+
+    def get_absolute_url(self):
+        """Get get_absolute_url of actual object."""
+
+        if self.newsorganization:
+            return self.newsorganization.get_absolute_url()
+        if self.newsorganizationnetwork:
+            return self.newsorganizationnetwork.get_absolute_url()
+        if self.project:
+            return self.project.get_absolute_url()
+        if self.story:
+            return self.story.get_absolute_url()
+        if self.item:
+            return self.item.get_absolute_url()
+        if self.task:
+            return self.task.get_absolute_url()
+        if self.event:
+            return self.event.get_absolute_url()
+        if self.pitch:
+            return self.pitch.get_absolute_url()
+        if self.assignment:
+            return self.assignment.get_absolute_url()

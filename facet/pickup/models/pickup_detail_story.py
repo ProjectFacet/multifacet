@@ -1,6 +1,6 @@
 from django.db import models
 
-from base.models import Partner, EntityOwner
+from base.models import Partner, EntityOwner, Participant
 from editorial.models import Story
 
 
@@ -28,11 +28,25 @@ class StoryPickupDetail(models.Model):
         on_delete=models.SET_NULL,
     )
 
+    original_participant_owner = models.OneToOneField(
+        Participant,
+        help_text = 'Participant that originally made the story available.',
+        null=True,
+        on_delete = models.SET_NULL,
+    )
+
     # To capture name of entity in the event the entity records are deleted.
     # FIXME Better ways to manage this data integrity component?
     original_entity_owner_name = models.CharField(
         max_length=300,
-        help_text='Name of original entity.'
+        help_text='Name of original entity.',
+        blank=True,
+    )
+
+    original_participant_owner_name = models.CharField(
+        max_length=300,
+        help_text='Name of origin participant.',
+        blank=True,
     )
 
     original_story = models.ForeignKey(

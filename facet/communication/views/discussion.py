@@ -13,9 +13,10 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView , UpdateView, DetailView, CreateView, View
 from braces.views import LoginRequiredMixin
 
-# from communication.forms import (
-#
-#     )
+from communication.forms import (
+        DiscussionForm,
+        CommentForm,
+    )
 
 from communication.models import (
         Discussion,
@@ -23,15 +24,29 @@ from communication.models import (
     )
 
 
-class DiscussionCreateView(CreateView):
+class DiscussionCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
     """Create a Discussion with a channel != 'main'."""
 
     model = Discussion
     template_name = 'discussion_form.html'
-    fields = ['channel', 'anchor']
+    form_class = DiscussionForm
+
+    form_invalid_message = "Something went wrong."
+    form_valid_message = "Discussion created."
+
+    def form_valid(self, form):
+        """Save -- but first adding anchor."""
+
+        self.object = discussion = form.save(commit=False)
+        anchor_id = form.cleaned_data['anchor']
+        anchor = get_object_or_404(Anchor, id=anchor_id)
+        discussion.anchor = anchor
+        discussion.channel = form.cleaned_data['channel']
+        discussion.save()
+        return redirect(self.object)
 
 
-class DiscussionUpdateView(UpdateView):
+class DiscussionUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
     """Change channel name for a Discussion."""
 
     model = Discussion
@@ -39,12 +54,26 @@ class DiscussionUpdateView(UpdateView):
     fields = ['channel']
 
 
-class DiscussionDeleteView(DeleteView):
-    """Delete a discussion/channel."""
-    pass
+class DiscussionDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
+    """Delete a non 'main' discussion/channel from a Entity or Project."""
+
+    model = Discussion
+    template_name = "discussion_delete.html'"
+
+    form_valid_message = "Deleted."
+    form_invalid_message = "Please check form."
+
+    def get_success_url(self):
+        """Post-deletion, return to the discussion anchor."""
+
+        anchor = self,request.Post.get('anchor')
+        if anchor.entity:
+            return anchor.entity.get_absolute_url()
+        if anchor.project:
+            return anchor.project.get_absolute_url()
 
 
-class CommentCreateView(CreateView):
+class CommentCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
     """Create a Comment associated with a Discussion."""
 
     model = Comment
@@ -58,16 +87,17 @@ class CommentCreateView(CreateView):
         comment.participant = self.request.user
         # association with entity or content is handled on the discussion
         discussion_id = self.request.POST.get('discussion')
-        comment.discussion = get_object_or_404(Discussion, id=discussion)
+        discussion = Discussion.objects.get(id=discussion_id)
+        comment.discussion = discussion
         comment.text = self.request.POST.get('text')
         comment.save()
         # TODO record action for notifications
-        # TODO return user to location of Comment's parent Discussion
-        return HttpResponseRedirect(reverse)
+        # return user to location of Comment's parent Discussion
+        return discussion.anchor.get_absolute_url()
 
 
-class CommmentUpdateView(UpdateView):
-    """Change channel name for a Discussion."""
+class CommmentUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
+    """Edit a comment in a discussion."""
 
     pass
     # model = Comment
@@ -76,6 +106,6 @@ class CommmentUpdateView(UpdateView):
 
     #TODO add updated, edited (boolean) to Comment model
 
-class DiscussionDeleteView(DeleteView):
-    """Delete a discussion/channel."""
+class CommentDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
+    """Delete a comment."""
     pass

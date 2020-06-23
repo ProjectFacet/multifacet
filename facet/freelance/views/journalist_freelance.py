@@ -1,13 +1,15 @@
 """FreelanceJournalist Views for Facet/Freelance.
 
-
 """
 
 from django.shortcuts import render
 from braces.views import LoginRequiredMixin, FormMessagesMixin
 from django.views.generic import TemplateView, UpdateView, DetailView, ListView, CreateView, DeleteView, FormView, View
 
-from freelance.forms import ()
+from freelance.forms import (
+    FreelanceJournalistForm,
+    FreelanceJournalistProfileForm,
+)
 
 from freelance.models import (
     FreelanceJournalist,
@@ -15,35 +17,53 @@ from freelance.models import (
 
 
 class FreelanceJournalistCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
-    """
+    """Create a Freelance Journalist."""
 
-    """
-    pass
+    model = FreelanceJournalist
+    form_class = FreelanceJournalistForm
+    template_name = 'freelance_journalist/freelance_journalist_form.html'
+
+    form_invalid_message = "Something went wrong."
+    form_valid_message = "Profile created."
 
 
 class FreelanceJournalistDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
-    """
+    """Create/update Freelance Journalist profile."""
 
-    """
-    pass
+    model = FreelanceJournalist
+    template_name = 'freelance_journalist/freelance_journalist_profile.html'
+
+    def notes(self):
+        """Return notes."""
+        pass
+
+    def internal_images(self):
+        """Return internal images."""
+        pass
+
+    def internal_documents(self):
+        """Return internal documents."""
+        pass
 
 
 class FreelanceJournalistPublicProfileDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
-    """
+    """Public Profile for a Freelance Journalist."""
 
-    """
-    pass
+    model = FreelanceJournalist
+    template_name = 'freelance_journalist/freelance_journalist_profile.html'
 
 
-class FreelanceJournalistUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
-    """
+class FreelanceJournalistProfileUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
+    """Edit a Freelance Journalist profile."""
 
-    """
-    pass
+    model = FreelanceJournalist
+    form_class = FreelanceJournalistProfileForm
+    template_name = 'freelance_journalist/freelance_journalist_profile_form.html'
+
+    form_invalid_message = "Something went wrong."
+    form_valid_message = "Profile updated."
 
 
 class FreelanceJournalistDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """
-
-    """
+    """."""
     pass

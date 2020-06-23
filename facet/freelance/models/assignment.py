@@ -1,5 +1,6 @@
 from django.db import models
 
+from base.models import Anchor
 from .journalist_freelance import FreelanceJournalist
 from .journalist_freelancemanager import FreelanceManager
 from entity.models import NewsOrganization
@@ -11,6 +12,8 @@ from note.models import Note
 
 class Assignment(models.Model):
     """The details of an assignment to a freelancer from an organization."""
+
+    anchor_profile = models.OneToOneField(Anchor, null=True, on_delete=models.SET_NULL)
 
     freelancer = models.ForeignKey(
         FreelanceJournalist,
