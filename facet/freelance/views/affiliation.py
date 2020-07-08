@@ -32,42 +32,48 @@ from freelance.models import (
 # Freelancer Affiliation Record Views
 
 class FreelancerAffiliationRecordCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
-    """."""
-    pass
+    """Create a record for an organization regarding details of a freelancer they are working with.
+
+    An affiliation record can be created:
+    - automatically by creating an assignment
+    - manually by clicking a button to create a record (if one does not already exist)
+    """
+
+
 
 
 class FreelancerAffiliationRecordDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
-    """."""
+    """Display record."""
     pass
 
 
 class FreelancerAffiliationRecordUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
-    """."""
+    """Update a record."""
     pass
 
 
 class FreelancerAffiliationRecordDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """."""
+    """Delete a record."""
     pass
 
 
 # Organization Affiliation Record Views
 
 class OrganizationAffiliationRecordCreateView(LoginRequiredMixin, FormMessagesMixin, CreateView):
-    """."""
+    """Create a record for a freelance journalist regarding details of an organization they are working with.."""
     pass
 
 
 class OrganizationAffiliationRecordDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
-    """."""
+    """Display record."""
     pass
 
 
 class OrganizationAffiliationRecordUpdateView(LoginRequiredMixin, FormMessagesMixin, UpdateView):
-    """."""
+    """Update a record."""
     pass
 
 
 class OrganizationAffiliationRecordDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """."""
+    """Delete a record."""
     pass

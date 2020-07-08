@@ -136,3 +136,8 @@ class FreelanceJournalist(models.Model):
     def get_active_pitches(self):
         """Return all active assignment."""
         return self.pitch_set.filter(Q(status="Pitched")|Q(status="Accepted"))
+
+    def get_notes(self):
+        """Return personal notes."""
+
+        return Note.objects.filter(anchor=self.object.anchor_profile)

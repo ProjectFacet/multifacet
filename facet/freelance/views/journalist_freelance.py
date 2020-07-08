@@ -28,14 +28,14 @@ class FreelanceJournalistCreateView(LoginRequiredMixin, FormMessagesMixin, Creat
 
 
 class FreelanceJournalistDetailView(LoginRequiredMixin, FormMessagesMixin, DetailView):
-    """Create/update Freelance Journalist profile."""
+    """View Freelance Journalist profile from perspective of the Freelance Journalist."""
 
     model = FreelanceJournalist
     template_name = 'freelance_journalist/freelance_journalist_profile.html'
 
     def notes(self):
         """Return notes."""
-        pass
+        return self.participant.notes.all()
 
     def internal_images(self):
         """Return internal images."""
