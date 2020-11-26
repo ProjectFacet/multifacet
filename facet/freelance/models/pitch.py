@@ -1,8 +1,8 @@
 from django.db import models
 
 from base.models import Anchor
-from .journalist_freelance import FreelanceJournalist
-from .journalist_freelancemanager import FreelanceManager
+from participant.models import FreelanceJournalist
+from participant.models import FreelanceManager
 from .call import Call
 # from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 
@@ -14,6 +14,7 @@ class Pitch(models.Model):
 
     freelancer = models.ForeignKey(
         FreelanceJournalist,
+        null=True,
         on_delete = models.CASCADE,
     )
 

@@ -24,9 +24,12 @@ from django.views.generic import TemplateView, UpdateView, DetailView, ListView,
 # from freelance.forms import ()
 
 from freelance.models import (
-    FreelanceJournalist,
     FreelancerAffiliationRecord,
     OrganizationAffiliationRecord
+)
+
+from participant.models import (
+    FreelanceJournalist,
 )
 
 # Freelancer Affiliation Record Views

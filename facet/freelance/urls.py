@@ -1,9 +1,6 @@
 from django.urls import path
 
 from .views import (
-    journalist_freelance_dashboard,
-    journalist_freelance,
-    freelance_manager,
     affiliation,
     freelance_invoice,
     call,
@@ -15,18 +12,18 @@ from .views import (
 
 app_name = 'freelance'
 urlpatterns = [
-    path('dashboard/', journalist_freelance_dashboard.FreelanceJournalistDashboardView.as_view(), name='dashboard_freelance'),
-    path('profile/create/', journalist_freelance.FreelanceJournalistCreateView.as_view(), name='freelance_journalist_create'),
-    path('profile/<pk>/', journalist_freelance.FreelanceJournalistDetailView.as_view(), name='freelance_journalist_detail'),
-    path('profile/<pk>/public/', journalist_freelance.FreelanceJournalistPublicProfileDetailView.as_view(), name='freelance_journalist_public_profile'),
-    path('profile/<pk>/update/', journalist_freelance.FreelanceJournalistProfileUpdateView.as_view(), name='freelance_journalist_update'),
-    path('profile/<pk>/delete/', journalist_freelance.FreelanceJournalistDeleteView.as_view(), name='freelance_journalist_delete'),
+    # path('dashboard/', journalist_freelance_dashboard.FreelanceJournalistDashboardView.as_view(), name='dashboard_freelance'),
+    # path('profile/create/', journalist_freelance.FreelanceJournalistCreateView.as_view(), name='freelance_journalist_create'),
+    # path('profile/<pk>/', journalist_freelance.FreelanceJournalistDetailView.as_view(), name='freelance_journalist_detail'),
+    # path('profile/<pk>/public/', journalist_freelance.FreelanceJournalistPublicProfileDetailView.as_view(), name='freelance_journalist_public_profile'),
+    # path('profile/<pk>/update/', journalist_freelance.FreelanceJournalistProfileUpdateView.as_view(), name='freelance_journalist_update'),
+    # path('profile/<pk>/delete/', journalist_freelance.FreelanceJournalistDeleteView.as_view(), name='freelance_journalist_delete'),
     # manager
-    path('manager/create/', freelance_manager.FreelanceManagerCreateView.as_view(), name='freelance_manager_create'),
-    path('manager/<pk>/', freelance_manager.FreelanceManagerDashboardView.as_view(), name='freelance_manager_dashboard'),
-    path('manager/<pk>/public/', freelance_manager.FreelanceManagerPublicProfileDetailView.as_view(), name='freelance_manager__public_profile'),
-    path('manager/<pk>/update/', freelance_manager.FreelanceManagerUpdateView.as_view(), name='freelance_manager_update'),
-    path('manager/<pk>/delete/', freelance_manager.FreelanceManagerDeleteView.as_view(), name='freelance_manager_delete'),
+    # path('manager/create/', freelance_manager.FreelanceManagerCreateView.as_view(), name='freelance_manager_create'),
+    # path('manager/<pk>/', freelance_manager.FreelanceManagerDashboardView.as_view(), name='freelance_manager_dashboard'),
+    # path('manager/<pk>/public/', freelance_manager.FreelanceManagerPublicProfileDetailView.as_view(), name='freelance_manager__public_profile'),
+    # path('manager/<pk>/update/', freelance_manager.FreelanceManagerUpdateView.as_view(), name='freelance_manager_update'),
+    # path('manager/<pk>/delete/', freelance_manager.FreelanceManagerDeleteView.as_view(), name='freelance_manager_delete'),
     # freelancer affiliation record
     path('organization/<org>/freelance/<fj>/affilitation/create/', affiliation.FreelancerAffiliationRecordCreateView.as_view(), name='freelance_affiliation_record_create'),
     path('organization/<org>/freelance/<fj>/affilitation/<pk>/', affiliation.FreelancerAffiliationRecordDetailView.as_view(), name='freelance_affiliation_record_detail'),

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
-from .journalist_freelancemanager import FreelanceManager
+from participant.models import FreelanceManager
 from entity.models import NewsOrganization
 # from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo, Tag
 
@@ -14,6 +14,7 @@ class Call(models.Model):
 
     owner = models.ForeignKey(
         FreelanceManager,
+        null=True,
         help_text='Freelance Manager that owns this call.',
         on_delete = models.CASCADE,
     )

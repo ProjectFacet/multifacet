@@ -1,7 +1,7 @@
 from django.db import models
 
-from .journalist_freelance import FreelanceJournalist
-from .journalist_freelancemanager import FreelanceManager
+from participant.models import FreelanceJournalist
+from participant.models import FreelanceManager
 from entity.models import NewsOrganization
 
 from base.models import BaseInvoice
@@ -12,11 +12,13 @@ class FreelanceInvoice(BaseInvoice):
 
     freelancer = models.ForeignKey(
         FreelanceJournalist,
+        null=True,
         on_delete = models.CASCADE,
     )
 
     manager = models.ForeignKey(
         FreelanceManager,
+        null=True,
         help_text='Manager responsible for this assignment.',
         on_delete = models.CASCADE,
     )

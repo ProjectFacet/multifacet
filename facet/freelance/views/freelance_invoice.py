@@ -15,6 +15,11 @@ from freelance.models import (
     FreelanceInvoice,
 )
 
+from participant.models import (
+    FreelanceJournalist,
+    FreelanceManager,
+)
+
 
 class FreelanceInvoiceListView(LoginRequiredMixin, FormMessagesMixin, ListView):
     """Show a freelancer their invoices."""

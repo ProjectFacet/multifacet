@@ -13,6 +13,11 @@ from freelance.models import (
     Assignment,
 )
 
+from participant.models import (
+    FreelanceJournalist,
+    FreelanceManager,
+)
+
 
 class FreelanceAssignmentListView(LoginRequiredMixin, FormMessagesMixin, ListView):
     """."""

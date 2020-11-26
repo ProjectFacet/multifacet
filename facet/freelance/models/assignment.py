@@ -1,8 +1,8 @@
 from django.db import models
 
 from base.models import Anchor
-from .journalist_freelance import FreelanceJournalist
-from .journalist_freelancemanager import FreelanceManager
+from participant.models import FreelanceJournalist
+from participant.models import FreelanceManager
 from entity.models import NewsOrganization
 from editorial.models import Project, Story, Item
 from .call import Call
@@ -17,11 +17,13 @@ class Assignment(models.Model):
 
     freelancer = models.ForeignKey(
         FreelanceJournalist,
+        null=True,
         on_delete = models.CASCADE,
     )
 
     editor = models.ForeignKey(
         FreelanceManager,
+        null=True,
         help_text='Editor responsible for this assignment.',
         on_delete = models.CASCADE,
     )

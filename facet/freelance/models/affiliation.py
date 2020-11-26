@@ -1,7 +1,7 @@
 from django.db import models
 
-from .journalist_freelance import FreelanceJournalist
-from .journalist_freelancemanager import FreelanceManager
+from participant.models import FreelanceJournalist
+from participant.models import FreelanceManager
 from entity.models import NewsOrganization
 from note.models import Note
 
@@ -25,6 +25,7 @@ class FreelancerAffiliationRecord(models.Model):
     # freelancer has deactivated/deleted their account
     freelancer = models.ForeignKey(
         FreelanceJournalist,
+        null=True,
         on_delete = models.CASCADE,
     )
 
@@ -112,6 +113,7 @@ class OrganizationAffiliationRecord(models.Model):
 
     freelancer = models.ForeignKey(
         FreelanceJournalist,
+        null=True,
         on_delete = models.CASCADE,
     )
 
