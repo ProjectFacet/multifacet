@@ -3,7 +3,7 @@ from django.db.models import Q
 
 from base.models import Participant, Anchor, EntityOwner
 from note.models import Note
-from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
+from internalasset.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 
 
 class Event(models.Model):

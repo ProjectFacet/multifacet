@@ -39,3 +39,6 @@ from .entity_owner import EntityOwner
 from .anchor import Anchor
 from .partner import Partner
 from .network_member import NetworkMember
+
+from .base_asset import BaseAsset, BaseAssetMetadata
+from .base_asset import BaseAudio, BaseDocument, BaseImage, BaseVideo

@@ -1,25 +1,6 @@
 from django.db import models
 
-from .asset_base import BaseAsset, BaseAssetMetadata
-
-
-class BaseDocumentAsset(BaseAsset):
-    """Base documents.
-
-    There are subclasses of this for DocumentAssets (attached to items with lots of
-    metadata) and InternalDocuments (attached to tasks, events, etc).
-    """
-
-    # type name for search system
-    type = "Document"
-
-    document = models.FileField(
-        upload_to='documents',
-        blank=True,
-    )
-
-    class Meta:
-        abstract = True
+from base.models import BaseAssetMetadata, BaseDocument
 
 
 class DocumentAssetManager(models.Manager):
@@ -31,7 +12,7 @@ class DocumentAssetManager(models.Manager):
         return documentasset
 
 
-class DocumentAsset(BaseDocumentAsset, BaseAssetMetadata):
+class DocumentAsset(BaseDocument, BaseAssetMetadata):
     """Document Assets (attached to items)"""
 
     #Choices for Asset type
@@ -82,34 +63,3 @@ class DocumentAsset(BaseDocumentAsset, BaseAssetMetadata):
     @property
     def type(self):
         return "Document Asset"
-
-
-class InternalDocument(BaseDocumentAsset):
-    """Simple Document (file upload, attached to events, tasks, etc.)"""
-
-    def get_usage(self):
-        """Return Organizations, Networks, Projects, Events and Tasks
-        the internal asset is associated with."""
-
-        associations = []
-        orgs = self.organization_internal_document.all()
-        networks = self.network_set.all()
-        projects = self.project_set.all()
-        events = self.event_set.all()
-        tasks = self.event_set.all()
-        associations.extend(orgs)
-        associations.extend(networks)
-        associations.extend(projects)
-        associations.extend(events)
-        associations.extend(tasks)
-
-        return associations
-
-
-    # def get_absolute_url(self):
-    #     return reverse('internal_document_detail', kwargs={'pk': self.id})
-
-
-    @property
-    def type(self):
-        return "Simple Document"

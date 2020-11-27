@@ -32,6 +32,9 @@ from django.views.generic import TemplateView, UpdateView, DetailView, ListView,
 from editorial.forms import (
     ProjectForm,
     ProjectTeamForm,
+)
+
+from internalasset.forms import (
     InternalImageForm,
     InternalDocumentForm,
     InternalImageLibraryAssociateForm,

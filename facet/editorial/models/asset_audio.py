@@ -1,30 +1,6 @@
 from django.db import models
 
-from .asset_base import BaseAsset, BaseAssetMetadata
-
-
-class BaseAudio(BaseAsset):
-    """Base type for audio files.
-
-    Subclassed by AudioAsset and InternalAudio.
-    """
-
-    # metadata for search system
-    type = "Audio"
-
-    audio = models.FileField(
-        upload_to='audio',
-        blank=True,
-    )
-
-    link = models.URLField(
-        max_length=400,
-        help_text='Link to audio file hosted elsewhere.',
-        blank=True,
-    )
-
-    class Meta:
-        abstract = True
+from base.models import BaseAssetMetadata, BaseAudio
 
 
 class AudioAssetManager(models.Manager):
@@ -81,32 +57,3 @@ class AudioAsset(BaseAudio, BaseAssetMetadata):
     @property
     def type(self):
         return "Audio Asset"
-
-
-class InternalAudio(BaseAudio):
-    """Simple Audio (attaches to an event, task, etc.)"""
-
-    def get_usage(self):
-        """Return Organizations, Networks, Projects, Events and Tasks
-        the internal asset is associated with."""
-
-        associations = []
-        orgs = self.organization_internal_audio.all()
-        networks = self.network_set.all()
-        projects = self.project_set.all()
-        events = self.event_set.all()
-        tasks = self.event_set.all()
-        associations.extend(orgs)
-        associations.extend(networks)
-        associations.extend(projects)
-        associations.extend(events)
-        associations.extend(tasks)
-
-        return associations
-
-    # def get_absolute_url(self):
-    #     return reverse('internal_audio_detail', kwargs={'pk': self.id})
-
-    @property
-    def type(self):
-        return "Simple Audio"

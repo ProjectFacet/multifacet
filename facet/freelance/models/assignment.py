@@ -7,7 +7,7 @@ from entity.models import NewsOrganization
 from editorial.models import Project, Story, Item
 from .call import Call
 from .pitch import Pitch
-from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
+from internalasset.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 from note.models import Note
 
 class Assignment(models.Model):

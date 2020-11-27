@@ -3,7 +3,8 @@ from django.contrib.postgres.fields import ArrayField
 
 from participant.models import FreelanceManager
 from entity.models import NewsOrganization
-# from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo, Tag
+from internalasset.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
+from editorial.models import Tag
 
 
 class Call(models.Model):
@@ -85,10 +86,10 @@ class Call(models.Model):
     )
 
     # internal assets
-    internal_image_assets = models.ManyToManyField('editorial.InternalImage', blank=True)
-    internal_document_assets = models.ManyToManyField('editorial.InternalDocument', blank=True)
-    internal_audio_assets = models.ManyToManyField('editorial.InternalAudio', blank=True)
-    internal_video_assets = models.ManyToManyField('editorial.InternalVideo', blank=True)
+    internal_image_assets = models.ManyToManyField(InternalImage, blank=True)
+    internal_document_assets = models.ManyToManyField(InternalDocument, blank=True)
+    internal_audio_assets = models.ManyToManyField(InternalAudio, blank=True)
+    internal_video_assets = models.ManyToManyField(InternalVideo, blank=True)
 
     tags = models.ManyToManyField('editorial.Tag', blank=True)
 

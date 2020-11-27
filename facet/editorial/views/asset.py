@@ -1,6 +1,5 @@
 """Asset Views for Facet/Editorial.
 
-
 """
 
 from django.shortcuts import render
@@ -8,15 +7,25 @@ from braces.views import LoginRequiredMixin, FormMessagesMixin
 from django.views.generic import TemplateView, UpdateView, DetailView, ListView, CreateView, DeleteView, FormView, View
 
 from editorial.forms import (
-    ImageAssetForm, LibraryImageAssociateForm, InternalImageForm, InternalImageLibraryAssociateForm,
-    DocumentAssetForm, LibraryDocumentAssociateForm, InternalDocumentForm, InternalDocumentLibraryAssociateForm,
-    AudioAssetForm, LibraryAudioAssociateForm, InternalAudioForm, InternalAudioLibraryAssociateForm,
-    VideoAssetForm, LibraryVideoAssociateForm, InternalVideoForm, InternalVideoLibraryAssociateForm,
+    ImageAssetForm, LibraryImageAssociateForm,
+    DocumentAssetForm, LibraryDocumentAssociateForm,
+    AudioAssetForm, LibraryAudioAssociateForm,
+    VideoAssetForm, LibraryVideoAssociateForm,
+)
+
+from internalasset.forms import (
+    InternalImageForm, InternalImageLibraryAssociateForm,
+    InternalDocumentForm, InternalDocumentLibraryAssociateForm,
+    InternalAudioForm, InternalAudioLibraryAssociateForm,
+    InternalVideoForm, InternalVideoLibraryAssociateForm,
 )
 
 from editorial.models import (
     Project, Story, Item,
     ImageAsset, DocumentAsset, AudioAsset, VideoAsset,
+)
+
+from internalasset.models import (
     InternalImage, InternalDocument, InternalAudio, InternalVideo,
 )
 
@@ -515,205 +524,3 @@ class VideoAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
         """Post deletion return to the media library."""
 
         return reverse('editorial:asset_library')
-
-
-# Simple Asset Library Views
-
-# ACCESS: Only an org's users should be able to see an organization's internal asset library
-class SimpleAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
-    """
-
-    """
-    pass
-
-
-class InternalImageAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
-    """
-
-    """
-    pass
-
-
-class InternalDocumentAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
-    """
-
-    """
-    pass
-
-
-class InternalAudioAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
-    """
-
-    """
-    pass
-
-
-class InternalVideoAssetLibraryTemplateView(LoginRequiredMixin, TemplateView):
-    """
-
-    """
-    pass
-
-# Simple Image
-
-# ACCESS: Any org user, or user from an organization that is in collaborate_with
-# should be able to create a internal asset for P, Sr, St, F
-# Contractors should only be able to do so for PSSF that they have access to
-# That should be handled by limiting which PSSF they have access to.
-class InternalImageCreateView(LoginRequiredMixin, CreateView):
-    """
-
-    """
-    pass
-
-
-# ACCESS: Any org user should be able to add an asset for a P, Sr, St, F
-# A user from an organization that is in collaborate_with or
-# contractors should not be able to do this because doing so requires access to
-# an org's entire asset library.
-class InternalImageLibraryAssociateView(LoginRequiredMixin, FormView):
-    """
-
-    """
-    pass
-
-
-class InternalImageUpdateView(LoginRequiredMixin, UpdateView):
-    """
-
-    """
-    pass
-
-
-class InternalImageAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """
-
-    """
-    pass
-
-
-class InternalImageAssetDisassociateView(LoginRequiredMixin, View):
-    """
-
-    """
-    pass
-
-
-# Simple Document
-class InternalDocumentCreateView(LoginRequiredMixin, CreateView):
-    """
-
-    """
-    pass
-
-
-class InternalDocumentUpdateView(LoginRequiredMixin, UpdateView):
-    """
-
-    """
-    pass
-
-
-class InternalDocumentAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """
-
-    """
-    pass
-
-
-# ACCESS: Any org user should be able to add an asset for a P, Sr, St, F
-# A user from an organization that is in collaborate_with or
-# contractors should not be able to do this because doing so requires access to
-# an org's entire asset library.
-class InternalDocumentLibraryAssociateView(LoginRequiredMixin, FormView):
-    """
-
-    """
-    pass
-
-
-class InternalDocumentAssetDisassociateView(LoginRequiredMixin, View):
-    """
-
-    """
-    pass
-
-
-# Simple Audio
-class InternalAudioCreateView(LoginRequiredMixin, CreateView):
-    """
-
-    """
-    pass
-
-
-class InternalAudioUpdateView(LoginRequiredMixin, UpdateView):
-    """
-
-    """
-    pass
-
-
-class InternalAudioAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """
-
-    """
-    pass
-
-
-# ACCESS: Any org user should be able to add an asset for a P, Sr, St, F
-# A user from an organization that is in collaborate_with or
-# contractors should not be able to do this because doing so requires access to
-# an org's entire asset library.
-class InternalAudioLibraryAssociateView(LoginRequiredMixin, FormView):
-    """
-
-    """
-    pass
-
-
-class InternalAudioAssetDisassociateView(LoginRequiredMixin, View):
-    """
-
-    """
-    pass
-
-
-# Simple Video
-class InternalVideoCreateView(LoginRequiredMixin, CreateView):
-    """
-
-    """
-    pass
-
-
-class InternalVideoUpdateView(LoginRequiredMixin, UpdateView):
-    """
-
-    """
-    pass
-
-
-class InternalVideoAssetDeleteView(LoginRequiredMixin, FormMessagesMixin, DeleteView):
-    """
-
-    """
-    pass
-
-
-# ACCESS: Any org user should be able to add an asset for a P, Sr, St, F
-# A user from an organization that is in collaborate_with or
-# contractors should not be able to do this because doing so requires access to
-# an org's entire asset library.
-class InternalVideoLibraryAssociateView(LoginRequiredMixin, FormView):
-    """
-
-    """
-    pass
-
-
-class InternalVideoAssetDisassociateView(LoginRequiredMixin, View):
-    """
-
-    """
-    pass

@@ -4,7 +4,7 @@ from base.models import Anchor
 from participant.models import FreelanceJournalist
 from participant.models import FreelanceManager
 from .call import Call
-# from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
+from internalasset.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 
 
 class Pitch(models.Model):
@@ -73,10 +73,10 @@ class Pitch(models.Model):
     )
 
     # internal assets
-    internal_image_assets = models.ManyToManyField('editorial.InternalImage', blank=True)
-    internal_document_assets = models.ManyToManyField('editorial.InternalDocument', blank=True)
-    internal_audio_assets = models.ManyToManyField('editorial.InternalAudio', blank=True)
-    internal_video_assets = models.ManyToManyField('editorial.InternalVideo', blank=True)
+    internal_image_assets = models.ManyToManyField(InternalImage, blank=True)
+    internal_document_assets = models.ManyToManyField(InternalDocument, blank=True)
+    internal_audio_assets = models.ManyToManyField(InternalAudio, blank=True)
+    internal_video_assets = models.ManyToManyField(InternalVideo, blank=True)
 
     tags = models.ManyToManyField('editorial.Tag', blank=True)
 

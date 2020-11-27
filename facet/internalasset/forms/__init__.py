@@ -1,0 +1,4 @@
+from .internal_audio import InternalAudioForm, InternalAudioLibraryAssociateForm
+from .internal_document import InternalDocumentForm, InternalDocumentLibraryAssociateForm
+from .internal_image import InternalImageForm, InternalImageLibraryAssociateForm
+from .internal_video import InternalVideoForm, InternalVideoLibraryAssociateForm

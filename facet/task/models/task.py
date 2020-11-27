@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Q
 
 from base.models import Participant, Anchor, EntityOwner
-from editorial.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
+from internalasset.models import InternalImage, InternalDocument, InternalAudio, InternalVideo
 from note.models import Note
 
 #-----------------------------------------------------------------------#

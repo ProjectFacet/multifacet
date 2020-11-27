@@ -89,35 +89,4 @@ urlpatterns = [
     path('video/<pk>/delete/', asset.VideoAssetDeleteView.as_view(), name='video_asset_delete'),
     path('video/<pk>/item/<item>/remove/', asset.VideoAssetDisassociateView.as_view(), name='video_asset_remove'),
     path('story/<story>/item/<item>/video/add/', asset.LibraryVideoAssociateView.as_view(), name='library_video_add'),
-    # # Simple Library
-    path('internalassets/', asset.SimpleAssetLibraryTemplateView.as_view(), name='internal_asset_library'),
-    path('internalassets/images/', asset.InternalImageAssetLibraryTemplateView.as_view(), name='internal_image_asset_library'),
-    path('internalassets/documents/', asset.InternalDocumentAssetLibraryTemplateView.as_view(), name='internal_document_asset_library'),
-    path('internalassets/audio/', asset.InternalAudioAssetLibraryTemplateView.as_view(), name='internal_audio_asset_library'),
-    path('internalassets/video/', asset.InternalVideoAssetLibraryTemplateView.as_view(), name='internal_video_asset_library'),
-    # # Simple Image
-    path('internalassets/internalimage/new/', asset.InternalImageCreateView.as_view(), name='upload_internal_image'),
-    path('internalassets/internalimage/add/', asset.InternalImageLibraryAssociateView.as_view(), name='library_internalimage_add'),
-    path('internalassets/internalimage/<pk>/', asset.InternalImageUpdateView.as_view(), name='internal_image_detail'),
-    path('internalassets/internalimage/<pk>/delete/', asset.InternalImageAssetDeleteView.as_view(), name='internal_image_delete'),
-    path('internalassets/internalimage/<pk>/remove/', asset.InternalImageAssetDisassociateView.as_view(), name='internal_image_remove'),
-    # # Simple Document
-    path('internalassets/internaldocument/new/', asset.InternalDocumentCreateView.as_view(), name='upload_internal_document'),
-    path('internalassets/internaldocument/add/', asset.InternalDocumentLibraryAssociateView.as_view(), name='library_internaldocument_add'),
-    path('internalassets/internaldocument/<pk>/', asset.InternalDocumentUpdateView.as_view(), name='internal_document_detail'),
-    path('internalassets/internaldocument/<pk>/delete/', asset.InternalDocumentAssetDeleteView.as_view(), name='internal_document_delete'),
-    path('internalassets/internaldocument/<pk>/remove/', asset.InternalDocumentAssetDisassociateView.as_view(), name='internal_document_remove'),
-    # # Simple Audio
-    path('internalassets/internalaudio/new/', asset.InternalAudioCreateView.as_view(), name='upload_internal_audio'),
-    path('internalassets/internalaudio/add/', asset.InternalAudioLibraryAssociateView.as_view(), name='library_internalaudio_add'),
-    path('internalassets/internalaudio/<pk>/', asset.InternalAudioUpdateView.as_view(), name='internal_audio_detail'),
-    path('internalassets/internalaudio/<pk>/delete/', asset.InternalAudioAssetDeleteView.as_view(), name='internal_audio_delete'),
-    path('internalassets/internalaudio/<pk>/remove/', asset.InternalAudioAssetDisassociateView.as_view(), name='internal_audio_remove'),
-    # # Simple Video
-    path('internalassets/internalvideo/new/', asset.InternalVideoCreateView.as_view(), name='upload_internal_video'),
-    path('internalassets/internalvideo/add/', asset.InternalVideoLibraryAssociateView.as_view(), name='library_internalvideo_add'),
-    path('internalassets/internalvideo/<pk>/', asset.InternalVideoUpdateView.as_view(), name='internal_video_detail'),
-    path('internalassets/internalvideo/<pk>/delete/', asset.InternalVideoAssetDeleteView.as_view(), name='internal_video_delete'),
-    path('internalassets/internalvideo/<pk>/remove/', asset.InternalVideoAssetDisassociateView.as_view(), name='internal_video_remove'),
-
 ]

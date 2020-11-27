@@ -1,23 +1,28 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from pilkit.processors import SmartResize
 
-from base.models import Participant, EntityOwner
-from entity.models import NewsOrganization
-from .tag import Tag
+
+from .participant import Participant
+from .entity_owner import EntityOwner
+# from editorial.models import Tag
+
 
 class BaseAsset(models.Model):
     """Base class for assets (some metadata)."""
 
-    participant_owner = models.OneToOneField(
+    participant_owner = models.ForeignKey(
         Participant,
         help_text = 'Participant who created/owns this.',
-        null = True,
+        blank=True,
+        null=True,
         on_delete = models.SET_NULL,
     )
 
     # XXX this means that if a participant from a partner org uploads an asset to another
     # organization's content, that asset will show up in their own organization's library
     # but not the partner organization's library.
-    entity_owner = models.OneToOneField(
+    entity_owner = models.ForeignKey(
         EntityOwner,
         help_text = 'Entity that owns this.',
         null = True,
@@ -78,7 +83,7 @@ class BaseAssetMetadata(models.Model):
         blank=True,
     )
 
-    tags = models.ManyToManyField(Tag, blank=True)
+    # tags = models.ManyToManyField(Tag, blank=True)
 
     class Meta:
         abstract = True
@@ -132,3 +137,98 @@ class BaseAssetMetadata(models.Model):
     #     )
     #
     #     return asset_info
+
+class BaseAudio(BaseAsset):
+    """Base type for audio files.
+
+    Subclassed by AudioAsset and InternalAudio.
+    """
+
+    # metadata for search system
+    type = "Audio"
+
+    audio = models.FileField(
+        upload_to='audio',
+        blank=True,
+    )
+
+    link = models.URLField(
+        max_length=400,
+        help_text='Link to audio file hosted elsewhere.',
+        blank=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class BaseDocument(BaseAsset):
+    """Base documents.
+
+    There are subclasses of this for DocumentAssets (attached to items with lots of
+    metadata) and InternalDocuments (attached to tasks, events, etc).
+    """
+
+    # type name for search system
+    type = "Document"
+
+    document = models.FileField(
+        upload_to='documents',
+        blank=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class BaseImage(BaseAsset):
+    """Base class for image assets (an image with some metadata).
+
+    Used for ImageAssets (attached to items) as well as SimpleAssets
+    (attached for tasks, notes, etc).
+    """
+
+    # type name for search system
+    type = "Image"
+
+    image = models.ImageField(
+        upload_to='photos',
+        blank=True,
+    )
+
+    display_images = ImageSpecField(
+        source='images',
+        format='JPEG',
+    )
+
+    class Meta:
+        abstract = True
+
+
+class BaseVideo(BaseAsset):
+    """Base class for videos.
+
+    Subclassed by VideoAsset and InternalVideo.
+    """
+
+    # metadata for search system
+    type = "Video"
+
+    video = models.FileField(
+        upload_to='videos',
+        blank=True,
+    )
+
+    thumbnail = models.FileField(
+        upload_to='videos',
+        blank=True,
+    )
+
+    link = models.URLField(
+        max_length=400,
+        help_text='Link to video file hosted elsewhere.',
+        blank=True,
+    )
+
+    class Meta:
+        abstract = True

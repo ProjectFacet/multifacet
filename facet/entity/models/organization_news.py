@@ -3,9 +3,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from base.models import BaseOrganization
-from base.models import Participant
-
+from base.models import BaseOrganization, Participant
 # from editorial.models import Item
 
 class NewsOrganization(BaseOrganization):

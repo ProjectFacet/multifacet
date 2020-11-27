@@ -6,10 +6,6 @@ from .asset_image import ImageAsset
 from .asset_document import DocumentAsset
 from .asset_audio import AudioAsset
 from .asset_video import VideoAsset
-from .asset_image import InternalImage
-from .asset_document import InternalDocument
-from .asset_audio import InternalAudio
-from .asset_video import InternalVideo
 from .tag import Tag
 from .content_license import ContentLicense
 from .correction import Correction

@@ -2,31 +2,7 @@ from django.db import models
 from imagekit.models import ImageSpecField
 from pilkit.processors import SmartResize
 
-from .asset_base import BaseAsset, BaseAssetMetadata
-
-
-class BaseImage(BaseAsset):
-    """Base class for image assets (an image with some metadata).
-
-    Used for ImageAssets (attached to items) as well as SimpleAssets
-    (attached for tasks, notes, etc).
-    """
-
-    # type name for search system
-    type = "Image"
-
-    image = models.ImageField(
-        upload_to='photos',
-        blank=True,
-    )
-
-    display_images = ImageSpecField(
-        source='images',
-        format='JPEG',
-    )
-
-    class Meta:
-        abstract = True
+from base.models import BaseAssetMetadata, BaseImage
 
 
 class ImageAssetManager(models.Manager):
@@ -82,32 +58,3 @@ class ImageAsset(BaseImage, BaseAssetMetadata):
     @property
     def type(self):
         return "Image Asset"
-
-
-class InternalImage(BaseImage):
-    """Simple image (with some metadata) for attaching to tasks, events, etc."""
-
-    def get_usage(self):
-        """Return Organizations, Networks, Projects, Events and Tasks
-        the internal asset is associated with."""
-
-        associations = []
-        orgs = self.organization_internal_image.all()
-        networks = self.network_set.all()
-        projects = self.project_set.all()
-        events = self.event_set.all()
-        tasks = self.event_set.all()
-        associations.extend(orgs)
-        associations.extend(networks)
-        associations.extend(projects)
-        associations.extend(events)
-        associations.extend(tasks)
-
-        return associations
-
-    # def get_absolute_url(self):
-    #     return reverse('internal_image_detail', kwargs={'pk': self.id})
-
-    @property
-    def type(self):
-        return "Simple Image"
