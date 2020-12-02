@@ -192,7 +192,7 @@ class BaseImage(BaseAsset):
     type = "Image"
 
     image = models.ImageField(
-        upload_to='photos',
+        upload_to='images',
         blank=True,
     )
 
@@ -219,7 +219,7 @@ class BaseVideo(BaseAsset):
         blank=True,
     )
 
-    thumbnail = models.FileField(
+    thumbnail = models.ImageField(
         upload_to='videos',
         blank=True,
     )

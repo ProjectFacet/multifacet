@@ -134,10 +134,10 @@ class Story(models.Model):
     # notes
     notes = models.ManyToManyField(Note, blank=True)
     # internal assets
-    internal_image_assets = models.ManyToManyField('internalasset.InternalImage', blank=True)
-    internal_document_assets = models.ManyToManyField('internalasset.InternalDocument', blank=True)
-    internal_audio_assets = models.ManyToManyField('internalasset.InternalAudio', blank=True)
-    internal_video_assets = models.ManyToManyField('internalasset.InternalVideo', blank=True)
+    internal_images = models.ManyToManyField('internalasset.InternalImage', blank=True)
+    internal_documents = models.ManyToManyField('internalasset.InternalDocument', blank=True)
+    internal_audio = models.ManyToManyField('internalasset.InternalAudio', blank=True)
+    internal_videos = models.ManyToManyField('internalasset.InternalVideo', blank=True)
 
     class Meta:
         verbose_name = 'Story'

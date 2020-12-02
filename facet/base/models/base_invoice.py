@@ -2,7 +2,7 @@ from django.db import models
 
 
 class BaseInvoice(models.Model):
-    """Invoice for freelance assignment(s)"""
+    """Base invoice."""
 
     reference_code = models.CharField(
         max_length=300,
@@ -53,10 +53,10 @@ class BaseInvoice(models.Model):
     )
 
     # internal assets
-    internal_image_assets = models.ManyToManyField('internalasset.InternalImage', blank=True)
-    internal_document_assets = models.ManyToManyField('internalasset.InternalDocument', blank=True)
-    internal_audio_assets = models.ManyToManyField('internalasset.InternalAudio', blank=True)
-    internal_video_assets = models.ManyToManyField('internalasset.InternalVideo', blank=True)
+    internal_images = models.ManyToManyField('internalasset.InternalImage', blank=True)
+    internal_documents = models.ManyToManyField('internalasset.InternalDocument', blank=True)
+    internal_audio = models.ManyToManyField('internalasset.InternalAudio', blank=True)
+    internal_videos = models.ManyToManyField('internalasset.InternalVideo', blank=True)
 
     class Meta:
         abstract = True
