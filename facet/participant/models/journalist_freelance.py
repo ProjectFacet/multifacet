@@ -27,7 +27,7 @@ class FreelanceJournalist(models.Model):
     )
 
     availability = models.TextField(
-        help_text="Notes on when a contractor is available or not.",
+        help_text="Notes on when freelancer is available or not.",
         blank=True,
     )
 
@@ -40,6 +40,11 @@ class FreelanceJournalist(models.Model):
         blank=True,
     )
 
+    working_area = models.TextField(
+        help_text='Description of the geographic area the freelancer covers.',
+        blank=True,
+    )
+
     gear = models.TextField(
         help_text="Gear that a contractor has access to and skills for.",
         blank=True,
@@ -48,30 +53,8 @@ class FreelanceJournalist(models.Model):
     # contractors will appear in public search results for contractors accepting work
     public = models.BooleanField(
         default=True,
-        help_text='Is the contractor publicly listed?',
+        help_text='Whether the contractor is publicly listed to freelance managers.',
     )
-
-    portfolio_link1 = models.URLField(
-        max_length=500,
-        help_text='Link to portfolio item.',
-        blank=True,
-        null=True,
-    )
-
-    portfolio_link2 = models.URLField(
-        max_length=500,
-        help_text='Link to portfolio item.',
-        blank=True,
-        null=True,
-    )
-
-    portfolio_link3 = models.URLField(
-        max_length=500,
-        help_text='Link to portfolio item.',
-        blank=True,
-        null=True,
-    )
-
 
     class Meta:
         verbose_name = "Freelance Journalist"

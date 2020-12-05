@@ -45,7 +45,7 @@ class StoryPickupDetail(models.Model):
 
     original_participant_owner_name = models.CharField(
         max_length=300,
-        help_text='Name of origin participant.',
+        help_text='Name of original participant owner.',
         blank=True,
     )
 

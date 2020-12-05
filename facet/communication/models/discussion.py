@@ -49,6 +49,7 @@ class Discussion(models.Model):
     Task, Event, Pitch, Assignment.
     """
 
+    #TODO auto create discussion with main channel when anchor is created
     channel = models.CharField(
         max_length=250,
         help_text='Name of specific discussion.',

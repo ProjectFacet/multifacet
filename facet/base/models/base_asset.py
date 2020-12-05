@@ -184,7 +184,7 @@ class BaseDocument(BaseAsset):
 class BaseImage(BaseAsset):
     """Base class for image assets (an image with some metadata).
 
-    Used for ImageAssets (attached to items) as well as SimpleAssets
+    Used for ImageAssets (attached to items) as well as Internal Assets
     (attached for tasks, notes, etc).
     """
 

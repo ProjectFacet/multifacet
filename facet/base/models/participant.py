@@ -13,7 +13,7 @@ from imagekit.models import ImageSpecField
 from pilkit.processors import SmartResize
 
 from .partner import Partner
-
+# from digital.models import PortfolioEntry
 
 class Participant(AbstractUser):
     """Participant.
@@ -25,6 +25,8 @@ class Participant(AbstractUser):
     partner_profile = models.OneToOneField(Partner, null=True, on_delete=models.SET_NULL)
     # notes
     notes = models.ManyToManyField('note.Note', blank=True)
+    # portfolio
+    portfolio = models.ManyToManyField('digital.PortfolioEntry', blank=True)
 
     connections = models.ManyToManyField(
         'self',

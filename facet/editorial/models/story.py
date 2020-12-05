@@ -14,7 +14,7 @@ from .project import Project
 class Story(models.Model):
     """The unit of a story.
 
-    A story is the one or more items that make up a particular story.
+    A story is the parent for one or more items that make up a particular story.
     Sharing and collaboration is controlled at the story level.
     The story also controls the sensitivity and embargo status of the content.
     """
@@ -58,8 +58,8 @@ class Story(models.Model):
     )
 
     desc = models.TextField(
+        help_text='Short description of story.',
         blank=True,
-        help_text='Short description of the story.'
     )
 
 

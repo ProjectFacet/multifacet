@@ -22,7 +22,7 @@ class Call(models.Model):
 
     organization = models.ForeignKey(
         NewsOrganization,
-        help_text='Organization that is making this call.',
+        help_text='NewsOrganization that is making this call.',
         on_delete = models.CASCADE,
     )
 
@@ -56,12 +56,12 @@ class Call(models.Model):
 
     urgent = models.BooleanField(
         default=False,
-        help_text='Is this call urgent?'
+        help_text='The urgency of the call'
     )
 
     timeframe = models.CharField(
         max_length=100,
-        help_text='What is the timeframe for responses?',
+        help_text='The timeframe for response.',
         blank=True,
         null=True,
     )
@@ -86,10 +86,10 @@ class Call(models.Model):
     )
 
     # internal assets
-    internal_image_assets = models.ManyToManyField(InternalImage, blank=True)
-    internal_document_assets = models.ManyToManyField(InternalDocument, blank=True)
-    internal_audio_assets = models.ManyToManyField(InternalAudio, blank=True)
-    internal_video_assets = models.ManyToManyField(InternalVideo, blank=True)
+    internal_images = models.ManyToManyField(InternalImage, blank=True)
+    internal_documents = models.ManyToManyField(InternalDocument, blank=True)
+    internal_audio = models.ManyToManyField(InternalAudio, blank=True)
+    internal_videos = models.ManyToManyField(InternalVideo, blank=True)
 
     tags = models.ManyToManyField('editorial.Tag', blank=True)
 

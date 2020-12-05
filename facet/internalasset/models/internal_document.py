@@ -3,7 +3,7 @@ from django.db import models
 from base.models import BaseDocument
 
 class InternalDocument(BaseDocument):
-    """Simple Document (file upload, attached to events, tasks, etc.)"""
+    """Internal Document (file upload, attached to events, tasks, etc.)"""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
@@ -28,4 +28,4 @@ class InternalDocument(BaseDocument):
 
     @property
     def type(self):
-        return "Simple Document"
+        return "Internal Document"

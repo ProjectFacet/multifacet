@@ -39,7 +39,7 @@ class ProjectForm(forms.ModelForm):
         fields = ['name', 'desc', 'collaborate']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'placeholder': 'Project Name'}),
-            'desc': Textarea(
+            'description': Textarea(
                 attrs={'class': 'form-control', 'placeholder': 'Description'}),
             'collaborate': CheckboxInput(),
             'partner_with': ArrayFieldSelectMultiple(

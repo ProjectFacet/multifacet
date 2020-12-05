@@ -55,10 +55,9 @@ class Project(models.Model):
     )
 
     desc = models.TextField(
+        help_text='Short description of project.',
         blank=True,
-        help_text='Short description of a story.'
     )
-
 
     creation_date = models.DateTimeField(
         auto_now_add=True,
@@ -79,11 +78,12 @@ class Project(models.Model):
         help_text='Is the content no longer active and needed?'
     )
 
-    website = models.URLField(
-        max_length=250,
-        blank=True,
-        help_text = 'Project website if applicable.'
-    )
+    #removed, instead use digital.website
+    # website = models.URLField(
+    #     max_length=250,
+    #     blank=True,
+    #     help_text = 'Project website if applicable.'
+    # )
 
     # notes
     notes = models.ManyToManyField(Note, blank=True)

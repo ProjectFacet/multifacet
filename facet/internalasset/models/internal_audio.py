@@ -4,7 +4,7 @@ from base.models import BaseAudio
 
 
 class InternalAudio(BaseAudio):
-    """Simple Audio (attaches to an event, task, etc.)"""
+    """Internal Audio that attaches to an event, task, etc."""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
@@ -29,4 +29,4 @@ class InternalAudio(BaseAudio):
 
     @property
     def type(self):
-        return "Simple Audio"
+        return "Internal Audio"

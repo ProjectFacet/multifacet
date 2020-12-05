@@ -46,7 +46,7 @@ class FreelancerAffiliationRecord(models.Model):
 
     disclosures = models.TextField(
         blank=True,
-        help_text='Disclosures regarind any potential noteworthy conflicts of interest.',
+        help_text='Disclosures regarding any potential noteworthy conflicts of interest.',
     )
 
     editor_notes = models.TextField(
@@ -61,6 +61,7 @@ class FreelancerAffiliationRecord(models.Model):
         help_text='Is this freelancer a trusted regular?',
     )
 
+    #FIXME change to choice field dependent on active assignments
     status = models.BooleanField(
         default=True,
         help_text='Is this freelancer currently working for the organization?'

@@ -1,6 +1,6 @@
 from django.db import models
 
-from base.models import Partner, EntityOwner
+from base.models import Partner, EntityOwner, Participant
 from editorial.models import Item
 
 
@@ -14,7 +14,20 @@ class ItemPickupDetailManager(models.Manager):
 
 
 class ItemPickupDetail(models.Model):
-    """ The details of a each pickup of a item. """
+    """ The details of each pickup of an item. """
+
+    original_participant_owner = models.OneToOneField(
+        Participant,
+        help_text='Participant that originally created/owned the item.',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    original_participant_owner_name = models.CharField(
+        max_length=300,
+        help_text='Name of original participant owner.',
+        blank=True,
+    )
 
     original_entity_owner = models.OneToOneField(
         EntityOwner,

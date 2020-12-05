@@ -28,4 +28,4 @@ class InternalVideo(BaseVideo):
 
     @property
     def type(self):
-        return "Simple Video"
+        return "Internal Video"

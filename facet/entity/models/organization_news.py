@@ -9,7 +9,7 @@ from base.models import BaseOrganization, Participant
 class NewsOrganization(BaseOrganization):
     """ Media Organization.
 
-    A mews organization is a media or publishing entity. News organizations are created
+    A news organization is a media or publishing entity. News organizations are created
     and owned by one or more admin participants. They can be managed by multiple admin participants.
     News organizations have many participants and serve as the owner of project and story content. News organizations
     can create and manage Networks. Ownership of a news organization can be transferred
@@ -98,9 +98,19 @@ class NewsOrganization(BaseOrganization):
         help_text='News Organization airs on cable television.',
     )
 
-    platform_radio = models.BooleanField(
+    platform_public_radio = models.BooleanField(
         default=False,
-        help_text='News Organization airs on radio.',
+        help_text='News Organization airs on public radio.',
+    )
+
+    platform_commercial_radio = models.BooleanField(
+        default=False,
+        help_text='News Organization airs on commercial radio.',
+    )
+
+    platform_community_radio = models.BooleanField(
+        default=False,
+        help_text='News Organization airs on community radio.',
     )
 
     platform_podcast = models.BooleanField(

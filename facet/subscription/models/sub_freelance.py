@@ -22,11 +22,11 @@ class FreelanceSubscription(models.Model):
 
     """
 
-    # freelancer = models.ForeignKey(
-    #     FreelanceJournalist,
-    #     help_text='Freelancer associated with this subscription.',
-    #     on_delete=models.CASCADE,
-    # )
+    freelancer = models.ForeignKey(
+        FreelanceJournalist,
+        help_text='Freelancer associated with this subscription.',
+        on_delete=models.CASCADE,
+    )
 
     objects = FreelanceSubscriptionManager()
 

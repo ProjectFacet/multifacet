@@ -1,6 +1,6 @@
 from django.db import models
 
-from base.models import Partner, EntityOwner
+from base.models import Partner, EntityOwner, Participant
 from editorial.models import VideoAsset
 
 
@@ -15,6 +15,19 @@ class VideoPickupDetailManager(models.Manager):
 
 class VideoPickupDetail(models.Model):
     """The details of each pickup of an VideoAsset."""
+
+    original_participant_owner = models.OneToOneField(
+        Participant,
+        help_text='Participant that originally created/owned this.',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    original_participant_owner_name = models.CharField(
+        max_length=300,
+        help_text='Name of original participant owner.',
+        blank=True,
+    )
 
     original_entity_owner = models.OneToOneField(
         EntityOwner,

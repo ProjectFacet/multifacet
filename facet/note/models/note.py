@@ -45,6 +45,11 @@ class Note(models.Model):
         help_text='When the note was created.'
     )
 
+    last_edit = models.DateTimeField(
+        auto_now=True,
+        help_text='When the note was updated'
+    )
+
     important = models.BooleanField(
         default=False,
         help_text='Mark as important for pinning to top of notes',

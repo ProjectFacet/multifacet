@@ -16,7 +16,7 @@ class FreelanceManager(models.Model):
     # freelancer related views sorted by this profile
     public = models.BooleanField(
         default=False,
-        help_text='Is this freelance manager publicly listed?',
+        help_text='whether the freelance manager is publicly listed',
     )
 
     interest = models.TextField(
@@ -24,9 +24,15 @@ class FreelanceManager(models.Model):
         blank=True,
     )
 
-    # TK
-    # topics
-    # formats
+    topics = models.TextField(
+        help_text = 'Description of topics interested in.',
+        blank=True,
+    )
+
+    formats = models.TextField(
+        help_text = 'Description of formats interested in.',
+        blank=True,
+    )
 
     class Meta:
         verbose_name = 'Freelance Manager'

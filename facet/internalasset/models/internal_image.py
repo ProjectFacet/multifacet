@@ -3,7 +3,7 @@ from django.db import models
 from base.models import BaseImage
 
 class InternalImage(BaseImage):
-    """Simple image (with some metadata) for attaching to tasks, events, etc."""
+    """Internal image (with some metadata) for attaching to tasks, events, etc."""
 
     def get_usage(self):
         """Return Organizations, Networks, Projects, Events and Tasks
@@ -28,4 +28,4 @@ class InternalImage(BaseImage):
 
     @property
     def type(self):
-        return "Simple Image"
+        return "Internal Image"

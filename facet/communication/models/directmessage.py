@@ -26,7 +26,7 @@ class DirectMessage(models.Model):
 
     exchange = models.ForeignKey(
         DirectMessageExchange,
-        help_text = 'The exchange of participants this message is meant for.',
+        help_text = 'The exchange of participants the message is associated with.',
         on_delete = models.CASCADE,
     )
 

@@ -102,10 +102,10 @@ class Event(models.Model):
     notes = models.ManyToManyField(Note, blank=True)
 
     # internal assets
-    internal_image_assets = models.ManyToManyField(InternalImage, blank=True)
-    internal_document_assets = models.ManyToManyField(InternalDocument, blank=True)
-    internal_audio_assets = models.ManyToManyField(InternalAudio, blank=True)
-    internal_video_assets = models.ManyToManyField(InternalVideo, blank=True)
+    internal_images = models.ManyToManyField(InternalImage, blank=True)
+    internal_documents = models.ManyToManyField(InternalDocument, blank=True)
+    internal_audio = models.ManyToManyField(InternalAudio, blank=True)
+    internal_videos = models.ManyToManyField(InternalVideo, blank=True)
 
     class Meta:
         verbose_name = 'Event'

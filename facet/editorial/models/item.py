@@ -19,7 +19,7 @@ class Item(models.Model):
     An item must belong to a story and can only belong to one story. An item is a version
     of the story.
 
-    Items have two owners, the participant that made them and the organization that
+    Items can have two owners, the participant that made them and the organization that
     participant belongs to, if any.
 
     Ex. A story about wildfires could have:
@@ -169,10 +169,11 @@ class Item(models.Model):
     # optional fields
     # ------------------------#
 
-    update_note  = models.TextField(
-        help_text='Text commenting regarding any updates or corrections made to the item.',
-        blank=True,
-    )
+    #Now handled on update model
+    # update_note  = models.TextField(
+    #     help_text='Text commenting regarding any updates or corrections made to the item.',
+    #     blank=True,
+    # )
 
     excerpt = models.TextField(
         help_text='Excerpt from the item.',
@@ -225,10 +226,11 @@ class Item(models.Model):
         blank=True,
     )
 
-    sources = models.TextField(
-        help_text='List of sources in the item.',
-        blank=True,
-    )
+    # removed as will be handled in RollCall
+    # sources = models.TextField(
+    #     help_text='List of sources in the item.',
+    #     blank=True,
+    # )
 
     edit_note = models.TextField(
         help_text='Information regarding allowable extent of editing and suggestions for specific kinds of edits.',
@@ -240,10 +242,11 @@ class Item(models.Model):
         blank=True,
     )
 
-    sponsors = models.TextField(
-        help_text='Sponsors or underwriters if need to indicate any.',
-        blank=True,
-    )
+    #moving to separate model, perhaps capital
+    # sponsors = models.TextField(
+    #     help_text='Sponsors or underwriters if need to indicate any.',
+    #     blank=True,
+    # )
 
     # ------------------------#
     #   web specific fields
